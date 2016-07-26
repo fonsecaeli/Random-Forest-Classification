@@ -2,10 +2,15 @@
 package Main;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Attribute {
     private String name;
-    private List<String> values;
+    private List<String> values = new ArrayList<>();
+    
+    public Attribute(String n){
+        name=n;
+    }
     
     public Attribute(String n, List<String> v){
         name=n;
@@ -14,11 +19,20 @@ public class Attribute {
         }
     }
     
-    public boolean hasValue(String s){
-        if(values.contains(s)){
-            return true;
-        }
+    public void add(String s){
+        if (!hasValue(s)) 
+            values.add(s);
+    }
+    
+    private boolean hasValue(String s){
+        for (int i=0; i<values.size(); i++)
+		if (s.equals(values.get(i)))
+			return true
         return false;
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public List<String> getValues(){

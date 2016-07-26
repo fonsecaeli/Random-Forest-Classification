@@ -1,15 +1,19 @@
 package Main;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Record{
-	private ArrayList <String> record = new ArrayList <String>();
+	private HashMap <String, String> record = new HashMap <String, String>();
 	
-	public Record(String[] data){
-		for(String a: data) record.add(a);
+	public Record(String attribute){
+		
 	}
 	
-	public ArrayList <String> getData(){
+	public void add(String attribute, String data){
+		record.put(attribute, data);
+	}
+	
+	public HashMap <String, String> getData(){
 		return record;
 	}
 	

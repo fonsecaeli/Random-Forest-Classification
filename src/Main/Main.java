@@ -1,5 +1,5 @@
 
-package randomforestclassification;
+package Main;
 
 public class Main {
 

@@ -9,7 +9,7 @@ public class ImportData {
 	
 	private ArrayList <Record> data;
 	private ArrayList <Attribute> attributes;
-	private String csvFile;
+	private String csvFile, line = "";
 	
 	public ImportData(){
 		

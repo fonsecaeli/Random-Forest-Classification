@@ -6,14 +6,16 @@ import java.util.ArrayList;
 
 public class Attribute {
     private String name;
-    private List<String> values = new ArrayList<>();
+    private List<String> values;
     
     public Attribute(String n){
         name=n;
+        values = new ArrayList<>();
     }
     
     public Attribute(String n, List<String> v){
         name=n;
+        values = new ArrayList<>();
         for(int i=0;i<v.size();i++){
             values.add(v.get(i));
         }

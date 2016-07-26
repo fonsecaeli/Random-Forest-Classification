@@ -27,7 +27,7 @@ public class Attribute {
     private boolean hasValue(String s){
         for (int i=0; i<values.size(); i++)
 		if (s.equals(values.get(i)))
-			return true
+			return true;
         return false;
     }
     

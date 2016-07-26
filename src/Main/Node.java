@@ -1,19 +1,19 @@
+//package Main;
 
-package Main;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Node {
-    List<Node> children;
-    List<String> childrenKeys;
-    Attribute att;
+    private List<Node> children;
+    private List<String> childrenKeys;
+    private Attribute att;
     
     
     public Node(){
         children = new ArrayList<>();
         childrenKeys = new ArrayList<>();
     }
-    
+
     private Node(List<Node> childs){
         children=childs;
     }
@@ -28,7 +28,7 @@ public class Node {
             childrenKeys.add(values.get(i));
         }
     }
-    
+
     public Node getNode(int i){
         return children.get(i);
     }

@@ -35,17 +35,20 @@ public class Entropy {
 	public static double attributeEntropy(List<Record> data, Attribute att) {
 		List<String> attValues = att.getValues();
 		List<List<Record>> sortedRecords = new ArrayList<ArrayList<Record>>();
+		for(int i = 0; i < attValues.size(); i++) {
+			sortedRecords.add(new ArrayList<Record>());
+		}
 		for(int i = 0; i < attValues.size(); i++) {	
 			for(Record r: data) { //could be faster if we removed the elements from data
-				if(r.getValue(att).equals(attValues.get(i))) { //need getValue(Attribute att) method for record
-					sortedRecords.get(i).add(r);
+				if(r.getValue(att).equals(attValues.get(i))) { //need getValue(Attribute att) method for record, also add the .equals()
+					sortedRecords.get(i).add(r); 
 				}
 			}
 		}
 		//sortedRecords should be filled
 		double attEntropy = 0.0;
 		for(int i = 0; i < attValues.size(); i++) {
-			double proportion = ((double) sortedRecords.size())/data.size();
+			double proportion = ((double) sortedRecords.get(i).size())/data.size();
 			attEntropy += entropy(sortedRecords.get(i))*proportion;
 		}
 		return attEntropy;

@@ -1,4 +1,4 @@
-package Main;
+//package Main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,12 +29,14 @@ public class ImportData {
 
 		data = new ArrayList <Record>();
 		attributes = new ArrayList<>();
-		String[] temp;
+		String[] temp = {""};
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))){
 			if ((line = br.readLine()) !=null)
 				temp = line.split(",");
 				for (String a: temp)
 					attributes.add(new Attribute(a));
+			
 			while ((line = br.readLine()) !=null)
 				temp = line.split(",");
 				data.add(new Record());
@@ -58,7 +60,7 @@ public class ImportData {
 	public String toString(){
 		String toReturn = "";
 		for (Attribute a: attributes){
-			toreturn+=a.getName();
+			toReturn+=a.getName();
 			toReturn+=a.getValues()+"\n";
 		}
 		for (Record a: data)

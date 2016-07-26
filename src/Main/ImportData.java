@@ -1,4 +1,4 @@
-package Main;
+//package Main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ImportData {
 	
-	private ArrayList <Record> data;
+	public ArrayList<Record> data;
 	private String csvFile, line = "";
 	
 	public ImportData(){
@@ -24,7 +24,7 @@ public class ImportData {
 	}
 	
 	public void importData(){
-		data = new ArrayList <Record>();
+		data = new ArrayList<Record>();
 		try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
 			while ((line = br.readLine()) !=null)
 				data.add(new Record(line.split(",")));

@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class ImportData {
 	
+
 	private ArrayList <Record> data;
 	private ArrayList <Attribute> attributes;
-	private String csvFile;
+	private String csvFile, line = "";
 	
 	public ImportData(){
 		
@@ -25,16 +26,18 @@ public class ImportData {
 	}
 	
 	public void importData(){
+
 		data = new ArrayList <Record>();
 		attributes = new ArrayList<>();
+		String[] temp;
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))){
 			if ((line = br.readLine()) !=null)
-				String[] temp = line.split(",");
+				temp = line.split(",");
 				for (String a: temp)
 					attributes.add(new Attribute(a));
 			while ((line = br.readLine()) !=null)
-				String[] temp = line.split(",");
-				data.add(new Record);
+				temp = line.split(",");
+				data.add(new Record());
 				for (int i=0; i<temp.length; i++){
 					attributes.get(i).add(temp[i]);
 					data.get(data.size()-1).add(attributes.get(i).getName(), temp[i]);

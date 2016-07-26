@@ -34,7 +34,7 @@ public class Entropy {
 	//this might not be the most effiecent way to do things, complexity is pretty poor
 	public static double attributeEntropy(List<Record> data, Attribute att) {
 		List<String> attValues = att.getValues();
-		List<List<Record>> sortedRecords = new ArrayList<ArrayList<Record>>();
+		List<List<Record>> sortedRecords = new ArrayList<>();
 		for(int i = 0; i < attValues.size(); i++) {
 			sortedRecords.add(new ArrayList<Record>());
 		}

@@ -60,8 +60,8 @@ public class ImportData {
 	public String toString(){
 		String toReturn = "";
 		for (Attribute a: attributes){
-			toReturn+=a.getName();
-			toReturn+=a.getValues()+"\n";
+			toReturn+=a.getName()+": ";
+			toReturn+=a.getValues().toString()+"\n";
 		}
 		for (Record a: data)
 			for (int i=0; i<attributes.size(); i++)

@@ -1,20 +1,24 @@
-//package Main;
+package Main;
 
 import java.util.HashMap;
 
 
 public class Record{
-	private HashMap <String, String> record;
+	private HashMap <Attribute, String> record;
 	
 	public Record(){
-		record = new HashMap <String, String>();
+		record = new HashMap <Attribute, String>();
 	}
 	
-	public void add(String attribute, String data){
+	public void add(Attribute attribute, String data){
 		record.put(attribute, data);
 	}
 	
-	public HashMap <String, String> getData(){
+	public HashMap <Attribute, String> getData(){
 		return record;
 	}
+        
+        public String getAttribute(Attribute att){
+            return record.get(att);
+        }
 }

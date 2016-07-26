@@ -7,7 +7,7 @@ public class Record{
 	private HashMap <String, String> record;
 	
 	public Record(){
-		record = new HashMap <String, String>()
+		record = new HashMap <String, String>();
 	}
 	
 	public void add(String attribute, String data){

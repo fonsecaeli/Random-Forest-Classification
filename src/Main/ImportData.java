@@ -29,14 +29,17 @@ public class ImportData {
 
 		data = new ArrayList <Record>();
 		attributes = new ArrayList<>();
+		String[] temp = {""};
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))){
 			if ((line = br.readLine()) !=null)
-				String[] temp = line.split(",");
+				temp = line.split(",");
 				for (String a: temp)
 					attributes.add(new Attribute(a));
+			
 			while ((line = br.readLine()) !=null)
-				String[] temp = line.split(",");
-				data.add(new Record);
+				temp = line.split(",");
+				data.add(new Record());
 				for (int i=0; i<temp.length; i++){
 					attributes.get(i).add(temp[i]);
 					data.get(data.size()-1).add(attributes.get(i).getName(), temp[i]);
@@ -56,9 +59,13 @@ public class ImportData {
 	
 	public String toString(){
 		String toReturn = "";
-		for (Record a: data){
-			toReturn+=a.toString()+"\n";
+		for (Attribute a: attributes){
+			toReturn+=a.getName()+": ";
+			toReturn+=a.getValues().toString()+"\n";
 		}
+		for (Record a: data)
+			for (int i=0; i<attributes.size(); i++)
+				toReturn+=a.getData().get(attributes.get(i).getName())+"\n";
 		return toReturn;
 	}
 }

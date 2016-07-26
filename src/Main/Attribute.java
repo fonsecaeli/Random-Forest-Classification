@@ -21,6 +21,10 @@ public class Attribute {
         return false;
     }
     
+    public String getName(){
+        return name;
+    }
+    
     public List<String> getValues(){
         return values;
     }

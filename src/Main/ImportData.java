@@ -57,9 +57,13 @@ public class ImportData {
 	
 	public String toString(){
 		String toReturn = "";
-		for (Record a: data){
-			toReturn+=a.toString()+"\n";
+		for (Attribute a: attributes){
+			toreturn+=a.getName();
+			toReturn+=a.getValues()+"\n";
 		}
+		for (Record a: data)
+			for (int i=0; i<attributes.size(); i++)
+				toReturn+=a.getData().get(attributes.get(i).getName())+"\n";
 		return toReturn;
 	}
 }

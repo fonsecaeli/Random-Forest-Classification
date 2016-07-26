@@ -17,8 +17,4 @@ public class Record{
 	public HashMap <String, String> getData(){
 		return record;
 	}
-	
-	public String toString(){
-		return record.toString();
-	}
 }

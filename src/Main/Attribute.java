@@ -40,6 +40,4 @@ public class Attribute {
     public List<String> getValues(){
         return values;
     }
-    
-    
 }

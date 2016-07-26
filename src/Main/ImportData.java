@@ -1,4 +1,4 @@
-//package Main;
+package Main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -42,7 +42,7 @@ public class ImportData {
 				data.add(new Record());
 				for (int i=0; i<temp.length; i++){
 					attributes.get(i).add(temp[i]);
-					data.get(data.size()-1).add(attributes.get(i).getName(), temp[i]);
+					data.get(data.size()-1).add(attributes.get(i), temp[i]);
 				}
 		} catch (IOException e){
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class ImportData {
 		}
 		for (Record a: data)
 			for (int i=0; i<attributes.size(); i++)
-				toReturn+=a.getData().get(attributes.get(i).getName())+"\n";
+				toReturn+=a.getData().get(attributes.get(i))+"\n";
 		return toReturn;
 	}
 }

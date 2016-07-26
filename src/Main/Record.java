@@ -1,16 +1,16 @@
 //package Main;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Record {
 
-	public ArrayList<String> record = new ArrayList <String>();
+public class Record{
+	private HashMap <String, String> record = new HashMap <String, String>();
 	
-	public Record(String[] data){
-		for(String a: data) record.add(a);
+	public Record(String attribute){
+		
 	}
 	
-	public ArrayList<String> getData(){
+	public HashMap <String, String> getData(){
 		return record;
 	}
 	

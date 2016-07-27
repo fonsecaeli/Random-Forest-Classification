@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImportData {
+
 	public static DataSet importData(String fileName){
 		ArrayList <Attribute> attributes = new ArrayList<>();
 		ArrayList <Record> data = new ArrayList <>();

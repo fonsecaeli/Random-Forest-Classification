@@ -11,16 +11,16 @@ public class DataSet{
 	
 	public DataTable(){}
 	
-	public DataTable(List <Attribute> att, List <Record> da){
+	public DataTable(List<Attribute> att, List<Record> da){
 		data = da;
 		attributes = att;
 	}
 	
-	public List <Record> getData(){
+	public List<Record> getData(){
 		return data;
 	}
 	
-	public List <Attribute> getAttributes(){
+	public List<Attribute> getAttributes(){
 		return attributes;
 	}
 	

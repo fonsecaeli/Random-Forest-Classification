@@ -1,4 +1,4 @@
-//package Main;
+package Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,4 @@ public class Node {
     public Node getNode(int i){
         return children.get(i);
     }
-    
-    
-    
-    
-    
-    
 }

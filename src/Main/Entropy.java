@@ -1,15 +1,13 @@
 package Main;
 
-//entropy class eli f.
-//7/26/2016
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Entropy {
 
-	//entropy of total data set
+	/**
+         * entropy of total data set
+         */ 
 	public static double entropy(List<Record> data) {
 
 		if(data.size() == 0) {
@@ -28,7 +26,9 @@ public class Entropy {
 			}
 		}
 
-        //handles the completely homogeneous case, because log2(0) = -Infinity but this indicates an entropy of 0
+        /**
+         * handles the completely homogeneous case, because log2(0) = -Infinity but this indicates an entropy of 0
+         */
         if(positiveP == 0 || negativeP == 0) {
             return 0;
         }
@@ -39,7 +39,12 @@ public class Entropy {
 		return -1*(positiveP*log2(positiveP)+negativeP*log2(negativeP));
 	}
 
-	//this might not be the most effiecent way to do things, complexity is pretty poor
+	/**
+         * Calculates the entropy of a given attribute
+         * NOTE: this might not be the most efficient way to do things, complexity is pretty poor
+         * @param data The list of Records to check against
+         * @param att The given Attribute to test
+         */ 
 	public static double attributeEntropy(List<Record> data, Attribute att) {
 		List<String> attValues = att.getValues();
 		List<List<Record>> sortedRecords = new ArrayList<>();
@@ -62,6 +67,11 @@ public class Entropy {
 		return attEntropy;
 	}
 
+        /**
+         * Basic log base 2 calculation
+         * @param n The number to calculate
+         * @return The log base 2 of n
+         */
 	private static double log2(double n) {
 		return Math.log(n)/Math.log(2);
 	}

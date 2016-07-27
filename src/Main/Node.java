@@ -3,12 +3,19 @@ package Main;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The basic node for the Decision tree class
+ * Has a list of children nodes and children keys (pointer Strings) as well as an Attribute for the node
+ */
 public class Node {
-    private List<Node> children;
+    private List<Node> children;//WHAT IF WE MADE THIS A LinkedHashMap childrenKeys -> children?
     private List<String> childrenKeys;
     private Attribute att;
     
-    
+    /**
+     * Default constructor
+     * Initializes children and childrenKeys
+     */
     public Node(){
         children = new ArrayList<>();
         childrenKeys = new ArrayList<>();

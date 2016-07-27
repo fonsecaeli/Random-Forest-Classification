@@ -9,9 +9,9 @@ public class DataSet{
 	private List <Attribute> attributes;
 	private List <Record> data;
 	
-	public DataTable(){}
+	public DataSet(){}
 	
-	public DataTable(List <Attribute> att, List <Record> da){
+	public DataSet(List <Attribute> att, List <Record> da){
 		data = da;
 		attributes = att;
 	}

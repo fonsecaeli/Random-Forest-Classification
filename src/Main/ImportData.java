@@ -6,32 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImportData {
-	
-
-	private ArrayList <Record> data;
-	private ArrayList <Attribute> attributes;
-	private String csvFile, line = "";
-	
-	public ImportData(){
-		
-	}
-	
-	public ImportData(String fileName){
-		setFileName(fileName);
-		importData();
-	}
-	
-	public void setFileName(String fileName){
-		csvFile = fileName;
-	}
-	
-	public void importData(){
-
-		data = new ArrayList <Record>();
-		attributes = new ArrayList<>();
+	public static DataTable importData(String fileName){
+		ArrayList <Record> data = new ArrayList <>();
+		ArrayList <Attribute> attributes = new ArrayList<>();
 		String[] temp = {""};
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))){
+		String line = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
 			if ((line = br.readLine()) !=null){
 				temp = line.split(",");
 				for (String a: temp)
@@ -48,25 +28,6 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-	}
-	
-	public ArrayList <Attribute> getAttributes(){
-		return attributes;
-	}
-	
-	public ArrayList <Record> getData(){
-		return data;
-	}
-	
-	public String toString(){
-		String toReturn = "";
-		for (Attribute a: attributes){
-			toReturn+=a.getName()+": ";
-			toReturn+=a.getValues().toString()+"\n";
-		}
-		for (Record a: data)
-			for (int i=0; i<attributes.size(); i++)
-				toReturn+=a.getData().get(attributes.get(i))+"\n";
-		return toReturn;
+		return new DataTable(data, attributes);
 	}
 }

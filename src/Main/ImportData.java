@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class ImportData {
 	public static DataTable importData(String fileName){
-		ArrayList <Record> data = new ArrayList <>();
 		ArrayList <Attribute> attributes = new ArrayList<>();
+		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
 		String line = "";
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
@@ -28,6 +28,6 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataTable(data, attributes);
+		return new DataTable(attributes, data);
 	}
 }

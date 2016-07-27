@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImportData {
-	public static DataTable importData(String fileName){
+	public static DataSet importData(String fileName){
 		ArrayList <Attribute> attributes = new ArrayList<>();
 		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
@@ -28,6 +28,6 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataTable(attributes, data);
+		return new DataSet(attributes, data);
 	}
 }

@@ -76,7 +76,7 @@ public class Attribute {
      */
     public String toString() {
         String toReturn = "";
-        toReturn += "["+getName()+": ";
+        toReturn += getName()+": ";
         toReturn += getValues().toString();
         return toReturn;
     }

@@ -6,13 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImportData {
-	/**
-	* This class imports data from the specified fileName path.
-	* It takes it line-by-line and splices the commas out and stores the words as strings in the appropriate classes
-	* 
-	* @param fileName the path to the csv file that the data is imported from
-	* @return the data set with all the information needed
-	*/
+
 	public static DataSet importData(String fileName){
 		ArrayList <Attribute> attributes = new ArrayList<>();
 		ArrayList <Record> data = new ArrayList <>();

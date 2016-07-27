@@ -16,11 +16,11 @@ public class DecisionTree {
     //helper method for the growTree method, will split the data on the best attribute and return that attribute so
     //that the tree can be grown correctly
     public Attribute bestSplit(List<Record> data) {
-
+            return null;
     }
 
     public boolean query(Record r) {
-
+            return false;
     }
 
     //could just be like ascii art shown on the console to start and then a gui later

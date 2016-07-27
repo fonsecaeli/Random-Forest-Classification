@@ -40,12 +40,11 @@ public class DataSet{
 	public String toString(){
 		String toReturn = "Attributes:\n";
 		for (Attribute a: attributes){
-			toReturn+="["+a.getName()+": ";
-			toReturn+=a.getValues().toString()+"]\n";
+			toReturn+=a.toString()+"\n";
 		}
-		for (Record a: data)
-			for (int i=0; i<a.getData().size(); i++)
-				toReturn+=a.getData().get(attributes.get(i))+"\n";
+		for (Record r: data)
+			for (int i=0; i<r.getData().size(); i++)
+				toReturn+=r.getData().get(attributes.get(i))+"\n";
 		return toReturn;
 	}
 }

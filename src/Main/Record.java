@@ -44,11 +44,10 @@ public class Record{
     public String toString() {
         String str = "";
         for(Attribute att: data.keySet()) {
-            String key = att.toString();
+            String key = att.getName();
             String value = data.get(att);
-            str += key + ": " + value + ", ";
+            str += "["+key + ": " + value + "], ";
         }
-        //System.out.println(data.keySet());
         return str;
     }
 }

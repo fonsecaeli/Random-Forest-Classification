@@ -43,9 +43,10 @@ public class DataSet{
 		for (Attribute a: attributes){
 			toReturn+=a.toString()+"\n";
 		}
-		for (Record r: data)
-			for (int i=0; i<r.getData().size(); i++)
-				toReturn+=r.getData().get(attributes.get(i))+"\n";
+		toReturn+="\nRecords:\n";
+		for (Record r: data){
+			toReturn+=r.toString()+"\n";
+		}
 		return toReturn;
 	}
 }

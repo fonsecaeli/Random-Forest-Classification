@@ -55,6 +55,6 @@ public class Record{
             String value = data.get(att);
             str += "["+key + ": " + value + "], ";
         }
-        return str;
+        return str.substring(0, str.length()-2);
     }
 }

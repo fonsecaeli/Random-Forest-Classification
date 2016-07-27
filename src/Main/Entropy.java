@@ -1,3 +1,5 @@
+package Main;
+
 //entropy class eli f.
 //7/26/2016
 
@@ -18,13 +20,19 @@ public class Entropy {
 		double negativeP = 0.0;
 		int total = data.size();
 		for(int i = 0; i < total; i++) {
-			if(data.get(i).getClassificaiton()) { //neet getClassification method in Record
+			if(data.get(i).getClassification()) {
 				positiveP += 1.0;
 			}
 			else {
 				negativeP += 1.0;
 			}
 		}
+
+        //handles the completely homogeneous case, because log2(0) = -Infinity but this indicates an entropy of 0
+        if(positiveP == 0 || negativeP == 0) {
+            return 0;
+        }
+
 		positiveP /= total;
 		negativeP /= total;
 
@@ -38,10 +46,10 @@ public class Entropy {
 		for(int i = 0; i < attValues.size(); i++) {
 			sortedRecords.add(new ArrayList<Record>());
 		}
-		for(int i = 0; i < attValues.size(); i++) {	
+		for(int i = 0; i < attValues.size(); i++) {
 			for(Record r: data) { //could be faster if we removed the elements from data
 				if(r.getValue(att).equals(attValues.get(i))) { //need getValue(Attribute att) method for record, also add the .equals()
-					sortedRecords.get(i).add(r); 
+					sortedRecords.get(i).add(r);
 				}
 			}
 		}
@@ -56,5 +64,5 @@ public class Entropy {
 
 	private static double log2(double n) {
 		return Math.log(n)/Math.log(2);
-	} 
+	}
 }

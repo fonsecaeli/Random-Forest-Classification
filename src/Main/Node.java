@@ -1,42 +1,43 @@
 package Main;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The basic node for the Decision tree class
  * Has a list of children nodes and children keys (pointer Strings) as well as an Attribute for the node
  */
 public class Node {
-    private List<Node> children;//WHAT IF WE MADE THIS A LinkedHashMap childrenKeys -> children?
-    private List<String> childrenKeys;
+    private Map<String,Node> children;
     private Attribute att;
     
     /**
-     * Default constructor
      * Initializes children and childrenKeys
      */
     public Node(){
-        children = new ArrayList<>();
-        childrenKeys = new ArrayList<>();
-    }
-
-    private Node(List<Node> childs){
-        children=childs;
+        children = new LinkedHashMap<>();
     }
     
+    //The initial setup for a node; Sets the Attribute and populates the map of children with the possible values in the Attribute as the keys
     public void setAttribute(Attribute a){
         att=a;
-        List<Node> ret = new ArrayList<>();
         List<String> values = att.getValues();
         
         for(int i=0;i<values.size();i++){
-            children.add(new Node());
-            childrenKeys.add(values.get(i));
+            children.put(values.get(i),new Node());
         }
     }
 
-    public Node getNode(int i){
-        return children.get(i);
+    //returns a Node based on a given key
+    public Node getNode(String str){
+        return children.get(str);
+    }
+    
+    //use for(String key : object.getKeys())
+    //returns the Set of all Keys (which can be used to access all the mapped Nodes)
+    public Set<String> getKeys(){
+        return children.keySet();
     }
 }

@@ -39,4 +39,8 @@ public class Attribute {
     public List<String> getValues(){
         return values;
     }
+
+    public String toString() {
+        return name;
+    }
 }

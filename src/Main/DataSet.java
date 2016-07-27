@@ -33,6 +33,10 @@ public class DataSet{
 	public List <Attribute> getAttributes(){
 		return attributes;
 	}
+        
+        public Attribute getClassification(){
+            return attributes.get(attributes.size()-1);
+        }
 	
 	/**
 	* Returns the class in String form so all the data can be seen

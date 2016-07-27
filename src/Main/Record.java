@@ -37,6 +37,13 @@ public class Record{
     public String getValue(Attribute att) {
             return data.get(att);
     }
+    
+	/**
+	* Input key, get value
+	*/
+    public String getClassificationValue(DataSet set) {
+            return data.get(set.getClassification());
+    }
 
 	/**
 	* Returns the string representation of the class

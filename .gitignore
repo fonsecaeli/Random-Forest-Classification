@@ -8,3 +8,5 @@
 /build/
 .Record*
 Test.java
+*.xml
+.idea/

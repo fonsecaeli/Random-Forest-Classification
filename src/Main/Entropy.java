@@ -55,10 +55,10 @@ public class Entropy {
          * @param index The index of the Attribute to test within dataSet.getAttributes();
          */ 
 	
-        public static double attributeEntropy(DataSet dataSet, int index) {
+        public static double attributeEntropy(DataSet dataSet, Attribute attr) {
                 //Intializing values needed
                 List<Record> data=dataSet.getData();                    //The list of records from with dataSet
-                Attribute att = dataSet.getAttributes().get(index);     //The attribute which will be tested
+                Attribute att = attr;     //The attribute which will be tested
 		List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
 		List<List<Record>> sortedRecords = new ArrayList<>();   //Outer List: size is number of possible values in the Attibute to test
                                                                         //Inner List: the Records which have the same value as the corresponding spot in the List of possible values 

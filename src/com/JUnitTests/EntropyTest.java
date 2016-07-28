@@ -1,3 +1,4 @@
+package com.JUnitTests;
 import com.main.*;
 import junit.framework.TestCase;
 
@@ -9,7 +10,7 @@ public class EntropyTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        data = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\Main\\data.csv");
+        data = ImportData.importData("data.csv");
 
     }
 

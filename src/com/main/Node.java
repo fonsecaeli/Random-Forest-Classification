@@ -32,10 +32,10 @@ public class Node {
     }
 
     //returns a Node based on a given key
-    public Node getNode(String str){
+    public Node getChild(String str){
         return children.get(str);
     }
-    
+
     //use for(String key : object.getKeys())
     //returns the Set of all Keys (which can be used to access all the mapped Nodes)
     public Set<String> getKeys(){

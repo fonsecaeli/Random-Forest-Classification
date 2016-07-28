@@ -12,6 +12,7 @@ import java.util.Set;
 public class Node {
     private Map<String,Node> children;
     private Attribute att;
+    private String decision;
     
     /**
      * Initializes children and childrenKeys
@@ -39,5 +40,16 @@ public class Node {
     //returns the Set of all Keys (which can be used to access all the mapped Nodes)
     public Set<String> getKeys(){
         return children.keySet();
+    }
+    
+    //Sets the decision for a node; only applicable for leaf nodes
+    public void setDecision(String value){
+        decision=value;
+    }
+    
+    
+    //returns the decisions
+    public String getDecision(){
+        return decision;
     }
 }

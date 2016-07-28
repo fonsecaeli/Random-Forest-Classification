@@ -49,52 +49,63 @@ public class Entropy {
 	}
 
 	/**
-         * Calculates the entropy of a given attribute
-         * NOTE: this might not be the most efficient way to do things, complexity is pretty poor
-         * @param dataSet The DataSet to check, contains the Record and Attribute Lists
-         * @param index The index of the Attribute to test within dataSet.getAttributes();
-         */ 
+     * Calculates the entropy of a given attribute
+     * NOTE: this might not be the most efficient way to do things, complexity is pretty poor
+     * @param dataSet The DataSet to check, contains the Record and Attribute Lists
+     * @param attr The Attribute to used to calculate entropy
+     */
 	
         public static double attributeEntropy(DataSet dataSet, Attribute attr) {
-                //Intializing values needed
-                List<Record> data=dataSet.getData();                    //The list of records from with dataSet
-                Attribute att = attr;     //The attribute which will be tested
-		List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
-		List<List<Record>> sortedRecords = new ArrayList<>();   //Outer List: size is number of possible values in the Attibute to test
-                                                                        //Inner List: the Records which have the same value as the corresponding spot in the List of possible values 
-                
-                //Sets up sortedRecords, populating it with new Lists numbering the number of possible values in the Attribute to test
-		for(int i = 0; i < attValues.size(); i++) {
-			sortedRecords.add(new ArrayList<Record>());
-		}
-                
-                //Adds a Record to index i if the Record has the same value as attValues (possible values for the tested Attribute) at i
-		for(int i = 0; i < attValues.size(); i++) {
-			for(Record r: data) { //could be faster if we removed the elements from data
-				if(r.getValue(att).equals(attValues.get(i))) { //need getValue(Attribute att) method for record, also add the .equals()
-					sortedRecords.get(i).add(r);
-				}
-			}
-		}
-                
-		//sortedRecords should be filled
-		double attEntropy = 0.0;
-		for(int i = 0; i < attValues.size(); i++) {
-			double proportion = ((double) sortedRecords.get(i).size())/data.size();//the ratio of how many had a certain Attribute value over the whole
-                        
-                        //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
-                        List<Attribute> attList = new ArrayList<>(); 
-                        attList.add(att);
-                        attList.add(dataSet.getClassification());
-                        
-                        //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test 
-                        //and the classification) and does a weighted average 
-                        DataSet ds = new DataSet(attList, data);
-			attEntropy += entropy(ds)*proportion;
-		}
-                
-		return attEntropy;
-	}
+            //Intializing values needed
+            List<Record> data=dataSet.getData();                    //The list of records from with dataSet
+            Attribute att = attr;     //The attribute which will be tested
+            List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
+            List<List<Record>> sortedRecords = new ArrayList<>();   //Outer List: size is number of possible values in the Attibute to test
+                                                                            //Inner List: the Records which have the same value as the corresponding spot in the List of possible values
+
+                    //Sets up sortedRecords, populating it with new Lists numbering the number of possible values in the Attribute to test
+            for(int i = 0; i < attValues.size(); i++) {
+                sortedRecords.add(new ArrayList<Record>());
+            }
+
+                    //Adds a Record to index i if the Record has the same value as attValues (possible values for the tested Attribute) at i
+            for(int i = 0; i < attValues.size(); i++) {
+                for(Record r: data) { //could be faster if we removed the elements from data
+                    if(r.getValue(att).equals(attValues.get(i))) { //need getValue(Attribute att) method for record, also add the .equals()
+                        sortedRecords.get(i).add(r);
+                    }
+                }
+            }
+
+            //sortedRecords should be filled
+            double attEntropy = 0.0;
+            for(int i = 0; i < attValues.size(); i++) {
+                double proportion = ((double) sortedRecords.get(i).size())/data.size();//the ratio of how many had a certain Attribute value over the whole
+
+                    //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
+                    List<Attribute> attList = new ArrayList<>();
+                    attList.add(att);
+                    attList.add(dataSet.getClassification());
+
+                    //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
+                    //and the classification) and does a weighted average
+                    DataSet ds = new DataSet(attList, data);
+                attEntropy += entropy(ds)*proportion;
+            }
+
+            return attEntropy;
+        }
+
+    /**
+     * calculates the information gain associated with splitting the data on a specific attribute
+     *
+     * @param data the total data set to be split
+     * @param att the attribute to split on
+     * @return the information gained by the split
+     */
+    public static double gain(DataSet data, Attribute att) {
+        return entropy(data) - attributeEntropy(data, att);
+    }
 
         /**
          * Basic log base 2 calculation

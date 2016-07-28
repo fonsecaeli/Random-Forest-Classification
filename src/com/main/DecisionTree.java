@@ -1,4 +1,4 @@
-package Main;
+package com.main;
 
 // Author: EliFo
 // Description: Class that represents a decision tree, provides functionality to grow one

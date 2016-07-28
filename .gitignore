@@ -6,3 +6,5 @@
 /RandomForestClassification/dist/
 /nbproject/private/
 /build/
+.Record*
+Test.java

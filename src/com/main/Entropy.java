@@ -67,14 +67,14 @@ public class Entropy {
         for(int i = 0; i < attValues.size(); i++) {
             double proportion = ((double) sortedRecords.get(i).size())/data.size();//the ratio of how many had a certain Attribute value over the whole
 
-                //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
-                List<Attribute> attList = new ArrayList<>();
-                attList.add(att);
-                attList.add(dataSet.getClassification());
+            //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
+            List<Attribute> attList = new ArrayList<>();
+            attList.add(att);
+            attList.add(dataSet.getClassification());
 
-                //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
-                //and the classification) and does a weighted average
-                DataSet ds = new DataSet(attList, data);
+            //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
+            //and the classification) and does a weighted average
+            DataSet ds = new DataSet(attList, sortedRecords.get(i));
             attEntropy += entropy(ds)*proportion;
         }
 

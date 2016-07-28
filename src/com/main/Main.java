@@ -1,27 +1,34 @@
 package com.main;
 
+import java.util.List;
+
 public class Main {
 
 	public static void main(String[] args) {
-		Attribute att = new Attribute("Name");
-		att.add("eben");
-		att.add("eli");
-		Attribute att2 = new Attribute("Glasses");
-		att2.add("no");
-		att2.add("yes");
-		Attribute att3 = new Attribute("Test");
-		att3.add("testchoice1");
-		att3.add("testchoice2");
-		Node node = new Node();
-		Node node2 = new Node();
-		Node node3 = new Node();
-		node.setAttribute(att);
-		node.getChild("eben").setAttribute(att2);
-		node.getChild("eli").setAttribute(att3);
-		node.getChild("eben").getChild("no").setDecision("1");
-		node.getChild("eben").getChild("yes").setDecision("2");
-		node.getChild("eli").getChild("testchoice1").setDecision("1");
-		node.getChild("eli").getChild("testchoice2").setDecision("2");
-		System.out.println(node);
+            DataSet ds = ImportData.importData("C:\\Users\\Benjamin 2\\Documents\\NetBeansProjects\\RandomForestClassification\\RandomForestClassification\\src\\golfData.csv");
+            //System.out.println(ds);
+            System.out.println(Entropy.entropy(ds));
+            
+            List<Attribute> atts = ds.getAttributes();
+            for(int i=0; i<atts.size(); i++){
+                System.out.println(atts.get(i).getName()+": ");
+                double attEn = Entropy.attributeEntropy(ds, atts.get(i));
+                System.out.println("Attribute Entropy: "+attEn);
+                System.out.println();
+            }
+            
+            /*
+            System.out.println("\n\n\n");
+            
+            ds = ImportData.importData("C:\\Users\\Benjamin 2\\Documents\\NetBeansProjects\\RandomForestClassification\\RandomForestClassification\\src\\irisData.csv");
+            System.out.println(ds);
+            System.out.println(Entropy.entropy(ds));
+            
+            atts = ds.getAttributes();
+            for(int i=0; i<atts.size(); i++){
+                System.out.println(atts.get(i).getName()+": "+Entropy.attributeEntropy(ds, atts.get(i)));
+            }
+            */
+>>>>>>> fccb1541f17774769068b61ae16f87f58d2aeceb
 	}
 }

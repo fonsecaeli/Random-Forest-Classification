@@ -11,12 +11,12 @@ public class Entropy {
 	public static double entropy(DataSet set) {
             List<Record> data = set.getData();
             if(data.size() == 0) {
-                    return 0.0;
+                return 0.0;
             }
 
             int total = data.size();
             Attribute classificationAttribute = set.getClassification();
-            double[] dataSums = new double[total];//This will count/keep track of how many of each classification appear in the data
+            double[] dataSums = new double[classificationAttribute.getValues().size()];//This will count/keep track of how many of each classification appear in the data
             for(int i = 0; i < total; i++) {
                 int index = classificationAttribute.getValues().indexOf(data.get(i).getClassificationValue(set));//This is the index of the current Record's final ("classification") value within the Attribute's list
                 if(index!=-1) {

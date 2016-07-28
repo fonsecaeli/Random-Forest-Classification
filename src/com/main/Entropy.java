@@ -43,7 +43,7 @@ public class Entropy {
             double entropy=0;
             for(int i=0; i<dataSums.length; i++){
                 double currentData = dataSums[i];
-                entropy-=currentData*log2(currentData);//Did -= instead of: sum += -1(...);
+                entropy-=currentData*logN(currentData, dataSums.length);//Did -= instead of: sum += -1(...);
             }
             return entropy;
 	}
@@ -112,7 +112,7 @@ public class Entropy {
          * @param n The number to calculate
          * @return The log base 2 of n
          */
-	private static double log2(double n) {
-		return Math.log(n)/Math.log(2);
+	private static double logN(double n, double base) {
+		return Math.log(n)/Math.log(base);
 	}
 }

@@ -1,6 +1,4 @@
-import Main.DataSet;
-import Main.Entropy;
-import Main.ImportData;
+import com.main.*;
 import junit.framework.TestCase;
 
 

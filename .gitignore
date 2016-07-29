@@ -1,2 +1,12 @@
 # Java class files
 *.class
+.fuse*
+/RandomForestClassification/nbproject/private/
+/RandomForestClassification/build/
+/RandomForestClassification/dist/
+/nbproject/private/
+/build/
+.Record*
+Test.java
+*.xml
+.idea/

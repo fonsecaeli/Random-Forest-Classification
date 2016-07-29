@@ -27,15 +27,19 @@ public class Node {
         for(int i=0;i<values.size();i++){
             for(int j=0; j<records.size(); j++){
                 if(records.get(j).getValue(att).equals(values.get(i))){
-                    children.put(values.get(i),new Node());
+                    createChild(values.get(i));
                     break;
                 }
             }
         }
     }
-
-    public Attribute getAttribute() {
-        return this.att;
+    
+    public Attribute getAttribute(){
+        return att;
+    }
+    
+    private void createChild(String str){
+        children.put(str, new Node());
     }
 
     //returns a Node based on a given key
@@ -59,33 +63,32 @@ public class Node {
         return decision;
     }
 	
-	public String toString(){
-		if (decision == null)
-                    return stringMaker(0, "HEAD_NODE");
-                else if (!decision.isEmpty()){
-                    return decision;
-                } else return "Tree is unpopulated";
-	}
-	
-	public String stringMaker(int tabs, String str){
-		String toReturn = tabs(tabs)+"[Option: "+str+"";
-		if (decision == null && att != null){
-			toReturn+=" | Attribute: "+att.getName()+"]\n";
-			for (String a: children.keySet())
-				toReturn+=children.get(a).stringMaker(tabs+1, a);
-		} else toReturn+="]\u001B[34m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
-		return toReturn;
-	}
-	
-	public String tabs(int tabs){
-		String str = "";
-		for (int i=0; i<tabs; i++)
-			str+="\t";
-		return str;
-	}
+    public String toString(){
+            if (decision == null)
+                return stringMaker(0, "HEAD_NODE");
+            else if (!decision.isEmpty()){
+                return decision;
+            } else return "Tree is unpopulated";
+    }
 
-    /*public void PrintPretty(String indent, String attValue, String decision, boolean last)
-    {
+    public String stringMaker(int tabs, String str){
+            String toReturn = tabs(tabs)+"[Option: "+str+"";
+            if (decision == null && att != null){
+                    toReturn+=" | Attribute: "+att.getName()+"]\n";
+                    for (String a: children.keySet())
+                            toReturn+=children.get(a).stringMaker(tabs+1, a);
+            } else toReturn+="]\u001B[34m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
+            return toReturn;
+    }
+	
+    public String tabs(int tabs){
+            String str = "";
+            for (int i=0; i<tabs; i++)
+                    str+="\t";
+            return str;
+    }
+
+    /*public void PrintPretty(String indent, String attValue, String decision, boolean last){
         System.out.print(indent);
         if(last) {
             System.out.print("\t\\-");
@@ -103,6 +106,6 @@ public class Node {
         for (int i = 0; i < keys.length; i++ ) {
             children.get(keys[i]).PrintPretty(indent, (String) keys[i], children.get(keys[i]).getDecision(), i == children.size() - 1);
         }
-	}*/
+    }*/
 }
 

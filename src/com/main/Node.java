@@ -10,12 +10,14 @@ public class Node {
     private Map<String,Node> children;
     private Attribute att;
     private String decision;
+    String keyString;
     
     /**
      * Initializes children and childrenKeys
      */
-    public Node(){
+    public Node(String from){
         children = new LinkedHashMap<>();
+        keyString=from;
     }
     
     //The initial setup for a node; Sets the Attribute and populates the map of children with the possible values in the Attribute as the keys
@@ -39,7 +41,7 @@ public class Node {
     }
     
     private void createChild(String str){
-        children.put(str, new Node());
+        children.put(str, new Node(str));
     }
 
     //returns a Node based on a given key
@@ -64,48 +66,13 @@ public class Node {
     }
 	
     public String toString(){
-            if (decision == null)
-                return stringMaker(0, "HEAD_NODE");
-            else if (!decision.isEmpty()){
-                return decision;
-            } else return "Tree is unpopulated";
+	String toReturn = "[Option: "+keyString+"";
+		if (att != null){
+			toReturn+=" | Attribute: "+att.getName()+"]";
+		} else if(decision!=null && !decision.equals(""))
+			toReturn+="]\u001B[34m[Classification: "+decision+"]\u001B[0m";
+		return toReturn;
     }
 
-    public String stringMaker(int tabs, String str){
-            String toReturn = tabs(tabs)+"[Option: "+str+"";
-            if (decision == null && att != null){
-                    toReturn+=" | Attribute: "+att.getName()+"]\n";
-                    for (String a: children.keySet())
-                            toReturn+=children.get(a).stringMaker(tabs+1, a);
-            } else toReturn+="]\u001B[34m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
-            return toReturn;
-    }
-	
-    public String tabs(int tabs){
-            String str = "";
-            for (int i=0; i<tabs; i++)
-                    str+="\t";
-            return str;
-    }
-
-    /*public void PrintPretty(String indent, String attValue, String decision, boolean last){
-        System.out.print(indent);
-        if(last) {
-            System.out.print("\t\\-");
-            indent += " ";
-        }
-        else {
-            System.out.print("\t|-");
-            indent += "\t.";
-
-        }
-        if(decision == "") System.out.println("Option: "+att.getName()+" | "+attValue);
-        else System.out.println(attValue + " Decision: " + decision);
-
-        Object[] keys = children.keySet().toArray();
-        for (int i = 0; i < keys.length; i++ ) {
-            children.get(keys[i]).PrintPretty(indent, (String) keys[i], children.get(keys[i]).getDecision(), i == children.size() - 1);
-        }
-    }*/
 }
 

@@ -3,7 +3,7 @@ package com.main;
 public class Main {
 
 	public static void main(String[] args) {
-            DataSet ds = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\irisData.csv");
+            DataSet ds = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
             //System.out.println(ds);
             //System.out.println(Entropy.entropy(ds));
             /*
@@ -28,7 +28,7 @@ public class Main {
             }
             */
             DecisionTree tree = new DecisionTree(ds);
-        System.out.println(tree);
+            System.out.println(tree);
 
 	}
 }

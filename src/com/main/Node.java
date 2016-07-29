@@ -27,15 +27,15 @@ public class Node {
         for(int i=0;i<values.size();i++){
             for(int j=0; j<records.size(); j++){
                 if(records.get(j).getValue(att).equals(values.get(i))){
-                    createChild(values.get(i));
+                    children.put(values.get(i),new Node());
                     break;
                 }
             }
         }
     }
-    
-    private void createChild(String str){
-        children.put(str, new Node());
+
+    public Attribute getAttribute() {
+        return this.att;
     }
 
     //returns a Node based on a given key

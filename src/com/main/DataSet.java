@@ -2,13 +2,13 @@ package com.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DataSet{
+
 	/**
-	 * The two arraylist storing the two different types of data needed
+	 * The two Arraylists storing the two different types of data needed
 	 */
     private List <Attribute> attributes;
     private List <Record> data;
@@ -34,11 +34,19 @@ public class DataSet{
 	public List <Attribute> getAttributes(){
 		return attributes;
 	}
-        
-	public Attribute getClassification(){
-            return attributes.get(attributes.size()-1);
-        }
 
+
+    public Attribute getClassification(){
+            return attributes.get(attributes.size()-1);
+	}
+
+    /**
+     * Splits a data set into a mapping of datasets that all share the same value for a common attribute
+     *
+     * @param data The data set to split
+     * @param att The Attribute to split that data on
+     * @return mapping of data sets to the values of the Attribute
+     */
 	public static Map<String, DataSet> splitData(DataSet data, Attribute att) {
             List<String> attValues = att.getValues();
             List<Record> records = data.getData();

@@ -34,6 +34,10 @@ public class Node {
         }
     }
 
+    public Attribute getAttribute() {
+        return this.att;
+    }
+
     //returns a Node based on a given key
     public Node getChild(String str){
         return children.get(str);
@@ -61,8 +65,6 @@ public class Node {
 			return stringMaker(0, "HEAD_NODE");
 		else throw new Error("You can't print an unpopulated tree!");
 	}
-
-
 	
 	public String stringMaker(int tabs, String str){
 		String toReturn = tabs(tabs)+"[Option: "+str+"";

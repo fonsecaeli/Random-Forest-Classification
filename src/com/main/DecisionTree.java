@@ -77,8 +77,12 @@ public class DecisionTree {
             }
     }
 
-    public boolean query(Record r) {
-        return false;
+    public String query(Record r) {
+        Node currentNode = head;
+        while(currentNode.getAttribute() != null) {
+
+        }
+        return "";
     }
 
     //could just be like ascii art shown on the console to start and then a gui later

@@ -54,7 +54,6 @@ public class Node {
         decision=value;
     }
     
-    
     //returns the decisions
     public String getDecision(){
         return decision;
@@ -62,8 +61,10 @@ public class Node {
 	
 	public String toString(){
 		if (decision == null)
-			return stringMaker(0, "HEAD_NODE");
-		else throw new Error("You can't print an unpopulated tree!");
+                    return stringMaker(0, "HEAD_NODE");
+                else if (!decision.isEmpty()){
+                    return decision;
+                } else return "Tree is unpopulated";
 	}
 	
 	public String stringMaker(int tabs, String str){

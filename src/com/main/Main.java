@@ -30,6 +30,5 @@ public class Main {
             DataSet ds = ImportData.importData(new Scanner(System.in).nextLine());
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);
-
 	}
 }

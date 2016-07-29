@@ -70,7 +70,7 @@ public class Node {
 			toReturn+=" | Attribute: "+att.getName()+"]\n";
 			for (String a: children.keySet())
 				toReturn+=children.get(a).stringMaker(tabs+1, a);
-		} else toReturn+="]\n"+tabs(tabs+1)+"\u001B[34m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
+		} else toReturn+="]\u001B[34m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
 		return toReturn;
 	}
 	
@@ -99,6 +99,7 @@ public class Node {
         Object[] keys = children.keySet().toArray();
         for (int i = 0; i < keys.length; i++ ) {
             children.get(keys[i]).PrintPretty(indent, (String) keys[i], children.get(keys[i]).getDecision(), i == children.size() - 1);
-        }*/
+        }
+	}*/
 }
 

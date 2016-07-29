@@ -27,7 +27,7 @@ public class Main {
                 System.out.println(atts.get(i).getName()+": "+Entropy.attributeEntropy(ds, atts.get(i)));
             }
             */
-            DataSet ds = ImportData.importData(new Scanner(System.in).nextLine());
+            DataSet ds = ImportData.importData(new Scanner(System.in).nextLine().replace("\'", ""));
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);
 	}

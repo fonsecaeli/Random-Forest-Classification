@@ -67,8 +67,7 @@ public class Entropy {
         for(int i = 0; i < attValues.size(); i++) {
             String currentKey = attValues.get(i);
             List<Record> currentRecords = dataSets.get(currentKey).getData();
-            double proportion = ((double) currentRecords.size())/dataSets.size();//the ratio of how many had a certain Attribute value over the whole
-
+            double proportion = ((double) dataSets.size())/currentRecords.size();//the ratio of how many had a certain Attribute value over the whole
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
             attList.add(att);
@@ -94,7 +93,9 @@ public class Entropy {
      * @return the information gained by the split
      */
     public static double gain(DataSet data, Attribute att) {
-        return entropy(data) - attributeEntropy(data, att);
+        double entropy = entropy(data);
+        double attributeEntropy = attributeEntropy(data,att);
+        return entropy - attributeEntropy;
     }
 
         /**

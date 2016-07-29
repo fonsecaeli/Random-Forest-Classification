@@ -32,7 +32,6 @@ public class DecisionTree {
     public void grow(DataSet data, Node node) {
         Attribute toSplitOn = bestSplit(data);
         List<Record> records = data.getData();
-        System.out.println(toSplitOn);
         
         //IF ONLY 1 RECORD IS IN DATA, toSplitOn WILL BE NULL BECAUSE THERE WOULD BE NO INFORMATION GAIN FROM SPLITTING
         if(toSplitOn==null){

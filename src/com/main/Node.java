@@ -27,15 +27,15 @@ public class Node {
         for(int i=0;i<values.size();i++){
             for(int j=0; j<records.size(); j++){
                 if(records.get(j).getValue(att).equals(values.get(i))){
-                    children.put(values.get(i),new Node());
+                    createChild(values.get(i));
                     break;
                 }
             }
         }
     }
-
-    public Attribute getAttribute() {
-        return this.att;
+    
+    private void createChild(String str){
+        children.put(str, new Node());
     }
 
     //returns a Node based on a given key
@@ -54,7 +54,6 @@ public class Node {
         decision=value;
     }
     
-    
     //returns the decisions
     public String getDecision(){
         return decision;
@@ -62,8 +61,10 @@ public class Node {
 	
 	public String toString(){
 		if (decision == null)
-			return stringMaker(0, "HEAD_NODE");
-		else throw new Error("You can't print an unpopulated tree!");
+                    return stringMaker(0, "HEAD_NODE");
+                else if (!decision.isEmpty()){
+                    return decision;
+                } else return "Tree is unpopulated";
 	}
 	
 	public String stringMaker(int tabs, String str){

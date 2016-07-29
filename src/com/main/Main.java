@@ -1,9 +1,9 @@
 package com.main;
 
+import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-            DataSet ds = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\tic_tac_toeData.csv");
             //System.out.println(ds);
             //System.out.println(Entropy.entropy(ds));
             /*
@@ -27,6 +27,7 @@ public class Main {
                 System.out.println(atts.get(i).getName()+": "+Entropy.attributeEntropy(ds, atts.get(i)));
             }
             */
+            DataSet ds = ImportData.importData(new Scanner(System.in).nextLine());
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);
 

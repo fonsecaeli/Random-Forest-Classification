@@ -30,47 +30,53 @@ public class DecisionTree {
     //this will be the recursive method we need not sure exactly how this works yet
     //TODO: make sure we don't check attributes that have already been split on
     public void grow(DataSet data, Node node) {
-        //base case, once we reach maximum entropy
-        if(Entropy.entropy(data) == 0) { //TODO: configure entropy to work with DataSet
-            node.setDecision(data.getData().get(0).getClassificationValue(data)); //setting the Decision of the node to the
-            //class shared between all the Records in the DataSet data
-            return;
-        }
-        Attribute att = bestSplit(data);
-        Map<String, DataSet> newDataSets = DataSet.splitData(data, att);
-        node.setAttribute(att); //TODO: need setCondition() in Node
-
-        Set<String> keys = node.getKeys();
-        for(String str: keys) {
-            DataSet d = newDataSets.get(str);
-            if(d != null) {
-                grow(d, node.getChild(str));
+        Attribute toSplitOn = bestSplit(data);
+        List<Record> records = data.getData();
+        System.out.println(toSplitOn);
+        
+        //IF ONLY 1 RECORD IS IN DATA, toSplitOn WILL BE NULL BECAUSE THERE WOULD BE NO INFORMATION GAIN FROM SPLITTING
+        if(toSplitOn==null){
+            
+            node.setDecision(records.get(0).getClassificationValue(data));
+            
+        } else {
+            
+            Map<String,DataSet> dataSets = DataSet.splitData(data, toSplitOn);
+            
+            node.setAttribute(toSplitOn);
+            List<String> keys = toSplitOn.getValues();
+            
+            for(int i=0; i<keys.size(); i++){
+                String key = keys.get(i);
+                Node nextNode = node.getChild(key);
+                DataSet dataSetForNextNode = dataSets.get(key);
+                grow(dataSetForNextNode, nextNode);
             }
+            
         }
-
-
     }
 
     //helper method for the growTree method, will split the data on the best attribute and return that attribute so
     //that the tree can be grown correctly
     public Attribute bestSplit(DataSet data) {
-        List<Attribute> attributes = data.getAttributes();
-        List<Record> records = data.getData();
-        double bestGain = 0;
-        Attribute bestAtt = attributes.get(0);
-        for(Attribute att: attributes) {
-            if(att!=data.getClassification()) {
-                double gain = Entropy.gain(data, att);
-                if (gain > bestGain) {
-                    bestAtt = att;
-                    bestGain = gain;
+            List<Attribute> attributes = data.getAttributes();
+            Attribute bestAtt=attributes.get(0);
+            double bestGain=0.0;
+            
+            for(int i=0; i<attributes.size()-1; i++){
+                Attribute currentAttribute = attributes.get(i);
+                double currentGain = Entropy.gain(data, currentAttribute);
+                if(currentGain>bestGain){
+                    bestAtt=currentAttribute;
+                    bestGain=currentGain;
                 }
             }
-        }
-        if(bestAtt == null) {
-            throw new IllegalArgumentException("could not find best attribute error");
-        }
-        return bestAtt;
+            
+            if(bestGain==0.0){
+                return null;
+            } else {
+                return bestAtt;
+            }
     }
 
     public boolean query(Record r) {

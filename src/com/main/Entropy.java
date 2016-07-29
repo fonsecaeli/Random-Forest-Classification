@@ -2,6 +2,7 @@ package com.main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Entropy {
 
@@ -10,7 +11,7 @@ public class Entropy {
          */ 
 	public static double entropy(DataSet set) {
             List<Record> data = set.getData();
-            if(data.size() == 0) {
+            if(data.isEmpty()) {
                 return 0.0;
             }
 
@@ -55,17 +56,18 @@ public class Entropy {
      * @param attr The Attribute to used to calculate entropy
      */
 	
-    public static double attributeEntropy(DataSet dataSet, Attribute attr) {
+    public static double attributeEntropy(DataSet dataSet, Attribute att) {
         //Intializing values needed
         List<Record> data=dataSet.getData();                    //The list of records from with dataSet
-        Attribute att = attr;     //The attribute which will be tested
         List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
-        List<List<Record>> sortedRecords = DataSet.splitData(data, att);
+        Map<String,DataSet> dataSets = DataSet.splitData(dataSet, att);
 
         //sortedRecords should be filled
         double attEntropy = 0.0;
         for(int i = 0; i < attValues.size(); i++) {
-            double proportion = ((double) sortedRecords.get(i).size())/data.size();//the ratio of how many had a certain Attribute value over the whole
+            String currentKey = attValues.get(i);
+            List<Record> currentRecords = dataSets.get(currentKey).getData();
+            double proportion = ((double) currentRecords.size())/dataSets.size();//the ratio of how many had a certain Attribute value over the whole
 
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
@@ -74,7 +76,7 @@ public class Entropy {
 
             //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
             //and the classification) and does a weighted average
-            DataSet ds = new DataSet(attList, sortedRecords.get(i));
+            DataSet ds = new DataSet(attList, currentRecords);
             attEntropy += entropy(ds)*proportion;
         }
 

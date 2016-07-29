@@ -109,7 +109,6 @@ public class DecisionTree {
     public String toString(){
 	String s="";
 	toStringRecursive(s, 0, head, true);
-        System.out.println("done building toString");
         return s;
     }
 
@@ -145,7 +144,7 @@ public class DecisionTree {
 
 
     public String getTabs(int deep, boolean atEnd){
-	String s="";
+	String s="\u001B[1m";
 	for(int i=0;i<deep;i++)
 		s+=".\t";
         if(atEnd){
@@ -153,6 +152,7 @@ public class DecisionTree {
         } else {
             s+="|";
         }
+        s+="\u001B[0m";
 	return s;
     }
 

@@ -1,15 +1,15 @@
 package com.JUnitTests;
 import com.main.*;
-import junit.framework.TestCase;
+//import junit.framework.TestCase;
 
 
-public class EntropyTest extends TestCase {
+public class EntropyTest /*extends TestCase*/ {
 
     DataSet data;
     public static final double delta = .001;
 
     public void setUp() throws Exception {
-        super.setUp();
+        //super.setUp();
         data = ImportData.importData("data.csv");
 
     }

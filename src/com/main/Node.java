@@ -66,11 +66,11 @@ public class Node {
     }
 	
     public String toString(){
-	String toReturn = "[Option: "+keyString+"";
+	String toReturn = "[Option: \u001B[31m"+keyString+"\u001B[0m";
 		if (att != null){
-			toReturn+=" | Attribute: "+att.getName()+"]";
+			toReturn+=" | Attribute: \u001B[47m"+att.getName()+"\u001B[0m]";
 		} else if(decision!=null && !decision.equals(""))
-			toReturn+="]\u001B[34m[Classification: "+decision+"]\u001B[0m";
+			toReturn+="][Classification: \u001B[34m"+decision+"]\u001B[0m";
 		return toReturn;
     }
 

@@ -35,16 +35,14 @@ public class DecisionTree {
         
         //IF ONLY 1 RECORD IS IN DATA, toSplitOn WILL BE NULL BECAUSE THERE WOULD BE NO INFORMATION GAIN FROM SPLITTING
         if(toSplitOn==null){
-            //System.out.println(records.size());
-            
-            if(!records.isEmpty())
+            if(!records.isEmpty()){
                 node.setDecision(records.get(0).getClassificationValue(data));
-            
+            }
         } else {
             
             Map<String,DataSet> dataSets = DataSet.splitData(data, toSplitOn);
             
-            node.setAttribute(toSplitOn);
+            node.setAttribute(data, toSplitOn);
             List<String> keys = toSplitOn.getValues();
             
             for(int i=0; i<keys.size(); i++){

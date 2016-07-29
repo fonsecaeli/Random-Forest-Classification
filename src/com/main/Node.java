@@ -22,12 +22,18 @@ public class Node {
     }
     
     //The initial setup for a node; Sets the Attribute and populates the map of children with the possible values in the Attribute as the keys
-    public void setAttribute(Attribute a){
+    public void setAttribute(DataSet ds, Attribute a){
         att=a;
         List<String> values = att.getValues();
+        List<Record> records = ds.getData();
         
         for(int i=0;i<values.size();i++){
-            children.put(values.get(i),new Node());
+            for(int j=0; j<records.size(); j++){
+                if(records.get(j).getValue(att).equals(values.get(i))){
+                    children.put(values.get(i),new Node());
+                    break;
+                }
+            }
         }
     }
 
@@ -65,7 +71,7 @@ public class Node {
 			toReturn+=" | Attribute: "+att.getName()+"]\n";
 			for (String a: children.keySet())
 				toReturn+=children.get(a).stringMaker(tabs+1, a);
-		} else toReturn+="]\n"+tabs(tabs+1)+"\u001B[31m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
+		} else toReturn+="]\n"+tabs(tabs+1)+"\u001B[34m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
 		return toReturn;
 	}
 	

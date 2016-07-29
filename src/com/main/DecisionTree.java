@@ -79,10 +79,13 @@ public class DecisionTree {
 
     public String query(Record r) {
         Node currentNode = head;
-        while(currentNode.getAttribute() != null) {
-
+        Attribute currentAtt = currentNode.getAttribute();
+        while(currentAtt != null) {
+            String value = r.getValue(currentAtt);
+            currentNode = currentNode.getChild(value);
+            currentAtt = currentNode.getAttribute();
         }
-        return "";
+        return currentNode.getDecision();
     }
 
     //could just be like ascii art shown on the console to start and then a gui later

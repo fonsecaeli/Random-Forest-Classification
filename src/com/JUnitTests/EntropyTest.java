@@ -24,7 +24,7 @@ public class EntropyTest extends TestCase {
     public void testAttributeEntropy() throws Exception {
         //test for the first attribute of the current data set
         //double e = Entropy.attributeEntropy(data.getData(), data.getAttributes().get(1));
-        //assertEquals(.693, e,  delta);
+        ///assertEquals(.693, e,  delta);
     }
 
 }

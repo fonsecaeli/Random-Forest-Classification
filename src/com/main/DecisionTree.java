@@ -6,7 +6,6 @@ package com.main;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class DecisionTree {
 
@@ -79,7 +78,7 @@ public class DecisionTree {
     }
 
     public boolean query(Record r) {
-            return false;
+        return false;
     }
 
     //could just be like ascii art shown on the console to start and then a gui later
@@ -97,6 +96,11 @@ public class DecisionTree {
     public void loadTree(String fileName) {
 
     }
+
+    /*public void print() {
+        head.PrintPretty("", "", "", true);
+
+    }*/
 
     public String toString() {
         return head.toString();

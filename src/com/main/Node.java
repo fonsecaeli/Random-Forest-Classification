@@ -1,9 +1,6 @@
 package com.main;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The basic node for the Decision tree class
@@ -64,6 +61,8 @@ public class Node {
 			return stringMaker(0, "HEAD_NODE");
 		else throw new Error("You can't print an unpopulated tree!");
 	}
+
+
 	
 	public String stringMaker(int tabs, String str){
 		String toReturn = tabs(tabs)+"[Option: "+str+"";
@@ -81,4 +80,25 @@ public class Node {
 			str+="\t";
 		return str;
 	}
+
+    /*public void PrintPretty(String indent, String attValue, String decision, boolean last)
+    {
+        System.out.print(indent);
+        if(last) {
+            System.out.print("\t\\-");
+            indent += " ";
+        }
+        else {
+            System.out.print("\t|-");
+            indent += "\t.";
+
+        }
+        if(decision == "") System.out.println("Option: "+att.getName()+" | "+attValue);
+        else System.out.println(attValue + " Decision: " + decision);
+
+        Object[] keys = children.keySet().toArray();
+        for (int i = 0; i < keys.length; i++ ) {
+            children.get(keys[i]).PrintPretty(indent, (String) keys[i], children.get(keys[i]).getDecision(), i == children.size() - 1);
+        }*/
 }
+

@@ -7,8 +7,8 @@ import java.util.Map;
 public class Entropy {
 
 	/**
-         * entropy of total data set
-         */ 
+     * entropy of total data set
+     */
 	public static double entropy(DataSet set) {
             List<Record> data = set.getData();
             if(data.isEmpty()) {
@@ -57,7 +57,7 @@ public class Entropy {
      * Calculates the entropy of a given attribute
      * NOTE: this might not be the most efficient way to do things, complexity is pretty poor
      * @param dataSet The DataSet to check, contains the Record and Attribute Lists
-     * @param attr The Attribute to used to calculate entropy
+     * @param att The Attribute to used to calculate entropy
      */
 	
     public static double attributeEntropy(DataSet dataSet, Attribute att) {
@@ -104,11 +104,11 @@ public class Entropy {
         return entropy - attributeEntropy;
     }
 
-        /**
-         * Basic log base 2 calculation
-         * @param n The number to calculate
-         * @return The log base 2 of n
-         */
+    /**
+     * Basic log base 2 calculation
+     * @param n The number to calculate
+     * @return The log base 2 of n
+     */
 	private static double logN(double n, double base) {
 		return Math.log(n)/Math.log(base);
 	}

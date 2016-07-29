@@ -80,14 +80,35 @@ public class DecisionTree {
     }
 
     public String query(Record r) {
+
         Node currentNode = head;
-        Attribute currentAtt = currentNode.getAttribute();
-        while(currentAtt != null) {
+        //System.out.println(currentNode.getAttribute());
+        //System.out.println(r.getValue(currentNode.getAttribute()));
+        while(true) {
+            Attribute currentAtt = null;
+            try {
+                currentAtt = currentNode.getAttribute();
+            }
+            catch(NullPointerException e) {
+                //when we reach a leaf node
+                return currentNode.getDecision();
+            }
+            System.out.println(currentAtt);
+            //System.out.println(r.getData());
             String value = r.getValue(currentAtt);
-            currentNode = currentNode.getChild(value);
-            currentAtt = currentNode.getAttribute();
+            //System.out.println(value);
+            Set<String> keys = currentNode.getKeys();
+            System.out.println(keys);
+            if(keys.contains(value)) {
+                currentNode = currentNode.getChild(value);
+            }
+            else {
+                return "";//"Error test record: " + r + "cannot be classified because it does not match the training data";
+            }
+
         }
-        return currentNode.getDecision();
+        //System.out.println(currentNode);
+        //return currentNode.getDecision();
     }
 
     //could just be like ascii art shown on the console to start and then a gui later

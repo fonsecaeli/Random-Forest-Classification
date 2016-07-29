@@ -60,12 +60,12 @@ public class Node {
 	}
 	
 	public String stringMaker(int tabs, String str){
-		String toReturn = tabs(tabs)+"[Option: "+str+"]";
-		if (decision == null){
-			toReturn+=", [Attribute: "+att.getName()+"]\n";
+		String toReturn = tabs(tabs)+"[Option: "+str+"";
+		if (decision == null && att != null){
+			toReturn+=" | Attribute: "+att.getName()+"]\n";
 			for (String a: children.keySet())
 				toReturn+=children.get(a).stringMaker(tabs+1, a);
-		} else toReturn+="\n"+tabs(tabs+1)+"\u001B[31m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
+		} else toReturn+="]\n"+tabs(tabs+1)+"\u001B[31m"+"[Classification: "+decision+"]"+"\u001B[0m"+"\n";
 		return toReturn;
 	}
 	

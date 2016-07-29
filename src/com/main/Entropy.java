@@ -42,10 +42,14 @@ public class Entropy {
 
             //calculate the entropy
             double entropy=0;
+            //System.out.print("[");
             for(int i=0; i<dataSums.length; i++){
                 double currentData = dataSums[i];
+                //System.out.print((int)(100*dataSums[i])/100.0+" ");
                 entropy-=currentData*logN(currentData, dataSums.length);//Did -= instead of: sum += -1(...);
             }
+            //System.out.println("]");
+            //System.out.println(entropy);
             return entropy;
 	}
 
@@ -58,16 +62,16 @@ public class Entropy {
 	
     public static double attributeEntropy(DataSet dataSet, Attribute att) {
         //Intializing values needed
-        List<Record> data=dataSet.getData();                    //The list of records from with dataSet
         List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
         Map<String,DataSet> dataSets = DataSet.splitData(dataSet, att);
 
         //sortedRecords should be filled
         double attEntropy = 0.0;
-        for(int i = 0; i < attValues.size(); i++) {
+        for(int i=0; i<attValues.size(); i++) {
             String currentKey = attValues.get(i);
             List<Record> currentRecords = dataSets.get(currentKey).getData();
-            double proportion = ((double) dataSets.size())/currentRecords.size();//the ratio of how many had a certain Attribute value over the whole
+            
+            double proportion = ((double) currentRecords.size())/dataSet.getData().size();
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
             attList.add(att);
@@ -76,9 +80,11 @@ public class Entropy {
             //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
             //and the classification) and does a weighted average
             DataSet ds = new DataSet(attList, currentRecords);
-            attEntropy += entropy(ds)*proportion;
+            double dataSetEntropy = entropy(ds);
+            attEntropy += dataSetEntropy*proportion;
+            //System.out.print(dataSetEntropy+" ");
         }
-
+        //System.out.println(att+" | Entropy: "+attEntropy);
         return attEntropy;
     }
 

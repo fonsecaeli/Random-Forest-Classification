@@ -52,7 +52,6 @@ public class DataSet{
                         recordsToAdd.add(r);
                     }
                 }
-                
                 mapping.put(attValues.get(i), new DataSet(data.getAttributes(), recordsToAdd));
             }
             

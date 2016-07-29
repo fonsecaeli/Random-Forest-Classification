@@ -22,26 +22,30 @@ public class DecisionTree {
     private Node head;
 
     public DecisionTree(DataSet data) {
+        head = new Node();
         grow(data, head);
 
     }
 
     //this will be the recursive method we need not sure exactly how this works yet
-    //TODO: make sure we dont check attributes that have already been split on
+    //TODO: make sure we don't check attributes that have already been split on
     public void grow(DataSet data, Node node) {
         //base case, once we reach maximum entropy
         if(Entropy.entropy(data) == 0) { //TODO: configure entropy to work with DataSet
             node.setDecision(data.getData().get(0).getClassificationValue(data)); //setting the Decision of the node to the
             //class shared between all the Records in the DataSet data
+            return;
         }
         Attribute att = bestSplit(data);
         Map<String, DataSet> newDataSets = DataSet.splitData(data, att);
         node.setAttribute(att); //TODO: need setCondition() in Node
 
-        //not sure if this for loop is a good idea
         Set<String> keys = node.getKeys();
         for(String str: keys) {
-            grow(newDataSets.get(str), node.getChild(str));
+            DataSet d = newDataSets.get(str);
+            if(d != null) {
+                grow(d, node.getChild(str));
+            }
         }
 
 
@@ -53,12 +57,14 @@ public class DecisionTree {
         List<Attribute> attributes = data.getAttributes();
         List<Record> records = data.getData();
         double bestGain = 0;
-        Attribute bestAtt = null;
+        Attribute bestAtt = attributes.get(0);
         for(Attribute att: attributes) {
-            double gain = Entropy.gain(data, att);
-            if(gain > bestGain) {
-                bestAtt = att;
-                bestGain = gain;
+            if(att!=data.getClassification()) {
+                double gain = Entropy.gain(data, att);
+                if (gain > bestGain) {
+                    bestAtt = att;
+                    bestGain = gain;
+                }
             }
         }
         if(bestAtt == null) {
@@ -85,6 +91,10 @@ public class DecisionTree {
     //loads a saved tree from a file of some kind
     public void loadTree(String fileName) {
 
+    }
+
+    public String toString() {
+        return head.toString();
     }
 
 }

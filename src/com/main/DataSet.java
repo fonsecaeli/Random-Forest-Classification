@@ -55,16 +55,25 @@ public class DataSet{
 				}
 			}
 		}
+
 		return sortedRecords;
 	}
 
 	public static Map<String, DataSet> splitData(DataSet data, Attribute att) {
 		Map<String, DataSet> dataSets = new LinkedHashMap<>();
 		List<List<Record>> splitData = splitData(data.getData(), att);
-
-		for(List<Record> r: splitData) {
-            DataSet d = new DataSet(data.getAttributes(), r);
-			dataSets.put(r.get(1).getClassificationValue(d),d);
+        //System.out.println("size: "+splitData.size());
+        /*for(int i=0;i<splitData.size();i++){
+            for(int j=0;j<splitData.get(i).size();j++) {
+                System.out.print(j+" "+splitData.get(i).size());
+            }
+            System.out.println();
+        }*/
+        for(List<Record> r: splitData) {
+            if(r.size() != 0) {
+                DataSet d = new DataSet(data.getAttributes(), r);
+                dataSets.put(r.get(0).getValue(att), d);
+            }
 		}
 		return dataSets;
 	}
@@ -73,7 +82,7 @@ public class DataSet{
 	 * Returns the class in String form so all the data can be seen
 	 */
 	public String toString(){
-		String toReturn = "Attributes:\n";
+		String toReturn = "\nAttributes:\n";
 		for (Attribute a: attributes){
 			toReturn+=a.toString()+"\n";
 		}

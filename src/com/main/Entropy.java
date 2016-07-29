@@ -32,13 +32,13 @@ public class Entropy {
                     return 0;
                 }
             }
-            
+
             //divides all by the total, to get the proportions
             for(int i=0; i<dataSums.length; i++){
                 dataSums[i] /= total;
-                
+
             }
-            
+
             //calculate the entropy
             double entropy=0;
             for(int i=0; i<dataSums.length; i++){

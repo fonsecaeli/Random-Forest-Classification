@@ -47,11 +47,12 @@ public class ImportData {
 			if ((line = br.readLine()) !=null){
 				temp = line.split(",");
 				for (String s: temp){
-					for (Attribute a: attributes){
-						boolean makeSure = false;
-						if (a.getname().equals(s)) makeSure = true;
-						if (!makeSure) throw new Error("Unknown Attribute");
+					boolean makeSure = false;
+					for (int i = 0; i<attributes.size()-1; i++) {
+						if (attributes.get(i).getName().equals(s)) makeSure = true;
 					}
+					if (!makeSure)
+						throw new Error("Unknown Attribute: ");
 				}
 			}
 			while ((line = br.readLine()) !=null){

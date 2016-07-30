@@ -1,6 +1,6 @@
 package com.main;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
@@ -27,8 +27,17 @@ public class Main {
                 System.out.println(atts.get(i).getName()+": "+Entropy.attributeEntropy(ds, atts.get(i)));
             }
             */
-            DataSet ds = ImportData.importData(new Scanner(System.in).nextLine().replace("\'", ""));
-            DecisionTree tree = new DecisionTree(ds);
-            System.out.println(tree);
-	}
+            System.out.println("Enter training Data: ");
+            DataSet ds = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\tic_tac_toeData.csv");
+            System.out.println("Enter testing Data: ");
+            DataSet test = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\tic_tac_toe_TestData.csv", new ArrayList(ds.getAttributes()));
+
+            RandomForest forest = new RandomForest(ds, 50);
+
+            //DecisionTree tree = new DecisionTree(ds);
+
+            for (Record r: test.getData()) {
+                System.out.println(forest.queryTrees(r));
+            }
+    }
 }

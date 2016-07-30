@@ -1,28 +1,25 @@
 package com.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DecisionTree {
 
-    /*
-     * used to hold the Attributes that can still be selected to split the data
-     * i needed some way to keep track of what options where still left
-     */
-    private List<Attribute> toSelect;
-
     //head node for the decision tree
     private Node head;
+    private final int ATTRIBUTE_SAMPLE_SIZE;
 
-    public DecisionTree(DataSet data) {
+
+    /*public DecisionTree(DataSet data) {
         head = new Node("HEAD_NODE");
         grow(data, head);
-
+    }
+    */
+    public DecisionTree(DataSet data, int attributeSampleSize) {
+        ATTRIBUTE_SAMPLE_SIZE = attributeSampleSize;
+        head = new Node("HEAD_NODE");
+        grow(data, head);
     }
 
-    //this will be the recursive method we need not sure exactly how this works yet
     //TODO: make sure we don't check attributes that have already been split on
     public void grow(DataSet data, Node node) {
         Attribute toSplitOn = bestSplit(data);
@@ -53,12 +50,13 @@ public class DecisionTree {
     //helper method for the growTree method, will split the data on the best attribute and return that attribute so
     //that the tree can be grown correctly
     public Attribute bestSplit(DataSet data) {
-            List<Attribute> attributes = data.getAttributes();
-            Attribute bestAtt=attributes.get(0);
+            List<Attribute> tempAttributes = data.getAttributes();
+            List<Attribute> randomAttributes = randomSample(tempAttributes);
+            Attribute bestAtt=randomAttributes.get(0);
             double bestGain=0.0;
             
-            for(int i=0; i<attributes.size()-1; i++){
-                Attribute currentAttribute = attributes.get(i);
+            for(int i=0; i<randomAttributes.size()-1; i++){
+                Attribute currentAttribute = randomAttributes.get(i);
                 double currentGain = Entropy.gain(data, currentAttribute);
                 if(currentGain>bestGain){
                     bestAtt=currentAttribute;
@@ -71,6 +69,24 @@ public class DecisionTree {
             } else {
                 return bestAtt;
             }
+    }
+
+    public List<Attribute> randomSample(List<Attribute> atts) {
+        Random randomGenerator = new Random();
+        List<Attribute> randomSample = new ArrayList<>();
+        for(int i = 0; i < ATTRIBUTE_SAMPLE_SIZE; i++) {
+            /*need the -1 because we dont want to count the classificaiton value for
+            this random splitting*/
+            Attribute toBeAdded = atts.get(randomGenerator.nextInt(atts.size()-1));
+            //makes sure we don't get any duplicates
+            if(!randomSample.contains(toBeAdded)) {
+                randomSample.add(toBeAdded);
+            }
+            else {
+                i--;
+            }
+        }
+        return randomSample;
     }
 
     public String query(Record r) {

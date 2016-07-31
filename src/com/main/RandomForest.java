@@ -8,6 +8,7 @@ public class RandomForest {
     private final Random randomGenerator;
     private DataSet data;
     private DecisionTree[] trees;
+    private double[] oobError;
 
     public RandomForest(DataSet data, int numTrees) {
         this.data = data;
@@ -17,11 +18,27 @@ public class RandomForest {
     }
 
     public void growTrees(DataSet data, int numTrees) {
-        List<DataSet> dataSets = bootStrapData(data, numTrees);
+        int gIndex = 0;
+        int oobIndex = 1;
+        List<List<DataSet>> dataSets = bootStrapData(data, numTrees);
         trees = new DecisionTree[numTrees];
+        oobError = new double[numTrees];
         for(int i = 0; i < numTrees; i++) {
-            trees[i] = new DecisionTree(dataSets.get(i), ATTRIBUTE_SAMPLE_SIZE);
+            trees[i] = new DecisionTree(dataSets.get(i).get(gIndex), ATTRIBUTE_SAMPLE_SIZE);
+            oobError[i] = trees[i].calculateError(dataSets.get(i).get(oobIndex));
         }
+    }
+
+    public double getAverageAccuracy() {
+        double total = 0;
+        for(int i = 0; i < oobError.length; i++) {
+            total += oobError[i];
+        }
+        return total/oobError.length;
+    }
+
+    public double[] getTreesAccuracy() {
+        return oobError;
     }
 
     public int detRandomSubspace(int numberOfAttributes) {
@@ -30,20 +47,31 @@ public class RandomForest {
         return (int) Math.floor(Math.log(numberOfAttributes)+1);
     }
 
-    public List<DataSet> bootStrapData(DataSet data, int numTrees) {
-        List<DataSet> dataSets = new ArrayList<>(numTrees);
+
+    public List<List<DataSet>> bootStrapData(DataSet data, int numTrees) {
+        List<List<DataSet>> dataSets = new ArrayList<List<DataSet>>(numTrees);
         for(int i = 0; i < numTrees; i++) {
-            List<Record> records = data.getData();
+            List<Record> records = data.getRecords();
             List<Record> newRecords = new ArrayList<>();
             for(int j = 0; j < records.size(); j++) {
                 newRecords.add(records.get(randomGenerator.nextInt(records.size())));
             }
-            DataSet d = new DataSet(data.getAttributes(), newRecords);
+            //creates a data set with all the elements in data that are not included in
+            //newRecords
+            List<Record> oobRecords = data.getRecords();
+            oobRecords.remove(newRecords);
+
+            DataSet oobData = new DataSet(data.getAttributes(), oobRecords);
+            DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords);
+            List<DataSet> d = new ArrayList<>(2);
+            d.add(bootStrappedData); d.add(oobData);
             dataSets.add(d);
         }
         return dataSets;
     }
 
+
+    //this should work but im not sure if it is the most efficient way to do thing
     public String queryTrees(Record r) {
         String[] votes = new String[trees.length];
         for(int i = 0; i < trees.length; i++) {

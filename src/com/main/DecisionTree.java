@@ -4,16 +4,15 @@ import java.util.*;
 
 public class DecisionTree {
 
-    //head node for the decision tree
     private Node head;
     private final int ATTRIBUTE_SAMPLE_SIZE;
-
 
     /*public DecisionTree(DataSet data) {
         head = new Node("HEAD_NODE");
         grow(data, head);
     }
     */
+
     public DecisionTree(DataSet data, int attributeSampleSize) {
         ATTRIBUTE_SAMPLE_SIZE = attributeSampleSize;
         head = new Node("HEAD_NODE");
@@ -23,7 +22,7 @@ public class DecisionTree {
     //TODO: make sure we don't check attributes that have already been split on
     public void grow(DataSet data, Node node) {
         Attribute toSplitOn = bestSplit(data);
-        List<Record> records = data.getData();
+        List<Record> records = data.getRecords();
         
         //IF ONLY 1 RECORD IS IN DATA, toSplitOn WILL BE NULL BECAUSE THERE WOULD BE NO INFORMATION GAIN FROM SPLITTING
         if(toSplitOn==null){
@@ -106,6 +105,18 @@ public class DecisionTree {
                 return "Error test record: " + r + "cannot be classified because it does not match the training data";
             }
         }
+    }
+
+    public double calculateError(DataSet data) {
+        List<Record> testingData = data.getRecords();
+        double correct = 0;
+        for(int i = 0; i < testingData.size(); i++) {
+            String guess = this.query(testingData.get(i));
+            if(guess.equals(testingData.get(i).getClassificationValue(data))) {
+                correct++;
+            }
+        }
+        return correct/testingData.size();
     }
 
     //could just be like ascii art shown on the console to start and then a gui later

@@ -10,7 +10,7 @@ public class Entropy {
      * entropy of total data set
      */
 	public static double entropy(DataSet set) {
-            List<Record> data = set.getData();
+            List<Record> data = set.getRecords();
             if(data.isEmpty()) {
                 return 0.0;
             }
@@ -69,9 +69,9 @@ public class Entropy {
         double attEntropy = 0.0;
         for(int i=0; i<attValues.size(); i++) {
             String currentKey = attValues.get(i);
-            List<Record> currentRecords = dataSets.get(currentKey).getData();
+            List<Record> currentRecords = dataSets.get(currentKey).getRecords();
             
-            double proportion = ((double) currentRecords.size())/dataSet.getData().size();
+            double proportion = ((double) currentRecords.size())/dataSet.getRecords().size();
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
             attList.add(att);

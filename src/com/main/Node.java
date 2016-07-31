@@ -24,7 +24,7 @@ public class Node {
     public void setAttribute(DataSet ds, Attribute a){
         att=a;
         List<String> values = att.getValues();
-        List<Record> records = ds.getData();
+        List<Record> records = ds.getRecords();
         
         for(int i=0;i<values.size();i++){
             for(int j=0; j<records.size(); j++){

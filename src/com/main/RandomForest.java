@@ -8,64 +8,52 @@ class RandomForest {
     private final Random randomGenerator;
     private DataSet data;
     private DecisionTree[] trees;
-    private double[] oobError;
+    private DataSet[] oobData;
 
-    public RandomForest(DataSet data, int numTrees) {
+    public RandomForest(DataSet data, int numTrees, double tuningFactor) {
+        oobData = new DataSet[numTrees];
+        int numAtts = data.getAttributes().size();
+        if(detRandomSubspace(numAtts, tuningFactor) > numAtts) throw new IllegalArgumentException("Tuning Factor too large");
         this.data = data;
         randomGenerator = new Random();
-        ATTRIBUTE_SAMPLE_SIZE = detRandomSubspace(data.getAttributes().size());
+        ATTRIBUTE_SAMPLE_SIZE = detRandomSubspace(data.getAttributes().size(), tuningFactor);
         growTrees(data, numTrees);
     }
 
     private void growTrees(DataSet data, int numTrees) {
-        int gIndex = 0;
-        int oobIndex = 1;
-        List<List<DataSet>> dataSets = bootStrapData(data, numTrees);
+        List<DataSet> dataSets = bootStrapData(data, numTrees);
         trees = new DecisionTree[numTrees];
-        oobError = new double[numTrees];
         for(int i = 0; i < numTrees; i++) {
-            trees[i] = new DecisionTree(dataSets.get(i).get(gIndex), ATTRIBUTE_SAMPLE_SIZE);
-            oobError[i] = trees[i].calculateError(dataSets.get(i).get(oobIndex));
+            trees[i] = new DecisionTree(dataSets.get(i), ATTRIBUTE_SAMPLE_SIZE);
         }
     }
 
-    public double oob() {
-        double total = 0;
-        for(int i = 0; i < oobError.length; i++) {
-            total += oobError[i];
-        }
-        return total/oobError.length;
-    }
+    /*public double oob() {
+        for(int i = 0; i < )
+    }*/
 
-    public double[] getAllError() {
-        return oobError;
-    }
-
-    private int detRandomSubspace(int numberOfAttributes) {
+    private int detRandomSubspace(int numberOfAttributes, double factor) {
         //can use either of the next two lines I believe
-        //return (int) Math.sqrt(numberOfAttributes);
-        return (int) Math.floor(Math.log(numberOfAttributes)+1);
+        return (int) (Math.sqrt(numberOfAttributes)*factor);
+        //return (int) Math.floor(Math.log(numberOfAttributes)+1);
     }
 
-
-    private List<List<DataSet>> bootStrapData(DataSet data, int numTrees) {
-        List<List<DataSet>> dataSets = new ArrayList<List<DataSet>>(numTrees);
+    private List<DataSet> bootStrapData(DataSet data, int numTrees) {
+        List<DataSet> dataSets = new ArrayList<DataSet>(numTrees);
         for(int i = 0; i < numTrees; i++) {
             List<Record> records = data.getRecords();
             List<Record> newRecords = new ArrayList<>();
             for(int j = 0; j < records.size(); j++) {
                 newRecords.add(records.get(randomGenerator.nextInt(records.size())));
             }
-            //creates a data set with all the elements in data that are not included in
-            //newRecords
-            List<Record> oobRecords = data.getRecords();
-            oobRecords.remove(newRecords);
 
-            DataSet oobData = new DataSet(data.getAttributes(), oobRecords);
+            List<Record> oobRecords = data.getRecords();
+            oobRecords.removeAll(newRecords);
+            System.out.println(oobRecords.size());
+            oobData[i] = new DataSet(data.getAttributes(), oobRecords);
+
             DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords);
-            List<DataSet> d = new ArrayList<>(2);
-            d.add(bootStrappedData); d.add(oobData);
-            dataSets.add(d);
+            dataSets.add(bootStrappedData);
         }
         return dataSets;
     }

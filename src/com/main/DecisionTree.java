@@ -2,7 +2,7 @@ package com.main;
 
 import java.util.*;
 
-class DecisionTree {
+public class DecisionTree {
 
     private Node head;
     private final int ATTRIBUTE_SAMPLE_SIZE;
@@ -110,9 +110,9 @@ class DecisionTree {
     public double calculateError(DataSet data) {
         List<Record> testingData = data.getRecords();
         double incorect = 0;
-        for(int i = 0; i < testingData.size(); i++) {
+        for (int i = 0; i < testingData.size(); i++) {
             String guess = this.query(testingData.get(i));
-            if(!guess.equals(testingData.get(i).getClassificationValue(data))) {
+            if (!guess.equals(testingData.get(i).getClassificationValue(data))) {
                 incorect++;
             }
         }
@@ -136,7 +136,7 @@ class DecisionTree {
     }
 
     public String toString(){
-	String s="";
+        String s="";
 	toStringRecursive(s, 0, head, true);
         return s;
     }

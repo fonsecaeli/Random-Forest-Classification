@@ -3,7 +3,7 @@ package com.main;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Main {
+class Main {
 
 	public static void main(String[] args) {
         //System.out.println(ds);
@@ -41,7 +41,7 @@ public class Main {
         for (Record r: test.getRecords()) {
             System.out.println(forest.queryTrees(r));
         }
-        System.out.println(forest.getAverageAccuracy());
-        System.out.println(Arrays.toString(forest.getTreesAccuracy()));
+        System.out.println(forest.oob());
+        System.out.println(Arrays.toString(forest.getAllError()));
     }
 }

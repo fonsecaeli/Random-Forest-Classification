@@ -10,7 +10,7 @@ public class Node {
     private Map<String,Node> children;
     private Attribute att;
     private String decision;
-    String keyString;
+    private String keyString;
     
     /**
      * Initializes children and childrenKeys

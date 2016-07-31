@@ -3,9 +3,9 @@ import com.main.*;
 //import junit.framework.TestCase;
 
 
-public class EntropyTest /*extends TestCase*/ {
+class EntropyTest /*extends TestCase*/ {
 
-    DataSet data;
+    private DataSet data;
     public static final double delta = .001;
 
     public void setUp() throws Exception {

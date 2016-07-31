@@ -2,7 +2,7 @@ package com.main;
 
 import java.util.*;
 
-public class RandomForest {
+class RandomForest {
 
     private final int ATTRIBUTE_SAMPLE_SIZE;
     private final Random randomGenerator;
@@ -17,7 +17,7 @@ public class RandomForest {
         growTrees(data, numTrees);
     }
 
-    public void growTrees(DataSet data, int numTrees) {
+    private void growTrees(DataSet data, int numTrees) {
         int gIndex = 0;
         int oobIndex = 1;
         List<List<DataSet>> dataSets = bootStrapData(data, numTrees);
@@ -29,7 +29,7 @@ public class RandomForest {
         }
     }
 
-    public double getAverageAccuracy() {
+    public double oob() {
         double total = 0;
         for(int i = 0; i < oobError.length; i++) {
             total += oobError[i];
@@ -37,18 +37,18 @@ public class RandomForest {
         return total/oobError.length;
     }
 
-    public double[] getTreesAccuracy() {
+    public double[] getAllError() {
         return oobError;
     }
 
-    public int detRandomSubspace(int numberOfAttributes) {
+    private int detRandomSubspace(int numberOfAttributes) {
         //can use either of the next two lines I believe
         //return (int) Math.sqrt(numberOfAttributes);
         return (int) Math.floor(Math.log(numberOfAttributes)+1);
     }
 
 
-    public List<List<DataSet>> bootStrapData(DataSet data, int numTrees) {
+    private List<List<DataSet>> bootStrapData(DataSet data, int numTrees) {
         List<List<DataSet>> dataSets = new ArrayList<List<DataSet>>(numTrees);
         for(int i = 0; i < numTrees; i++) {
             List<Record> records = data.getRecords();

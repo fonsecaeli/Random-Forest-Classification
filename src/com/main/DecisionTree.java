@@ -2,7 +2,7 @@ package com.main;
 
 import java.util.*;
 
-public class DecisionTree {
+class DecisionTree {
 
     private Node head;
     private final int ATTRIBUTE_SAMPLE_SIZE;
@@ -20,7 +20,7 @@ public class DecisionTree {
     }
 
     //TODO: make sure we don't check attributes that have already been split on
-    public void grow(DataSet data, Node node) {
+    private void grow(DataSet data, Node node) {
         Attribute toSplitOn = bestSplit(data);
         List<Record> records = data.getRecords();
         
@@ -48,7 +48,7 @@ public class DecisionTree {
 
     //helper method for the growTree method, will split the data on the best attribute and return that attribute so
     //that the tree can be grown correctly
-    public Attribute bestSplit(DataSet data) {
+    private Attribute bestSplit(DataSet data) {
             List<Attribute> tempAttributes = data.getAttributes();
             List<Attribute> randomAttributes = randomSample(tempAttributes);
             Attribute bestAtt=randomAttributes.get(0);
@@ -70,7 +70,7 @@ public class DecisionTree {
             }
     }
 
-    public List<Attribute> randomSample(List<Attribute> atts) {
+    private List<Attribute> randomSample(List<Attribute> atts) {
         Random randomGenerator = new Random();
         List<Attribute> randomSample = new ArrayList<>();
         for(int i = 0; i < ATTRIBUTE_SAMPLE_SIZE; i++) {
@@ -109,14 +109,14 @@ public class DecisionTree {
 
     public double calculateError(DataSet data) {
         List<Record> testingData = data.getRecords();
-        double correct = 0;
+        double incorect = 0;
         for(int i = 0; i < testingData.size(); i++) {
             String guess = this.query(testingData.get(i));
-            if(guess.equals(testingData.get(i).getClassificationValue(data))) {
-                correct++;
+            if(!guess.equals(testingData.get(i).getClassificationValue(data))) {
+                incorect++;
             }
         }
-        return correct/testingData.size();
+        return incorect/testingData.size();
     }
 
     //could just be like ascii art shown on the console to start and then a gui later
@@ -141,7 +141,7 @@ public class DecisionTree {
         return s;
     }
 
-    public String toStringRecursive(String s, int deep, Node n, boolean atEnd){
+    private String toStringRecursive(String s, int deep, Node n, boolean atEnd){
 	    s+=getTabs(deep, atEnd)+n.toString()+"\n";
         System.out.print(getTabs(deep,atEnd)+n.toString()+"\n");
 	    if(n.getAttribute()!=null){
@@ -166,8 +166,7 @@ public class DecisionTree {
         return s;
     }
 
-
-    public String getTabs(int deep, boolean atEnd){
+    private String getTabs(int deep, boolean atEnd){
 	String s="\u001B[1m";
 	for(int i=0;i<deep;i++)
 		s+=".\t";

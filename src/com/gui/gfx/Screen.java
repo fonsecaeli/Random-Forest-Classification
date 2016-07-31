@@ -8,17 +8,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Screen extends Canvas {
-    public int WIDTH = 512;
-    public int HEIGHT = 512;
-    public final String TITLE = "Test";
+class Screen extends Canvas {
+    private int WIDTH = 512;
+    private int HEIGHT = 512;
+    private final String TITLE = "Test";
     //offsets
-    int xoff=0,yoff=0;
+    private int xoff=0;
+    private int yoff=0;
     
     //inputs
-    public MouseInputListener mouse = new MouseInputListener();
-    public MouseMotionInputListener mouseMovement = new MouseMotionInputListener();
-    public KeyboardInputListener keyboard = new KeyboardInputListener();
+    private MouseInputListener mouse = new MouseInputListener();
+    private MouseMotionInputListener mouseMovement = new MouseMotionInputListener();
+    private KeyboardInputListener keyboard = new KeyboardInputListener();
     
     
     

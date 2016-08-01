@@ -1,24 +1,24 @@
 
 package com.gui.gfx;
 
+import com.gui.input.ImageHandler;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Font {
+public abstract class Font {
     private static int charWidth, charHeight;
     private static BufferedImage fontImage;
     
-    public Font(int l, int h, String filePath){
+    public static final void init(int l, int h, String filePath){
         charWidth = l;
         charHeight = h;
         
-        try{
-            fontImage = loadImage(filePath);
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+        ImageHandler ih = new ImageHandler(filePath);
+        fontImage = ih.getImage();
+        
     }
     
     public static BufferedImage stringToBufferedImage(String s){
@@ -34,11 +34,6 @@ public class Font {
         }
         
         return bi;
-    }
-    
-    private BufferedImage loadImage(String path) throws IOException{
-        BufferedImage image = ImageIO.read(getClass().getResource(path));
-        return image;
     }
     
     public static int getCharWidth() {

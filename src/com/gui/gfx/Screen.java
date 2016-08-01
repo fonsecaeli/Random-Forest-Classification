@@ -13,12 +13,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Screen extends Canvas {
-    public int WIDTH = 512;
-    public int HEIGHT = 512;
+    private int WIDTH;
+    private int HEIGHT;
     public final String TITLE = "Test";
-    public Font font;
     //offsets
-    int xoff=0,yoff=0;
+    private int xoff=0,yoff=0;
     
     //inputs
     public MouseInputListener mouse = new MouseInputListener();
@@ -48,8 +47,6 @@ public class Screen extends Canvas {
     
     public void init() {
         requestFocus();
-        
-        font = new Font(8,12,"/font8x12.png");
 
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouseMovement);
@@ -76,10 +73,10 @@ public class Screen extends Canvas {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
 
-        g.drawImage(font.stringToBufferedImage("This is at (0,0)"),0,0,null);
-        g.drawImage(font.stringToBufferedImage("Hi, Eben!"),WIDTH/2,HEIGHT/2,null);
+        drawImage(Font.stringToBufferedImage("This is at (0,0)"),0,0);
+        drawImage(Font.stringToBufferedImage("Hi, Eben!"),WIDTH/2,HEIGHT/2);
         
-        g.drawImage(font.getFontImage(),100,100,null);
+        drawImage(Font.getFontImage(),100,100);
         
         g.dispose();
         bs.show();

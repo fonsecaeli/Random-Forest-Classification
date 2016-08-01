@@ -33,4 +33,6 @@ public abstract class Interactable {
 	}
 	
 	public abstract void onClick(MouseEvent me);
+	public abstract void onHover(MouseEvent me);
+	public abstract void onDrag(MouseEvent me);
 }

@@ -1,3 +1,5 @@
+package com.gui.gfx;
+
 public class SideBar {
 	private final Button LOAD, SAVEAS;
 	private int xOffSet, yOffSet = 0;

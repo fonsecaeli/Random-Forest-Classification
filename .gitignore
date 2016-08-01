@@ -10,3 +10,4 @@
 Test.java
 *.xml
 .idea/
+/nbproject/

@@ -38,4 +38,34 @@ public class ImportData {
 		}
 		return new DataSet(attributes, data);
 	}
+	
+	public static DataSet importData(String fileName, ArrayList <Attribute> attributes){
+		ArrayList <Record> data = new ArrayList <>();
+		String[] temp = {""};
+		String line = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
+			if ((line = br.readLine()) !=null){
+				temp = line.split(",");
+				for (String s: temp){
+					boolean makeSure = false;
+					for (int i = 0; i<attributes.size()-1; i++) {
+						if (attributes.get(i).getName().equals(s)) makeSure = true;
+					}
+					if (!makeSure)
+						throw new Error("Unknown Attribute: ");
+				}
+			}
+			while ((line = br.readLine()) !=null){
+				temp = line.split(",");
+				data.add(new Record());
+				for (int i=0; i<temp.length; i++){
+					attributes.get(i).add(temp[i]);
+					data.get(data.size()-1).add(attributes.get(i), temp[i]);
+				}
+			}
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		return new DataSet(attributes, data);
+	}
 }

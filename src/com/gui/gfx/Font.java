@@ -12,12 +12,11 @@ public abstract class Font {
     private static int charWidth, charHeight;
     private static BufferedImage fontImage;
     
-    public static final void init(int l, int h, String filePath){
+    public static final void init(int l, int h){
         charWidth = l;
         charHeight = h;
         
-        ImageHandler ih = new ImageHandler(filePath);
-        fontImage = ih.getImage();
+        fontImage = ImageHandler.fontImage;
         
     }
     

@@ -16,6 +16,7 @@ public class Screen extends Canvas {
     private int WIDTH;
     private int HEIGHT;
     public final String TITLE = "Test";
+    private BufferedImage draw;
     //offsets
     private int xoff=0,yoff=0;
     
@@ -48,6 +49,8 @@ public class Screen extends Canvas {
     public void init() {
         requestFocus();
 
+        draw=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouseMovement);
         this.addKeyListener(keyboard);
@@ -70,13 +73,20 @@ public class Screen extends Canvas {
         }
         Graphics g = bs.getDrawGraphics();
         
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,getWidth(),getHeight());
+        /*g.setColor(Color.BLACK);
+        g.fillRect(0,0,getWidth(),getHeight());*/
 
+        
+        
         drawImage(Font.stringToBufferedImage("This is at (0,0)"),0,0);
         drawImage(Font.stringToBufferedImage("Hi, Eben!"),WIDTH/2,HEIGHT/2);
         
         drawImage(Font.getFontImage(),100,100);
+        
+        
+        
+        
+        g.drawImage(draw,0,0,null);
         
         g.dispose();
         bs.show();
@@ -84,7 +94,7 @@ public class Screen extends Canvas {
     }
 
     public void drawImage(BufferedImage image, int x, int y) {
-        Graphics g = getGraphics();
+        Graphics g = draw.getGraphics();
         g.drawImage(image, x, y, null);
     }
 

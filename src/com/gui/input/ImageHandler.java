@@ -6,18 +6,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageHandler {
-    private BufferedImage image;
+    public static BufferedImage fontImage;
     
-    public ImageHandler(String filePath){
+    public ImageHandler(){
         try{
-            image = loadImage(filePath);
+            fontImage = loadImage("/font.png");
         } catch(IOException e){
             e.printStackTrace();
         }
-    }
-    
-    public BufferedImage getImage(){
-        return image;
     }
     
     private BufferedImage loadImage(String path) throws IOException{

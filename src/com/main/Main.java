@@ -2,16 +2,17 @@ package com.main;
 
 import com.gui.gfx.Font;
 import com.gui.gfx.Screen;
+import com.gui.input.ImageHandler;
 import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Input the font file: ");
-            String fontInput = scanner.nextLine();
-            fontInput = fontInput.replace("\'", "").replace("\"", "");
-            
-            Font.init(8,12,fontInput);
+            //Scanner scanner = new Scanner(System.in);
+            //System.out.println("Input the font file: ");
+            //String fontInput = scanner.nextLine();
+            //fontInput = fontInput.replace("\'", "").replace("\"", "");
+            ImageHandler ih = new ImageHandler();
+            Font.init(8,14);
             
             Screen screen = new Screen(640,640);
             screen.render();

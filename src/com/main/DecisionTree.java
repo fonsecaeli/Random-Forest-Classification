@@ -107,16 +107,15 @@ public class DecisionTree {
         }
     }
 
-    public double calculateError(DataSet data) {
-        List<Record> testingData = data.getRecords();
-        double incorect = 0;
-        for (int i = 0; i < testingData.size(); i++) {
-            String guess = this.query(testingData.get(i));
-            if (!guess.equals(testingData.get(i).getClassificationValue(data))) {
-                incorect++;
-            }
+    //TODO: we really should change how we get the classification of a record, it is just ugly right now
+    public boolean testRecord(Record r, DataSet data) {
+        String guess = this.query(r);
+        System.out.println(guess);
+        System.out.println(r.getClassificationValue(data));
+        if(guess.equals(r.getClassificationValue(data))) {
+            return true;
         }
-        return incorect/testingData.size();
+        return false;
     }
 
     //could just be like ascii art shown on the console to start and then a gui later

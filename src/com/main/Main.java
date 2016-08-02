@@ -56,6 +56,7 @@ class Main {
         System.out.println("Time to tune: "+(end-start)/1000);*/
 
         RandomForest bestForest = new RandomForest(ds, 10, 3);
+        System.out.println(bestForest.oob());
 
         /*for (Record r: test.getRecords()) {
             System.out.println(forest.queryTrees(r));

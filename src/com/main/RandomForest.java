@@ -8,10 +8,10 @@ class RandomForest {
     private final Random randomGenerator;
     private DataSet data;
     private DecisionTree[] trees;
-    private DataSet[] oobData;
+    private List<DataSet> oobData;
 
     public RandomForest(DataSet data, int numTrees, double tuningFactor) {
-        oobData = new DataSet[numTrees];
+        oobData = new ArrayList<>(numTrees);
         int numAtts = data.getAttributes().size();
         if(detRandomSubspace(numAtts, tuningFactor) > numAtts) throw new IllegalArgumentException("Tuning Factor too large");
         this.data = data;
@@ -28,9 +28,42 @@ class RandomForest {
         }
     }
 
-    /*public double oob() {
-        for(int i = 0; i < )
-    }*/
+    //there are error is this method right now
+    public double oob() {
+        int incorrect = 0;
+        int correct = 0;
+        List<Record> records = data.getRecords();
+        for(int i = 0; i < records.size(); i++) {
+            List<DecisionTree> testTrees = new ArrayList<>();
+            for(int j = 0; j < oobData.size(); j++) {
+                if(oobData.get(j).getRecords().contains(records.get(i))
+                        && !trees[j].testRecord(records.get(i), data)) {
+                    testTrees.add(trees[j]);
+                }
+            }
+            //if we have some trees to test, test them
+            if(!testTrees.isEmpty()) {
+                if(validateTrees(testTrees, records.get(i))) {correct++;}
+                else {incorrect++;}
+            }
+        }
+        System.out.println(incorrect);
+        System.out.println(correct);
+        return (double)incorrect/(correct+incorrect);
+    }
+
+    private boolean validateTrees(List<DecisionTree> trees, Record r) {
+        int correct = 0;
+        for(DecisionTree t: trees) {
+            if(t.testRecord(r, data)) {
+                correct++;
+            }
+        }
+        if((double)correct/trees.size() > .5) {
+            return true;
+        }
+        return false;
+    }
 
     private int detRandomSubspace(int numberOfAttributes, double factor) {
         //can use either of the next two lines I believe
@@ -39,7 +72,7 @@ class RandomForest {
     }
 
     private List<DataSet> bootStrapData(DataSet data, int numTrees) {
-        List<DataSet> dataSets = new ArrayList<DataSet>(numTrees);
+        List<DataSet> dataSets = new ArrayList<>(numTrees);
         for(int i = 0; i < numTrees; i++) {
             List<Record> records = data.getRecords();
             List<Record> newRecords = new ArrayList<>();
@@ -47,10 +80,10 @@ class RandomForest {
                 newRecords.add(records.get(randomGenerator.nextInt(records.size())));
             }
 
-            List<Record> oobRecords = data.getRecords();
+            //makes a list of all the excluded records from each boot strapped data set
+            List<Record> oobRecords = new ArrayList<>(data.getRecords());
             oobRecords.removeAll(newRecords);
-            System.out.println(oobRecords.size());
-            oobData[i] = new DataSet(data.getAttributes(), oobRecords);
+            oobData.add(new DataSet(data.getAttributes(), oobRecords));
 
             DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords);
             dataSets.add(bootStrappedData);
@@ -60,7 +93,7 @@ class RandomForest {
 
 
     //this should work but im not sure if it is the most efficient way to do thing
-    public String queryTrees(Record r) {
+    public String queryTrees(Record r, DecisionTree[] trees) {
         String[] votes = new String[trees.length];
         for(int i = 0; i < trees.length; i++) {
             votes[i] = trees[i].query(r);
@@ -83,7 +116,5 @@ class RandomForest {
         }
 
         return answer;
-
-
     }
 }

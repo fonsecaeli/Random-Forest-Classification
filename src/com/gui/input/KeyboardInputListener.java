@@ -6,7 +6,37 @@ import java.awt.event.KeyListener;
 
 
 public class KeyboardInputListener implements KeyListener{
-    public boolean q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m,left,right,up,down,space;
+    private boolean q;
+    private boolean w;
+    private boolean e;
+    private boolean r;
+    private boolean t;
+    private boolean y;
+    private boolean u;
+    private boolean i;
+    private boolean o;
+    private boolean p;
+    private boolean a;
+    private boolean s;
+    private boolean d;
+    private boolean f;
+    private boolean g;
+    private boolean h;
+    private boolean j;
+    private boolean k;
+    private boolean l;
+    private boolean z;
+    private boolean x;
+    private boolean c;
+    private boolean v;
+    private boolean b;
+    private boolean n;
+    private boolean m;
+    private boolean left;
+    private boolean right;
+    private boolean up;
+    private boolean down;
+    private boolean space;
 
     @Override
     public void keyTyped(KeyEvent ke) {

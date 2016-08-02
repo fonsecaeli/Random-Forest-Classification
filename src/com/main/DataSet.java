@@ -24,7 +24,7 @@ public class DataSet{
 	/**
 	 * @return the data arrayList of Records that stores the LinkedHashMaps
 	 */
-	public List <Record> getData(){
+	public List <Record> getRecords(){
 		return data;
 	}
 
@@ -49,7 +49,7 @@ public class DataSet{
      */
 	public static Map<String, DataSet> splitData(DataSet data, Attribute att) {
             List<String> attValues = att.getValues();
-            List<Record> records = data.getData();
+            List<Record> records = data.getRecords();
             Map<String, DataSet> mapping = new HashMap<>();
             
             for(int i=0; i<attValues.size(); i++){

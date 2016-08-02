@@ -2,6 +2,7 @@ package com.gui.gfx;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 
 public class SideBar extends Interactable{
 	
@@ -27,6 +28,12 @@ public class SideBar extends Interactable{
 	private class LoadButton extends Button {
 		public LoadButton(Screen screen, SideBar sb){
 			super((((screen.getWidth()-sb.getX())/2)-(("Load...".length()*Font.getCharWidth()+Button.XBORDER)/2)+sb.getX()), 64, "Load...");
+		}
+		
+		public void mouseClicked(MouseEvent me){
+			super.mouseClicked(me);
+			System.out.println("success!");
+			
 		}
 	}
 	

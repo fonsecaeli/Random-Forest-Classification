@@ -28,7 +28,7 @@ public abstract class Interactable {
         }
 	
 	public final boolean contains(MouseEvent me){
-		return ((me.getX()>x && me.getX()<x+width) && (me.getY()>y && me.getY()<x+height));
+		return ((me.getX()>x && me.getX()<x+width) && (me.getY()>y && me.getY()<y+height));
 	}
 	
 	public final int getX(){

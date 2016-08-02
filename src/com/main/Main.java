@@ -40,15 +40,9 @@ public class Main {
             screen.render();
             screen.render();
             screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
+		while(true) {
+			gui.render(screen);
+			screen.render();
+		}
 	}
 }

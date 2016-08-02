@@ -41,29 +41,44 @@ public class DataSet{
 	}
 
     /**
-     * Splits a data set into a mapping of datasets that all share the same value for a common attribute
+     * Splits a data set into a mapping of data sets that all share the same value for a common attribute
      *
      * @param data The data set to split
      * @param att The Attribute to split that data on
      * @return mapping of data sets to the values of the Attribute
      */
 	public static Map<String, DataSet> splitData(DataSet data, Attribute att) {
-            List<String> attValues = att.getValues();
-            List<Record> records = data.getRecords();
-            Map<String, DataSet> mapping = new HashMap<>();
-            
-            for(int i=0; i<attValues.size(); i++){
+        List<String> attValues = att.getValues();
+        List<Record> records = data.getRecords();
+        Map<String, DataSet> mapping = new HashMap<>();
+        /*
+        if(att instanceof ContinuousAttribute) {
+            ContinuousAttribute cAtt = (ContinuousAttribute) att;
+            List<Record> aboveCutOff = new ArrayList<>();
+            List<Record> belowCutOff = new ArrayList<>();
+            for(int i = 0; i < records.size(); i++) {
+                Record r = records.get(i);
+                if(Integer.parseInt(r.getValue(att)) <= cAtt.getCutOff()) {
+                    belowCutOff.add(r);
+                }
+            }
+        }
+
+        else {
+        */
+            for (int i = 0; i < attValues.size(); i++) {
                 List<Record> recordsToAdd = new ArrayList<>();
-                for(int j=0; j<records.size(); j++){
+                for (int j = 0; j < records.size(); j++) {
                     Record r = records.get(j);
-                    if(r.getValue(att).equals(attValues.get(i))){
+                    if (r.getValue(att).equals(attValues.get(i))) {
                         recordsToAdd.add(r);
                     }
                 }
                 mapping.put(attValues.get(i), new DataSet(data.getAttributes(), recordsToAdd));
             }
-            
-            return mapping;
+        //}
+
+        return mapping;
 	}
 	
 	/**

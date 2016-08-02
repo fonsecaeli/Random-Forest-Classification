@@ -35,7 +35,11 @@ public class Record{
 	* Input key, get value
 	*/
     public String getValue(Attribute att) {
-            return data.get(att);
+        if(att instanceof ContinuousAttribute) {
+            ContinuousAttribute cAtt = (ContinuousAttribute) att;
+            return cAtt.getBucket(data.get(att));
+        }
+        return data.get(att);
     }
     
 	/**

@@ -1,5 +1,7 @@
 package com.main;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,9 +90,6 @@ class Entropy {
         return attEntropy;
     }
 
-
-
-
     /**
      * calculates the information gain associated with splitting the data on a specific attribute
      *
@@ -102,6 +101,36 @@ class Entropy {
         double entropy = entropy(data);
         double attributeEntropy = attributeEntropy(data,att);
         return entropy - attributeEntropy;
+    }
+
+    public List<Attribute> bucketContinuousAttributes(List<Attribute> atts, List<Record> r) {
+        List<Attribute> newAtts = new ArrayList<>(atts.size());
+        for(int i = 0; i < atts.size(); i++) {
+            boolean flagged = false;
+            boolean continuous = true;
+            List<String> values = atts.get(i).getValues();
+            for(int j = 0; j < values.size(); j++) {
+                try {
+                    double n = Double.parseDouble(values.get(j));
+                }
+                catch(NumberFormatException e) {
+                    if(j!=0) flagged=true;
+                    continuous=false;
+                    break;
+                }
+        }
+            if(continuous) {
+                double cutOff = detCutOff(r, atts.get(i));
+                newAtts.add(new ContinuousAttribute(atts.get(i).getName(), cutOff));
+            }
+            else if(flagged) {
+                System.out.println("They may be an error in the data under the " + atts.get(i).getName() + " column");
+            }
+        }
+    }
+
+    private double detCutOff(List<Record> r, Attribute att) {
+
     }
 
     /**

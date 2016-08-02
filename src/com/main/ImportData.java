@@ -36,6 +36,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+        attributes = Entropy.bucketContinuousAttributes(attributes, data);
 		return new DataSet(attributes, data);
 	}
 	

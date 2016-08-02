@@ -1,9 +1,6 @@
 package com.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DecisionTree {
 
@@ -214,22 +211,4 @@ public class DecisionTree {
         }
         
     }
-
-    private class MutableString {
-        private String s;
-
-        public MutableString(){
-            s="";
-        }
-
-        public void add(String string){
-            s+=string;
-        }
-
-        public String get(){
-            return s;
-        }
-
-    }
-
 }

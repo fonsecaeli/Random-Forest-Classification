@@ -12,7 +12,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
-class Screen extends Canvas {
+public class Screen extends Canvas {
     private int WIDTH = 512;
     private int HEIGHT = 512;
     private final String TITLE = "Test";

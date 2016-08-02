@@ -5,11 +5,11 @@ import java.awt.Graphics;
 
 public class SideBar extends Interactable{
 	
-	public SideBar(Screen screen){
-		this(screen, 100, 0);
+	private SideBar(Screen screen){
+		this(100, 0, screen);
 	}
 	
-	public SideBar(Screen screen, int x, int y){
+	public SideBar(int x, int y, Screen screen){
 		super(x, y, screen.getWidth()-x, screen.getHeight()-y);
 		initImage(screen);
                 addInteractable(new LoadButton(screen, this));
@@ -17,7 +17,6 @@ public class SideBar extends Interactable{
 	}
 	
 	private void initImage(Screen screen){
-                super.initImage(screen.getWidth(), screen.getHeight());
                 Graphics g = getImage().getGraphics();
 		g.setColor(new Color(175, 175, 175));
 		g.fillRect(getX(), getY(), screen.getWidth()-getX(), screen.getHeight()-getY());

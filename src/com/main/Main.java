@@ -17,7 +17,8 @@ public class Main {
             Font.init(8,14);
             
             Screen screen = new Screen(1280,700);
-            screen.setInput(new GUI(screen));
+            GUI gui = new GUI(screen);
+            screen.setInput(gui);
             screen.render();
             screen.render();
             screen.render();
@@ -30,8 +31,9 @@ public class Main {
             DataSet ds = ImportData.importData(input);
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);*/
-            SideBar sb = new SideBar(screen, 1000, 0);
-            sb.render(screen);
+            /*SideBar sb = new SideBar(screen, 1000, 0);
+            sb.render(screen);*/
+            gui.render(screen);
             screen.render();
             screen.render();
             screen.render();

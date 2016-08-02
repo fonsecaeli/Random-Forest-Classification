@@ -9,6 +9,6 @@ public class GUI extends Interactable{
     }
     
     private final void init(Screen screen){
-        addInteractable(new SideBar(screen));
+        addInteractable(new SideBar((int)(screen.getWidth()*.8), 0, screen));
     }
 }

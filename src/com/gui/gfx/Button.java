@@ -37,13 +37,14 @@ public class Button extends Interactable {
             else g.setColor(Color.BLACK);
 
             g.drawRect(0, 0, getImage().getWidth()-1, getImage().getHeight()-1);
-            g.setColor(new Color(255, 255, 255));
-            g.drawRect(1, 1, getImage().getWidth()-2, getImage().getHeight()-2);
 	}
 	
 	private void initImage(){
+            Graphics g = getImage().getGraphics();
+            g.setColor(new Color(255, 255, 255));
+            g.fillRect(1, 1, getImage().getWidth()-2, getImage().getHeight()-2);
             BufferedImage text = Font.stringToBufferedImage(name);
-            getImage().getGraphics().drawImage(text, XBORDER, YBORDER, null);
+            g.drawImage(text, XBORDER, YBORDER, null);
 	}
 	
         @Override

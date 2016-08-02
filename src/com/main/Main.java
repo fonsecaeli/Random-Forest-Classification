@@ -12,7 +12,7 @@ public class Main {
             //System.out.println("Input the font file: ");
             //String fontInput = scanner.nextLine();
             //fontInput = fontInput.replace("\'", "").replace("\"", "");
-            ImageHandler ih = new ImageHandler();
+            ImageHandler ih = new ImageHandler("/font.png");
             Font.init(8,14);
             
             Screen screen = new Screen(1280,700);
@@ -28,12 +28,20 @@ public class Main {
             DataSet ds = ImportData.importData(input);
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);*/
-            SideBar sb = new SideBar(screen);
+            SideBar sb = new SideBar(screen, 1000, 0);
             sb.render(screen);
             screen.render();
             screen.render();
             screen.render();
             screen.render();
-            
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
 	}
 }

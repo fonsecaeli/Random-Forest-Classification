@@ -78,7 +78,7 @@ public class RandomForest {
             tot += t.counter;
         }
         //System.out.println(tot);
-        System.out.println("% of incorrect do to weird bug: "+(double)tot/incorrect);
+        System.out.println("% of incorrect because of architecture of the trees: "+(double)tot/incorrect);
         return (double)incorrect/(correct+incorrect);
     }
 
@@ -171,12 +171,14 @@ public class RandomForest {
         String answer = "";
         Integer bestCount = 0;
         for(String str: votes) {
-            Integer count = frequencies.get(str);
-            count = count != null ? count+1 : 0;
-            frequencies.put(str, count);
-            if(count > bestCount) {
-                bestCount = count;
-                answer = str;
+            if(!str.equals(DecisionTree.ERROR_MESSAGE)) {
+                Integer count = frequencies.get(str);
+                count = count != null ? count + 1 : 0;
+                frequencies.put(str, count);
+                if (count > bestCount) {
+                    bestCount = count;
+                    answer = str;
+                }
             }
         }
         if(answer.equals("")){

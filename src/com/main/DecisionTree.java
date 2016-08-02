@@ -3,9 +3,13 @@ package com.main;
 import java.util.*;
 
 public class DecisionTree {
+
+    //TODO just for testing purposes we can remove later, but nice to have for now
     public int counter = 0;
     private Node head;
     private final int ATTRIBUTE_SAMPLE_SIZE;
+    public static final String ERROR_MESSAGE = "Error, Record cannot be classified";
+
 
     /*public DecisionTree(DataSet data) {
         head = new Node("HEAD_NODE");
@@ -110,7 +114,7 @@ public class DecisionTree {
                 //System.out.println(keys);
                 //System.out.println(value);
                 //System.out.println();
-                return "l";//"Error test record: " + r + "cannot be classified because it does not match the training data";
+                return ERROR_MESSAGE;//"Error test record: " + r + "cannot be classified because it does not match the training data";
             }
         }
     }
@@ -118,7 +122,7 @@ public class DecisionTree {
     //TODO: we really should change how we get the classification of a record, it is just ugly right now
     public boolean testRecord(Record r, DataSet data) {
         String guess = this.query(r);
-        if(guess.equals("l")) counter++;
+        if(guess.equals(ERROR_MESSAGE)) counter++;
         //System.out.println(guess);
         //System.out.println(r.getClassificationValue(data));
         if (guess.equals(r.getClassificationValue(data))) {

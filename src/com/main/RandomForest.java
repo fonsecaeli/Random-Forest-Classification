@@ -2,7 +2,7 @@ package com.main;
 
 import java.util.*;
 
-class RandomForest {
+public class RandomForest {
 
     private final int ATTRIBUTE_SAMPLE_SIZE;
     private final Random randomGenerator;

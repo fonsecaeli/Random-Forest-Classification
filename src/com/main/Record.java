@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 
-class Record{
+public class Record{
 	/**
 	* Stores the data in a LinkedHashMap with the keys as the data types and the values as the actual values
 	*/

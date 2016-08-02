@@ -9,8 +9,12 @@ public class ImageHandler {
     public static BufferedImage fontImage;
     
     public ImageHandler(){
+        this("/font.png");
+    }
+    
+    public ImageHandler(String file){
         try{
-            fontImage = loadImage("/font.png");
+            fontImage = loadImage(file);
         } catch(IOException e){
             e.printStackTrace();
         }

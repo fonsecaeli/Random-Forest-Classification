@@ -4,10 +4,8 @@ package com.main;
 // Description: Class that represents a decision tree, provides functionality to grow one
 // 7/26/2016
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class DecisionTree {
 
@@ -23,7 +21,7 @@ public class DecisionTree {
     private Node head;
 
     public DecisionTree(DataSet data) {
-        head = new Node("HEAD_NODE");
+        head = new Node();
         grow(data, head);
 
     }
@@ -80,35 +78,14 @@ public class DecisionTree {
     }
 
     public String query(Record r) {
-
         Node currentNode = head;
-        //System.out.println(currentNode.getAttribute());
-        //System.out.println(r.getValue(currentNode.getAttribute()));
-        while(true) {
-            Attribute currentAtt = null;
-            try {
-                currentAtt = currentNode.getAttribute();
-            }
-            catch(NullPointerException e) {
-                //when we reach a leaf node
-                return currentNode.getDecision();
-            }
-            System.out.println(currentAtt);
-            //System.out.println(r.getData());
+        Attribute currentAtt = currentNode.getAttribute();
+        while(currentAtt != null) {
             String value = r.getValue(currentAtt);
-            //System.out.println(value);
-            Set<String> keys = currentNode.getKeys();
-            System.out.println(keys);
-            if(keys.contains(value)) {
-                currentNode = currentNode.getChild(value);
-            }
-            else {
-                return "";//"Error test record: " + r + "cannot be classified because it does not match the training data";
-            }
-
+            currentNode = currentNode.getChild(value);
+            currentAtt = currentNode.getAttribute();
         }
-        //System.out.println(currentNode);
-        //return currentNode.getDecision();
+        return currentNode.getDecision();
     }
 
     //could just be like ascii art shown on the console to start and then a gui later
@@ -127,54 +104,13 @@ public class DecisionTree {
 
     }
 
-    public String toString(){
-	String s="";
-	toStringRecursive(s, 0, head, true);
-        System.out.println("done building toString");
-        return s;
-    }
+    /*public void print() {
+        head.PrintPretty("", "", "", true);
 
-    public String toStringRecursive(String s, int deep, Node n, boolean atEnd){
-	s+=getTabs(deep, atEnd)+n.toString()+"\n";
-        System.out.print(getTabs(deep,atEnd)+n.toString()+"\n");
-        //System.out.println("Deep: "+deep+" | Node: "+n);
-	if(n.getAttribute()!=null){
-                //System.out.println("going deeper");
-		Set<String> keys = n.getKeys();
-                
-                //this
-                List<String> listOfKeys = new ArrayList<>();
-		for(String key : keys){
-                    listOfKeys.add(key);
-		}
-                for(int i=0; i<listOfKeys.size(); i++){
-                        String key = listOfKeys.get(i);
-			toStringRecursive(s, deep+1, n.getChild(key), i==listOfKeys.size()-1);
-                }
-                
-                /*or this, doesn't really work because the node doesn't necessarily have a child for each value in attributes
-                int i=0;
-                for(String key : keys){
-			toStringRecursive(s, deep+1, n.getChild(key), i==n.getAttribute().getValues().size()-1);
-                        i++;
-		}
-                        
-                */
-	}	
-        return s;
-    }
+    }*/
 
-
-    public String getTabs(int deep, boolean atEnd){
-	String s="";
-	for(int i=0;i<deep;i++)
-		s+=".\t";
-        if(atEnd){
-            s+="\\";
-        } else {
-            s+="|";
-        }
-	return s;
+    public String toString() {
+        return head.toString();
     }
 
 }

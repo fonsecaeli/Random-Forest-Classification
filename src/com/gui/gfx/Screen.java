@@ -77,15 +77,6 @@ public class Screen extends Canvas {
         g.fillRect(0,0,getWidth(),getHeight());*/
 
         
-        
-        drawImage(Font.stringToBufferedImage("This is at (0,0)"),0,0);
-        drawImage(Font.stringToBufferedImage("Hi, Eben!"),WIDTH/2,HEIGHT/2);
-        
-        drawImage(Font.getFontImage(),100,100);
-        
-        
-        
-        
         g.drawImage(draw,0,0,null);
         
         g.dispose();
@@ -94,6 +85,9 @@ public class Screen extends Canvas {
     }
 
     public void drawImage(BufferedImage image, int x, int y) {
+        if(image == null){
+            return;
+        }
         Graphics g = draw.getGraphics();
         g.drawImage(image, x, y, null);
     }

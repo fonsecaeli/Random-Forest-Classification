@@ -7,14 +7,14 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-            //Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);
             //System.out.println("Input the font file: ");
             //String fontInput = scanner.nextLine();
             //fontInput = fontInput.replace("\'", "").replace("\"", "");
             ImageHandler ih = new ImageHandler();
             Font.init(8,14);
             
-            Screen screen = new Screen(640,640);
+            Screen screen = new Screen(1280,700);
             screen.render();
             screen.render();
             screen.render();
@@ -27,6 +27,10 @@ public class Main {
             DataSet ds = ImportData.importData(input);
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);*/
+            screen.render();
+            screen.render();
+            screen.render();
+            screen.render();
             
 	}
 }

@@ -108,40 +108,43 @@ public class DecisionTree {
 
     }
 
+    @Override
     public String toString(){
-	String s="";
-	toStringRecursive(s, 0, head, true);
-        return s;
+	return toString(false);
     }
 
-    public String toStringRecursive(String s, int deep, Node n, boolean atEnd){
-	    s+=getTabs(deep, atEnd)+n.toString()+"\n";
-        System.out.print(getTabs(deep,atEnd)+n.toString()+"\n");
-	    if(n.getAttribute()!=null){
-		    Set<String> keys = n.getKeys();
-            List<String> listOfKeys = new ArrayList<>();
-		for(String key : keys){
-                    listOfKeys.add(key);
-		}
-        for(int i=0; i<listOfKeys.size(); i++){
-            String key = listOfKeys.get(i);
-            toStringRecursive(s, deep+1, n.getChild(key), i==listOfKeys.size()-1);
+    public String toString(boolean doColor){
+	MutableString s = new MutableString();
+	toStringRecursive(s, 0, head, true, doColor);
+        return s.get();
+    }
+
+    private void toStringRecursive(MutableString s, int deep, Node n, boolean atEnd, boolean doColor){
+        s.add(getTabs(deep, atEnd, doColor));
+        if(doColor){
+            s.add(n.toStringColor()+"\n");
+        }else{
+            s.add(n.toString()+"\n");
         }
-                        /*or this, doesn't really work because the node doesn't necessarily have a child for each value in attributes
-                int i=0;
-                for(String key : keys){
-			toStringRecursive(s, deep+1, n.getChild(key), i==n.getAttribute().getValues().size()-1);
-                        i++;
-		}
-                        
-                */
-	}	
-        return s;
+        if(n.getAttribute()!=null){
+            Set<String> keys = n.getKeys();
+            List<String> listOfKeys = new ArrayList<>();
+            
+            for(String key : keys){
+                listOfKeys.add(key);
+            }
+            
+            for(int i=0; i<listOfKeys.size(); i++){
+                String key = listOfKeys.get(i);
+                toStringRecursive(s, deep+1, n.getChild(key), i==listOfKeys.size()-1, doColor);
+            }
+        }
     }
 
 
-    public String getTabs(int deep, boolean atEnd){
-	String s="\u001B[1m";
+    public String getTabs(int deep, boolean atEnd, boolean doColor){
+        String s="";
+	if(doColor)s+="\u001B[1m";
 	for(int i=0;i<deep;i++)
 		s+=".\t";
         if(atEnd){
@@ -149,8 +152,25 @@ public class DecisionTree {
         } else {
             s+="|";
         }
-        s+="\u001B[0m";
+        if(doColor)s+="\u001B[0m";
 	return s;
+    }
+    
+    private class MutableString {
+        private String s;
+        
+        public MutableString(){
+            s="";
+        }
+        
+        public void add(String string){
+            s+=string;
+        }
+        
+        public String get(){
+            return s;
+        }
+        
     }
 
 }

@@ -13,6 +13,10 @@ public class DataSet{
     private List <Attribute> attributes;
     private List <Record> data;
 
+    public DataSet() {
+
+    }
+
 	/**
 	 * Takes the two arrayLists of data and stores them within the class
 	 */
@@ -34,6 +38,11 @@ public class DataSet{
 	public List <Attribute> getAttributes(){
 		return attributes;
 	}
+
+    public void setAttributes(List<Attribute> atts) {
+        attributes = atts;
+    }
+
 
 
     public Attribute getClassification(){

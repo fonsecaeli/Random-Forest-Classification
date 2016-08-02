@@ -187,6 +187,13 @@ class RandomForest {
         return answer;
     }
 
+    @Override
+    /**
+     * Creates a String representation of this Object.  Basically returns a string
+     * representing each tree in the forest
+     *
+     * @return String representation of the Object
+     */
     public String toString() {
         String toReturn = "";
         for(DecisionTree t: trees) {

@@ -5,7 +5,6 @@ import com.gui.input.KeyboardInputListener;
 import com.gui.input.MouseInputListener;
 import com.gui.input.MouseMotionInputListener;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -16,6 +15,7 @@ public class Screen extends Canvas {
     private int WIDTH = 512;
     private int HEIGHT = 512;
     private final String TITLE = "Test";
+    private BufferedImage draw;
     //offsets
     private int xoff=0;
     private int yoff=0;
@@ -46,7 +46,7 @@ public class Screen extends Canvas {
         init();
     }
     
-    public void init() {
+    public final void init() {
         requestFocus();
 
         draw=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);

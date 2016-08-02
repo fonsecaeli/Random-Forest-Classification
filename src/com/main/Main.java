@@ -3,12 +3,13 @@ package com.main;
 import com.gui.gfx.Font;
 import com.gui.gfx.GUI;
 import com.gui.gfx.Screen;
-import com.gui.gfx.SideBar;
 import com.gui.input.ImageHandler;
 import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
+            System.out.println("asdfasdfasdfasdfadsfasdf");
             Scanner scanner = new Scanner(System.in);
             //System.out.println("Input the font file: ");
             //String fontInput = scanner.nextLine();
@@ -16,6 +17,7 @@ public class Main {
             ImageHandler ih = new ImageHandler("/font.png");
             Font.init(8,14);
             
+            System.out.println("asdf");
             Screen screen = new Screen(1280,700);
             GUI gui = new GUI(screen);
             screen.setInput(gui);
@@ -33,6 +35,7 @@ public class Main {
             System.out.println(tree);*/
             /*SideBar sb = new SideBar(screen, 1000, 0);
             sb.render(screen);*/
+            System.out.println("asdf");
             gui.render(screen);
             screen.render();
             screen.render();

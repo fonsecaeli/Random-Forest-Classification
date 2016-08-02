@@ -1,6 +1,9 @@
 package com.main;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DecisionTree {
 
@@ -147,24 +150,35 @@ public class DecisionTree {
 
     }
 
-    public String toString() {
-        String s = "";
-        toStringRecursive(s, 0, head, true);
-        return s;
+    @Override
+    public String toString(){
+	return toString(false);
     }
 
-    private String toStringRecursive(String s, int deep, Node n, boolean atEnd) {
-        s += getTabs(deep, atEnd) + n.toString() + "\n";
-        System.out.print(getTabs(deep, atEnd) + n.toString() + "\n");
-        if (n.getAttribute() != null) {
+    public String toString(boolean doColor){
+	MutableString s = new MutableString();
+	toStringRecursive(s, 0, head, true, doColor);
+        return s.get();
+    }
+
+    private void toStringRecursive(MutableString s, int deep, Node n, boolean atEnd, boolean doColor){
+        s.add(getTabs(deep, atEnd, doColor));
+        if(doColor){
+            s.add(n.toStringColor()+"\n");
+        }else{
+            s.add(n.toString()+"\n");
+        }
+        if(n.getAttribute()!=null){
             Set<String> keys = n.getKeys();
             List<String> listOfKeys = new ArrayList<>();
-            for (String key : keys) {
+
+            for(String key : keys){
                 listOfKeys.add(key);
             }
-            for (int i = 0; i < listOfKeys.size(); i++) {
+
+            for(int i=0; i<listOfKeys.size(); i++){
                 String key = listOfKeys.get(i);
-                toStringRecursive(s, deep + 1, n.getChild(key), i == listOfKeys.size() - 1);
+                toStringRecursive(s, deep+1, n.getChild(key), i==listOfKeys.size()-1, doColor);
             }
                         /*or this, doesn't really work because the node doesn't necessarily have a child for each value in attributes
                 int i=0;
@@ -178,17 +192,36 @@ public class DecisionTree {
         return s;
     }
 
-    private String getTabs(int deep, boolean atEnd) {
-        String s = "\u001B[1m";
-        for (int i = 0; i < deep; i++)
-            s += ".\t";
-        if (atEnd) {
-            s += "\\";
+
+    public String getTabs(int deep, boolean atEnd, boolean doColor){
+        String s="";
+	if(doColor)s+="\u001B[1m";
+	for(int i=0;i<deep;i++)
+		s+=".\t";
+        if(atEnd){
+            s+="\\";
         } else {
-            s += "|";
+            s+="|";
         }
-        s += "\u001B[0m";
-        return s;
+        if(doColor)s+="\u001B[0m";
+	return s;
+    }
+
+    private class MutableString {
+        private String s;
+
+        public MutableString(){
+            s="";
+        }
+
+        public void add(String string){
+            s+=string;
+        }
+
+        public String get(){
+            return s;
+        }
+
     }
 
 }

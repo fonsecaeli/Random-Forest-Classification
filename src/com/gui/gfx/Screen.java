@@ -16,21 +16,22 @@ public class Screen extends Canvas {
     private int HEIGHT = 512;
     private final String TITLE = "Test";
     private BufferedImage draw;
+    private GUI gui;
     //offsets
     private int xoff=0;
     private int yoff=0;
     
     //inputs
-    private MouseInputListener mouse = new MouseInputListener();
-    private MouseMotionInputListener mouseMovement = new MouseMotionInputListener();
-    private KeyboardInputListener keyboard = new KeyboardInputListener();
+    private MouseInputListener mouse;
+    private MouseMotionInputListener mouseMovement;
+    private KeyboardInputListener keyboard;
     
     
     
     public Screen(int width, int height){
         WIDTH=width;
         HEIGHT=height;
-
+        
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setMaximumSize(new Dimension(WIDTH,HEIGHT));
         setMinimumSize(new Dimension(WIDTH,HEIGHT));
@@ -51,9 +52,18 @@ public class Screen extends Canvas {
 
         draw=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         
+    }
+    
+    public void setInput(GUI g){
+        gui = g;
+        mouse = new MouseInputListener(gui);
+        mouseMovement = new MouseMotionInputListener(gui);
+        keyboard = new KeyboardInputListener();
+        
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouseMovement);
         this.addKeyListener(keyboard);
+        
     }
     
     public void setXOff(int i){
@@ -90,6 +100,7 @@ public class Screen extends Canvas {
         }
         Graphics g = draw.getGraphics();
         g.drawImage(image, x, y, null);
+        render();
     }
 
     

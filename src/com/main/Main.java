@@ -1,6 +1,7 @@
 package com.main;
 
 import com.gui.gfx.Font;
+import com.gui.gfx.GUI;
 import com.gui.gfx.Screen;
 import com.gui.gfx.SideBar;
 import com.gui.input.ImageHandler;
@@ -16,6 +17,7 @@ public class Main {
             Font.init(8,14);
             
             Screen screen = new Screen(1280,700);
+            screen.setInput(new GUI(screen));
             screen.render();
             screen.render();
             screen.render();

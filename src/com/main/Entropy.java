@@ -1,8 +1,7 @@
 package com.main;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -68,15 +67,21 @@ class Entropy {
         Map<String,DataSet> dataSets = DataSet.splitData(dataSet, att);
 
         //sortedRecords should be filled
+
+        //System.out.println(att+" | Entropy: "+attEntropy);
+        return helper(dataSet, dataSets, attValues);
+    }
+
+    private static double helper(DataSet dataSet, Map<String, DataSet> dataSets, List<String> attValues) {
         double attEntropy = 0.0;
         for(int i=0; i<attValues.size(); i++) {
             String currentKey = attValues.get(i);
             List<Record> currentRecords = dataSets.get(currentKey).getRecords();
-            
+
             double proportion = ((double) currentRecords.size())/dataSet.getRecords().size();
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
-            attList.add(att);
+            //attList.add(att);
             attList.add(dataSet.getClassification());
 
             //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
@@ -86,7 +91,6 @@ class Entropy {
             attEntropy += dataSetEntropy*proportion;
             //System.out.print(dataSetEntropy+" ");
         }
-        //System.out.println(att+" | Entropy: "+attEntropy);
         return attEntropy;
     }
 
@@ -103,7 +107,7 @@ class Entropy {
         return entropy - attributeEntropy;
     }
 
-    public List<Attribute> bucketContinuousAttributes(List<Attribute> atts, List<Record> r) {
+    public static List<Attribute> bucketContinuousAttributes(List<Attribute> atts, List<Record> r) {
         List<Attribute> newAtts = new ArrayList<>(atts.size());
         for(int i = 0; i < atts.size(); i++) {
             boolean flagged = false;
@@ -118,18 +122,24 @@ class Entropy {
                     continuous=false;
                     break;
                 }
-        }
+            }
+            Attribute toAdd = atts.get(i);
             if(continuous) {
-                double cutOff = detCutOff(r, atts.get(i));
-                newAtts.add(new ContinuousAttribute(atts.get(i).getName(), cutOff));
+                double cutOff = detCutOff(r, atts, atts.get(i));
+                toAdd = new ContinuousAttribute(atts.get(i).getName(), cutOff);
             }
             else if(flagged) {
                 System.out.println("They may be an error in the data under the " + atts.get(i).getName() + " column");
             }
+            newAtts.add(toAdd);
         }
+        return newAtts;
     }
 
-    private double detCutOff(List<Record> r, Attribute att) {
+    //TODO write this method!!!
+    private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
+        Collections.sort(r, new AttributeSorter(att));
+        return 0;
 
     }
 

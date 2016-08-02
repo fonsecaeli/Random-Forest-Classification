@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImportData {
 
@@ -15,7 +16,7 @@ public class ImportData {
 	 * @return the data set with all the information needed
 	 */
 	public static DataSet importData(String fileName){
-		ArrayList <Attribute> attributes = new ArrayList<>();
+		List<Attribute> attributes = new ArrayList<>();
 		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
 		String line = "";
@@ -40,7 +41,7 @@ public class ImportData {
 		return new DataSet(attributes, data);
 	}
 	
-	public static DataSet importData(String fileName, ArrayList <Attribute> attributes){
+	public static DataSet importData(String fileName, List<Attribute> attributes){
 		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
 		String line = "";

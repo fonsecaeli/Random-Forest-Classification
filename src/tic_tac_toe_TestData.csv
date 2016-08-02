@@ -1,10 +1,10 @@
-top-left-square,top-middle-square,top-right-square,middle-left-square,middle-middle-square,middle-right-square,bottom-left-square,bottom-middle-square,bottom-right-square,result
-x,x,x,x,o,o,x,o,o,x won
-x,x,x,x,o,o,o,x,o,x won
-x,x,x,x,o,o,o,o,x,x won
-x,x,x,x,o,o,o,b,b,x won
-x,x,x,x,o,o,b,o,b,x won
-x,x,x,x,o,o,b,b,o,x won
-x,x,x,x,o,b,o,o,b,x won
-x,x,x,x,o,b,o,b,o,x won
-x,x,x,x,o,b,b,o,o,x won
+top-left-square,top-middle-square,top-right-square,middle-left-square,middle-middle-square,middle-right-square,bottom-left-square,bottom-middle-square,bottom-right-square
+x,x,x,x,o,o,x,o,o
+x,x,x,x,o,o,o,x,o
+x,x,x,x,o,o,o,o,x
+x,x,x,x,o,o,o,b,b
+x,x,x,x,o,o,b,o,b
+x,x,x,x,o,o,b,b,o
+x,x,x,x,o,b,o,o,b
+x,x,x,x,o,b,o,b,o
+x,x,x,x,o,b,b,o,o

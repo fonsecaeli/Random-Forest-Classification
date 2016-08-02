@@ -10,7 +10,7 @@ public class Node {
     private Map<String,Node> children;
     private Attribute att;
     private String decision;
-    String keyString;
+    private String keyString;
     
     /**
      * Initializes children and childrenKeys
@@ -24,7 +24,7 @@ public class Node {
     public void setAttribute(DataSet ds, Attribute a){
         att=a;
         List<String> values = att.getValues();
-        List<Record> records = ds.getData();
+        List<Record> records = ds.getRecords();
         
         for(int i=0;i<values.size();i++){
             for(int j=0; j<records.size(); j++){

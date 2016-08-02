@@ -7,78 +7,105 @@ import java.util.Set;
 
 public class DecisionTree {
 
-    /*
-     * used to hold the Attributes that can still be selected to split the data
-     * i needed some way to keep track of what options where still left
-     */
-    private List<Attribute> toSelect;
-
-    //head node for the decision tree
+    //TODO just for testing purposes we can remove later, but nice to have for now
+    public int counter = 0;
     private Node head;
+    private final int ATTRIBUTE_SAMPLE_SIZE;
+    public static final String ERROR_MESSAGE = "Error, Record cannot be classified";
 
-    public DecisionTree(DataSet data) {
+
+    /*public DecisionTree(DataSet data) {
         head = new Node("HEAD_NODE");
         grow(data, head);
+    }
+    */
 
+    public DecisionTree(DataSet data, int attributeSampleSize) {
+        ATTRIBUTE_SAMPLE_SIZE = attributeSampleSize;
+        head = new Node("HEAD_NODE");
+        grow(data, head);
     }
 
-    //this will be the recursive method we need not sure exactly how this works yet
     //TODO: make sure we don't check attributes that have already been split on
-    public void grow(DataSet data, Node node) {
+    private void grow(DataSet data, Node node) {
         Attribute toSplitOn = bestSplit(data);
-        List<Record> records = data.getData();
-        
+        List<Record> records = data.getRecords();
+
         //IF ONLY 1 RECORD IS IN DATA, toSplitOn WILL BE NULL BECAUSE THERE WOULD BE NO INFORMATION GAIN FROM SPLITTING
-        if(toSplitOn==null){
-            if(!records.isEmpty()){
+        if(toSplitOn == null) {
+            if(!records.isEmpty()) {
                 node.setDecision(records.get(0).getClassificationValue(data));
             }
         } else {
-            
-            Map<String,DataSet> dataSets = DataSet.splitData(data, toSplitOn);
-            
+
+            Map<String, DataSet> dataSets = DataSet.splitData(data, toSplitOn);
+
             node.setAttribute(data, toSplitOn);
             List<String> keys = toSplitOn.getValues();
-            
-            for(int i=0; i<keys.size(); i++){
+
+            for (int i = 0; i < keys.size(); i++) {
                 String key = keys.get(i);
                 Node nextNode = node.getChild(key);
                 DataSet dataSetForNextNode = dataSets.get(key);
                 grow(dataSetForNextNode, nextNode);
             }
-            
+
         }
     }
 
     //helper method for the growTree method, will split the data on the best attribute and return that attribute so
     //that the tree can be grown correctly
-    public Attribute bestSplit(DataSet data) {
-            List<Attribute> attributes = data.getAttributes();
-            Attribute bestAtt=attributes.get(0);
-            double bestGain=0.0;
-            
-            for(int i=0; i<attributes.size()-1; i++){
-                Attribute currentAttribute = attributes.get(i);
-                double currentGain = Entropy.gain(data, currentAttribute);
-                if(currentGain>bestGain){
-                    bestAtt=currentAttribute;
-                    bestGain=currentGain;
-                }
+    private Attribute bestSplit(DataSet data) {
+        List<Attribute> tempAttributes = data.getAttributes();
+        List<Attribute> randomAttributes = randomSample(tempAttributes);
+        Attribute bestAtt = randomAttributes.get(0);
+        double bestGain = 0.0;
+
+        for (int i = 0; i < randomAttributes.size() - 1; i++) {
+            Attribute currentAttribute = randomAttributes.get(i);
+            double currentGain = Entropy.gain(data, currentAttribute);
+            if (currentGain > bestGain) {
+                bestAtt = currentAttribute;
+                bestGain = currentGain;
             }
-            
-            if(bestGain==0.0){
-                return null;
-            } else {
-                return bestAtt;
-            }
+        }
+
+        if (bestGain == 0.0) {
+            return null;
+        } else {
+            return bestAtt;
+        }
     }
 
+    private List<Attribute> randomSample(List<Attribute> atts) {
+        Random randomGenerator = new Random();
+        List<Attribute> randomSample = new ArrayList<>();
+        for (int i = 0; i < ATTRIBUTE_SAMPLE_SIZE; i++) {
+            /*need the -1 because we dont want to count the classificaiton value for
+            this random splitting*/
+            Attribute toBeAdded = atts.get(randomGenerator.nextInt(atts.size() - 1));
+            //makes sure we don't get any duplicates
+            if (!randomSample.contains(toBeAdded)) {
+                randomSample.add(toBeAdded);
+            } else {
+                i--;
+            }
+        }
+        return randomSample;
+    }
+
+    /*
+    TODO interesting thing happens in the method when combine with RandomForest Algorithm
+    it is possible to have a valid record but reach a place in a tree where
+    you can no longer progress down the tree.  need to figure out how we want to handle
+    this issue
+    */
     public String query(Record r) {
 
         Node currentNode = head;
-        while(true) {
+        while (true) {
             String classification = currentNode.getDecision();
-            if(classification != null) {
+            if (classification != null) {
                 return classification;
             }
             Attribute currentAtt = currentNode.getAttribute();
@@ -87,9 +114,24 @@ public class DecisionTree {
             if (keys.contains(value)) {
                 currentNode = currentNode.getChild(value);
             } else {
-                return "Error test record: " + r + "cannot be classified because it does not match the training data";
+                //System.out.println(keys);
+                //System.out.println(value);
+                //System.out.println();
+                return ERROR_MESSAGE;//"Error test record: " + r + "cannot be classified because it does not match the training data";
             }
         }
+    }
+
+    //TODO: we really should change how we get the classification of a record, it is just ugly right now
+    public boolean testRecord(Record r, DataSet data) {
+        String guess = this.query(r);
+        if(guess.equals(ERROR_MESSAGE)) counter++;
+        //System.out.println(guess);
+        //System.out.println(r.getClassificationValue(data));
+        if (guess.equals(r.getClassificationValue(data))) {
+            return true;
+        }
+        return false;
     }
 
     //could just be like ascii art shown on the console to start and then a gui later
@@ -171,6 +213,23 @@ public class DecisionTree {
             return s;
         }
         
+    }
+
+    private class MutableString {
+        private String s;
+
+        public MutableString(){
+            s="";
+        }
+
+        public void add(String string){
+            s+=string;
+        }
+
+        public String get(){
+            return s;
+        }
+
     }
 
 }

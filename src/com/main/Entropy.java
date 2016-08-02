@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Entropy {
+class Entropy {
 
 	/**
      * entropy of total data set
      */
-	public static double entropy(DataSet set) {
-            List<Record> data = set.getData();
+	private static double entropy(DataSet set) {
+            List<Record> data = set.getRecords();
             if(data.isEmpty()) {
                 return 0.0;
             }
@@ -60,7 +60,7 @@ public class Entropy {
      * @param att The Attribute to used to calculate entropy
      */
 	
-    public static double attributeEntropy(DataSet dataSet, Attribute att) {
+    private static double attributeEntropy(DataSet dataSet, Attribute att) {
         //Intializing values needed
         List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
         Map<String,DataSet> dataSets = DataSet.splitData(dataSet, att);
@@ -69,9 +69,9 @@ public class Entropy {
         double attEntropy = 0.0;
         for(int i=0; i<attValues.size(); i++) {
             String currentKey = attValues.get(i);
-            List<Record> currentRecords = dataSets.get(currentKey).getData();
+            List<Record> currentRecords = dataSets.get(currentKey).getRecords();
             
-            double proportion = ((double) currentRecords.size())/dataSet.getData().size();
+            double proportion = ((double) currentRecords.size())/dataSet.getRecords().size();
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
             attList.add(att);

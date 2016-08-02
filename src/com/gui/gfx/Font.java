@@ -26,7 +26,7 @@ public abstract class Font {
             return null;
         }
         
-        int numLines = getNumber(s, "\n");
+        int numLines = getNumber(s, "\n")+1;
         int longestSubstring = longestLengthBetweenString(s, "/n");
         
         BufferedImage bi = new BufferedImage(longestSubstring*charWidth, charHeight*numLines, BufferedImage.TYPE_INT_ARGB);
@@ -71,7 +71,7 @@ public abstract class Font {
         return fontImage;
     }
     
-    public static int getNumber(String container, String check){
+    private static int getNumber(String container, String check){
         return container.length() - container.replace(check,"").length();
     }
     
@@ -79,12 +79,16 @@ public abstract class Font {
         String[] strings = container.split(check);
         int maxSize = 0;
         for(int i=0;i<strings.length; i++){
-            int stringLength = strings[i].length()+(TAB_SIZE-1)*(getNumber(strings[i], "\t"));
+            int stringLength = stringLength(strings[i]);
             if(stringLength>maxSize){
                 maxSize=stringLength;
             }
         }
         
         return maxSize;
+    }
+    
+    public static int stringLength(String s){
+        return s.length()+(TAB_SIZE-1)*getNumber(s,"\t")/*-getNumber(s,"\n")*/;
     }
 }

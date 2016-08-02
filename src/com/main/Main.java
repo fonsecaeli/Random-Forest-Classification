@@ -2,6 +2,7 @@ package com.main;
 
 import com.gui.gfx.Font;
 import com.gui.gfx.Screen;
+import com.gui.gfx.SideBar;
 import com.gui.input.ImageHandler;
 import java.util.Scanner;
 public class Main {
@@ -27,6 +28,8 @@ public class Main {
             DataSet ds = ImportData.importData(input);
             DecisionTree tree = new DecisionTree(ds);
             System.out.println(tree);*/
+            SideBar sb = new SideBar(screen);
+            sb.render(screen);
             screen.render();
             screen.render();
             screen.render();

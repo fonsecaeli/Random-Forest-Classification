@@ -65,12 +65,22 @@ public class Node {
         return decision;
     }
 	
-    public String toString(){
+    public String toStringColor(){
 	String toReturn = "[Option: \u001B[31m"+keyString+"\u001B[0m";
 		if (att != null){
 			toReturn+=" | Attribute: \u001B[47m"+att.getName()+"\u001B[0m]";
 		} else if(decision!=null && !decision.equals(""))
 			toReturn+="][Classification: \u001B[34m"+decision+"]\u001B[0m";
+		return toReturn;
+    }
+	
+    @Override
+    public String toString(){
+	String toReturn = "[Option: "+keyString;
+		if (att != null){
+			toReturn+=" | Attribute: "+att.getName()+"]";
+		} else if(decision!=null && !decision.equals(""))
+			toReturn+="][Classification: "+decision+"]";
 		return toReturn;
     }
 

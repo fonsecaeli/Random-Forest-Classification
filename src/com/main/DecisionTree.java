@@ -171,25 +171,16 @@ public class DecisionTree {
         if(n.getAttribute()!=null){
             Set<String> keys = n.getKeys();
             List<String> listOfKeys = new ArrayList<>();
-
+            
             for(String key : keys){
                 listOfKeys.add(key);
             }
-
+            
             for(int i=0; i<listOfKeys.size(); i++){
                 String key = listOfKeys.get(i);
                 toStringRecursive(s, deep+1, n.getChild(key), i==listOfKeys.size()-1, doColor);
             }
-                        /*or this, doesn't really work because the node doesn't necessarily have a child for each value in attributes
-                int i=0;
-                for(String key : keys){
-			toStringRecursive(s, deep+1, n.getChild(key), i==n.getAttribute().getValues().size()-1);
-                        i++;
-		}
-                        
-                */
         }
-        return s;
     }
 
 
@@ -205,6 +196,23 @@ public class DecisionTree {
         }
         if(doColor)s+="\u001B[0m";
 	return s;
+    }
+    
+    private class MutableString {
+        private String s;
+        
+        public MutableString(){
+            s="";
+        }
+        
+        public void add(String string){
+            s+=string;
+        }
+        
+        public String get(){
+            return s;
+        }
+        
     }
 
     private class MutableString {

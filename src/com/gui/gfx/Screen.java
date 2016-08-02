@@ -4,9 +4,13 @@ package com.gui.gfx;
 import com.gui.input.KeyboardInputListener;
 import com.gui.input.MouseInputListener;
 import com.gui.input.MouseMotionInputListener;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import javax.swing.JFrame;
 
 class Screen extends Canvas {
     private int WIDTH = 512;
@@ -38,11 +42,15 @@ class Screen extends Canvas {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
+        init();
     }
     
     public void init() {
         requestFocus();
 
+        draw=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouseMovement);
         this.addKeyListener(keyboard);
@@ -57,7 +65,7 @@ class Screen extends Canvas {
     }
     
     public void render(){
-        BufferStrategy bs = this.getBufferStrategy();
+        BufferStrategy bs = getBufferStrategy();
         
         if (bs==null){
             createBufferStrategy(3);
@@ -65,14 +73,26 @@ class Screen extends Canvas {
         }
         Graphics g = bs.getDrawGraphics();
         
-        g.setColor(new Color(0,0,0));
-        g.fillRect(0,0,getWidth(),getHeight());
+        /*g.setColor(Color.BLACK);
+        g.fillRect(0,0,getWidth(),getHeight());*/
 
+        
+        g.drawImage(draw,0,0,null);
         
         g.dispose();
         bs.show();
+        
     }
 
+    public void drawImage(BufferedImage image, int x, int y) {
+        if(image == null){
+            return;
+        }
+        Graphics g = draw.getGraphics();
+        g.drawImage(image, x, y, null);
+    }
+
+    
     /**
      * used to set offset
      */

@@ -73,12 +73,6 @@ public class RandomForest {
         }
         System.out.println("incorrect: "+incorrect);
         System.out.println("correct: "+correct);
-        int tot = 0;
-        for(DecisionTree t: trees) {
-            tot += t.counter;
-        }
-        //System.out.println(tot);
-        System.out.println("% of incorrect because of architecture of the trees: "+(double)tot/incorrect);
         return (double)incorrect/(correct+incorrect);
     }
 

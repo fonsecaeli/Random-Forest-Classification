@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Interactable {
+
 	private int x, y, width, height;
-        private List<Interactable> interactables;
+    private List<Interactable> interactables;
 	private BufferedImage image;
 	
 	public Interactable(int x, int y, int width, int height){

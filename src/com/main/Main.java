@@ -42,8 +42,8 @@ public class Main {
             screen.render();
             screen.render();*/
 
-        DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\tic_tac_toeData.csv");
-        RandomForest f = new RandomForest(d, 10, 3);
+        DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
+        RandomForest f = new RandomForest(d, 10, 1);
         System.out.println(f.oob());
     }
 }

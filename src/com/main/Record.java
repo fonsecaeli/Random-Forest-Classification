@@ -36,6 +36,7 @@ public class Record{
 	*/
     public String getValue(Attribute att) {
         if(att instanceof ContinuousAttribute) {
+            System.out.println(att.getClass());
             ContinuousAttribute cAtt = (ContinuousAttribute) att;
             return cAtt.getBucket(data.get(att));
         }

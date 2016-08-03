@@ -66,13 +66,6 @@ class Entropy {
         List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
         Map<String,DataSet> dataSets = DataSet.splitData(dataSet, att);
 
-        //sortedRecords should be filled
-
-        //System.out.println(att+" | Entropy: "+attEntropy);
-        return helper(dataSet, dataSets, attValues);
-    }
-
-    private static double helper(DataSet dataSet, Map<String, DataSet> dataSets, List<String> attValues) {
         double attEntropy = 0.0;
         for(int i=0; i<attValues.size(); i++) {
             String currentKey = attValues.get(i);
@@ -92,7 +85,10 @@ class Entropy {
             //System.out.print(dataSetEntropy+" ");
         }
         return attEntropy;
+        //sortedRecords should be filled
+        //System.out.println(att+" | Entropy: "+attEntropy);
     }
+
 
     /**
      * calculates the information gain associated with splitting the data on a specific attribute
@@ -126,6 +122,7 @@ class Entropy {
             Attribute toAdd = atts.get(i);
             if(continuous) {
                 double cutOff = detCutOff(r, atts, atts.get(i));
+                System.out.println(cutOff);
                 toAdd = new ContinuousAttribute(atts.get(i).getName(), cutOff);
             }
             else if(flagged) {
@@ -136,11 +133,26 @@ class Entropy {
         return newAtts;
     }
 
-    //TODO write this method!!!
     private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
         Collections.sort(r, new AttributeSorter(att));
-        return 0;
+        double bestGain = 0.0;
+        double cutOff = Double.parseDouble(r.get(r.size()/2).getValue(att));
+        for(int i = 0; i < r.size(); i++) {
+            List<Record> low = r.subList(0, i);
+            List<Record> high = r.subList(i, r.size());
+            double gain = gainForLists(r, atts, high, low);
+            if(gain > bestGain) {
+                cutOff = Double.parseDouble(r.get(i).getValue(att));
+                System.out.println("cutOff has been calculated");
+            }
+        }
+        return cutOff;
+    }
 
+    private static double gainForLists(List<Record> data, List<Attribute> atts, List<Record> high, List<Record> low) {
+        double postSplit = ((double)low.size()/data.size())*entropy(new DataSet(atts, low))+((double)high.size()/data.size())*entropy(new DataSet(atts, high));
+        double preSplit = entropy(new DataSet(atts, data));
+        return preSplit - postSplit;
     }
 
     /**

@@ -2,6 +2,8 @@ package com.main;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
 
 public class Record{
@@ -14,7 +16,7 @@ public class Record{
 	* Initializes data
 	*/
     public Record(){
-            data = new LinkedHashMap<>();
+        data = new LinkedHashMap<>();
     }
 
 	/**
@@ -35,6 +37,9 @@ public class Record{
 	* Input key, get value
 	*/
     public String getValue(Attribute att) {
+        if(data.get(att) == null) {
+            System.out.println(att);
+        }
         if(att instanceof ContinuousAttribute) {
             System.out.println(att.getClass());
             ContinuousAttribute cAtt = (ContinuousAttribute) att;
@@ -42,7 +47,18 @@ public class Record{
         }
         return data.get(att);
     }
-    
+
+    public void changeKeys(List<Attribute> atts) {
+        Set<Attribute> keys = data.keySet();
+        if(keys.size() != atts.size()) {
+            throw new IllegalArgumentException("cannot change keys because new keylist is not correct length");
+        }
+        for(int i = 0; i < atts.size(); i++) {
+
+        }
+
+    }
+
 	/**
 	* Input key, get value
 	*/

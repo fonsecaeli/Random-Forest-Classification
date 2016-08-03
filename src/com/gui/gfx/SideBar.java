@@ -7,10 +7,10 @@ import java.awt.event.MouseEvent;
 public class SideBar extends Interactable{
 	
 	private SideBar(Screen screen){
-		this(100, 0, screen);
+		this(100, 0, 0,0,screen);
 	}
 	
-	public SideBar(int x, int y, Screen screen){
+	public SideBar(int x, int y, int width, int height, Screen screen){
 		super(x, y, screen.getWidth()-x, screen.getHeight()-y);
 		initImage(screen);
                 addInteractable(new LoadButton(screen, this));

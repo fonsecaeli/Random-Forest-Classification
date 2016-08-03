@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class Button extends Interactable {
 	private String name;
         private int status;
-	public static final int XBORDER = 6, YBORDER = 6;//16,10
+	public static final int XBORDER = 16, YBORDER = 10;//16,10
 	public static final int OFF = 0, HOVER = 1, CLICK = 2;
         public static final Color OFF_COLOR = new Color(175, 175, 175), 
                                   HOVER_COLOR = new Color(75, 75, 75), 
@@ -90,5 +90,13 @@ public class Button extends Interactable {
         
         public void onAction(MouseEvent me){
             
+        }
+        
+        public static int getWidth(String name){
+            return (Font.stringWidth(name)+2*Button.XBORDER)/2;
+        }
+        
+        public static int getHeight(String name){
+            return (Font.stringHeight(name)+2*Button.YBORDER)/2;
         }
 }

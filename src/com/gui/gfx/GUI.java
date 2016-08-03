@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 public class GUI extends Interactable{
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
-    public static final double VIEWER_WIDTH_PROPORTION = 0.9;
+    public static final double VIEWER_WIDTH_PROPORTION = 0.8;
     
     public GUI(Screen screen){
         super(0, 0, screen.getWidth(), screen.getHeight());

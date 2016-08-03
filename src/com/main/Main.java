@@ -13,31 +13,12 @@ public class Main {
             //System.out.println("Input the font file: ");
             //String fontInput = scanner.nextLine();
             //fontInput = fontInput.replace("\'", "").replace("\"", "");
-            ImageHandler ih = new ImageHandler("/font.png");
+            new ImageHandler("/font.png");
             Font.init(8,14);
-            
             
             Screen screen = new Screen(1280,700);
             GUI gui = new GUI(screen);
             screen.setInput(gui);
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            screen.render();
-            //For Ben: ImportData.importData("C:\\Users\\Benjamin 2\\Documents\\NetBeansProjects\\RandomForestClassification\\RandomForestClassification\\src\\tic_tac_toeData.csv");
-            /*System.out.print("Input your file path here and click enter: ");
-            String input = scanner.nextLine();
-            input = input.replace("\'", "").replace("\"", "");
-            DataSet ds = ImportData.importData(input);
-            DecisionTree tree = new DecisionTree(ds);
-            System.out.println(tree);*/
-            /*SideBar sb = new SideBar(screen, 1000, 0);
-            sb.render(screen);*/
-            gui.render(screen);
-            screen.render();
-            screen.render();
-            screen.render();
 		while(true) {
 			gui.render(screen);
 			screen.render();

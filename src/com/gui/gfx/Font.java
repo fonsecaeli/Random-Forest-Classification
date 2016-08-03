@@ -4,9 +4,6 @@ package com.gui.gfx;
 import com.gui.input.ImageHandler;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public abstract class Font {
     private static final int TAB_SIZE=4;
@@ -95,7 +92,16 @@ public abstract class Font {
         return maxSize;
     }
     
+    //no \n chars allowed
     public static int stringLength(String s){
         return s.length()+(TAB_SIZE-1)*getNumber(s,"\t")/*-getNumber(s,"\n")*/;
+    }
+    
+    public static int stringWidth(String s){
+        return longestLengthBetweenString(s,"\n")*charWidth;
+    }
+    
+    public static int stringHeight(String s){
+        return (1+getNumber(s,"\n"))*charHeight;
     }
 }

@@ -13,8 +13,8 @@ public class SideBar extends Interactable{
 	public SideBar(int x, int y, int width, int height, Screen screen){
             super(x, y, width, height);
             initImage();
-            addInteractable(new LoadButton(screen, this));
-            //addInteractable(new SaveButton(screen, this));
+            addInteractable(new LoadButton(getX()+getWidth()/2-Button.getWidth(LoadButton.TITLE), 64));
+            addInteractable(new SaveButton(getX()+getWidth()/2-Button.getWidth(SaveButton.TITLE), 128));
 	}
 	
 	private void initImage(){
@@ -23,16 +23,17 @@ public class SideBar extends Interactable{
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(BORDER_COLOR);
             g.drawLine(0, 0 , 0, getHeight());
-            System.out.println(getImage().getWidth()+", "+getImage().getHeight());
 	}
         
 	private class LoadButton extends Button {
-		public LoadButton(Screen screen, SideBar sb){
-			super((((screen.getWidth()-sb.getX())/2)-(("Load...".length()*Font.getCharWidth()+Button.XBORDER)/2)+sb.getX()), 64, "Load...");
-		}
-		
-                @Override
-		public void onAction(MouseEvent me){
+            private static final String TITLE = "Load...";
+            
+            public LoadButton(int x, int y){
+                    super(x, y, TITLE);
+            }
+
+            @Override
+            public void onAction(MouseEvent me){
                     JFileChooser chooser = new JFileChooser();
                     chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
                     int returnVal = chooser.showOpenDialog(null);
@@ -47,17 +48,18 @@ public class SideBar extends Interactable{
 	}
 	
 	private class SaveButton extends Button {
-            public SaveButton(Screen screen, SideBar sb){
-                super((((screen.getWidth()-sb.getX())/2)-(("Save As...".length()*Font.getCharWidth()+Button.XBORDER)/2)+sb.getX()), 128, "Save As...");
+            private static final String TITLE = "Save As...";
+            
+            public SaveButton(int x, int y){
+                super(x, y, TITLE);
             }
 
             /**
             * This, for the moment, uses the open dialog THIS NEEDS TO BE CHANGED TO A SAVE DIALOG
             */
-
             @Override
             public void onAction(MouseEvent me){
-                JFileChooser chooser = new JFileChooser();
+                /*JFileChooser chooser = new JFileChooser();
                 chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
                 int returnVal = chooser.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION){
@@ -66,7 +68,7 @@ public class SideBar extends Interactable{
                         System.out.println("You chose to open this file: "+filePath);
                         //StaticStorage.newData(chooser.getSelectedFile());
                     }
-                }
+                }*/
             }
 
 	}

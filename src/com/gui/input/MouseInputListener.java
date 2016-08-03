@@ -13,7 +13,7 @@ public class MouseInputListener implements MouseListener{
     
     @Override
     public void mousePressed(MouseEvent me) {
-        
+        if(i.contains(me))i.mousePressed(me);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class MouseInputListener implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        if(i.contains(me))i.mouseClicked(me);
+        if(i.contains(me))i.mouseReleased(me);
     }
 
     @Override

@@ -63,6 +63,24 @@ public abstract class Interactable {
             }
         }
         
+	public void mousePressed(MouseEvent me){
+            for(Interactable i : interactables){
+                if(i.contains(me)){
+                    i.mousePressed(me);
+                }
+            }
+        }
+        
+	public void mouseReleased(MouseEvent me){
+            for(Interactable i : interactables){
+                if(i.contains(me)){
+                    i.mouseReleased(me);
+                } else {
+                    i.mouseNotHovered(me);
+                }
+            }
+        }
+        
 	public void mouseNotHovered(MouseEvent me){
             for(Interactable i : interactables){
                 if(!i.contains(me)){
@@ -85,6 +103,8 @@ public abstract class Interactable {
             for(Interactable i : interactables){
                 if(i.contains(me)){
                     i.mouseDragged(me);
+                } else {
+                    i.mouseNotHovered(me);
                 }
             }
         }

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Button extends Interactable {
 	private String name;
+        private int status;
 	public static final int XBORDER = 6, YBORDER = 6;
 	public static final int OFF = 0, HOVER = 1, CLICK = 2;
         public static final Color OFF_COLOR = new Color(175, 175, 175), 
@@ -52,10 +53,15 @@ public class Button extends Interactable {
 	}
 	
         @Override
-	public void mouseClicked(MouseEvent me){
+	public void mouseDragged(MouseEvent me){
+            refreshImage(HOVER);
+	}
+        
+        @Override
+	public void mousePressed(MouseEvent me){
             refreshImage(CLICK);
 	}
-
+        
         @Override
         public void mouseHovered(MouseEvent me) {
             refreshImage(HOVER);

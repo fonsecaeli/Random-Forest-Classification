@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SideBar extends Interactable{
-        public static final Color BACKGROUND_COLOR = new Color(175, 35, 175);
+        public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
         public static final Color BORDER_COLOR = new Color(75, 75, 75);
 	
 	public SideBar(int x, int y, int width, int height, Screen screen){
@@ -20,9 +20,10 @@ public class SideBar extends Interactable{
 	private void initImage(){
             Graphics g = getImage().getGraphics();
             g.setColor(BACKGROUND_COLOR);
-            g.fillRect(getX(), getY(), getWidth(), getHeight());
+            g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(BORDER_COLOR);
-            g.drawLine(getX(), getY(), getX()+1, getHeight());
+            g.drawLine(0, 0 , 0, getHeight());
+            System.out.println(getImage().getWidth()+", "+getImage().getHeight());
 	}
         
 	private class LoadButton extends Button {

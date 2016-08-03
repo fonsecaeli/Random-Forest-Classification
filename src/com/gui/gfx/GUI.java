@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 public class GUI extends Interactable{
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
+    public static final double VIEWER_WIDTH_PROPORTION = 0.9;
     
     public GUI(Screen screen){
         super(0, 0, screen.getWidth(), screen.getHeight());
@@ -20,7 +21,7 @@ public class GUI extends Interactable{
     }
     
     private final void init(Screen screen){
-        addInteractable(new SideBar((int)(screen.getWidth()*.8), 0,(int)(screen.getWidth()*.2), screen.getHeight(), screen));
-        addInteractable(new Viewer(0, 0,(int)(screen.getWidth()*.8), screen.getHeight(), screen));
+        addInteractable(new SideBar((int)(screen.getWidth()*VIEWER_WIDTH_PROPORTION), 0,(int)(screen.getWidth()*(1-VIEWER_WIDTH_PROPORTION)), screen.getHeight(), screen));
+        addInteractable(new Viewer(0, 0,(int)(screen.getWidth()*VIEWER_WIDTH_PROPORTION), screen.getHeight(), screen));
     }
 }

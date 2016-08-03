@@ -39,9 +39,9 @@ public class SideBar extends Interactable{
 			int returnVal = chooser.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION){
 				String filePath = chooser.getSelectedFile().getPath();
-				if (filePath.substring(filePath.length()-4, filePath.length()).equals(".csv")){
+				if (filePath.substring(filePath.length()-4).equals(".csv")){
 					System.out.println("You chose to open this file: "+filePath);
-					//StaticStorage.newData(chooser.getSelectedFile().getName());
+					//com.main.StaticStorage.newData(chooser.getSelectedFile());
 				}
 			}
 		}
@@ -63,9 +63,9 @@ public class SideBar extends Interactable{
 			int returnVal = chooser.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION){
 				String filePath = chooser.getSelectedFile().getPath();
-				if (filePath.substring(filePath.length()-4, filePath.length()).equals(".csv")){
+				if (filePath.substring(filePath.length()-4).equals(".csv")){
 					System.out.println("You chose to open this file: "+filePath);
-					//StaticStorage.newData(chooser.getSelectedFile().getName());
+					//StaticStorage.newData(chooser.getSelectedFile());
 				}
 			}
 		}

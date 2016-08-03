@@ -63,18 +63,20 @@ public abstract class Interactable {
             }
         }
         
-	public void mouseReleased(MouseEvent me){
+	public void mouseNotHovered(MouseEvent me){
             for(Interactable i : interactables){
-                if(i.contains(me)){
-                    i.mouseReleased(me);
+                if(!i.contains(me)){
+                    i.mouseNotHovered(me);
                 }
             }
         }
         
-	public void mouseMoved(MouseEvent me){
+	public void mouseHovered(MouseEvent me){
             for(Interactable i : interactables){
                 if(i.contains(me)){
-                    i.mouseMoved(me);
+                    i.mouseHovered(me);
+                } else {
+                    i.mouseNotHovered(me);
                 }
             }
         }

@@ -31,7 +31,7 @@ public class SideBar extends Interactable{
 		}
 		
                 @Override
-		public void mouseReleased(MouseEvent me){
+		public void onAction(MouseEvent me){
                     JFileChooser chooser = new JFileChooser();
                     chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
                     int returnVal = chooser.showOpenDialog(null);
@@ -55,7 +55,7 @@ public class SideBar extends Interactable{
             */
 
             @Override
-            public void mouseReleased(MouseEvent me){
+            public void onAction(MouseEvent me){
                 JFileChooser chooser = new JFileChooser();
                 chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
                 int returnVal = chooser.showOpenDialog(null);

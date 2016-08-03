@@ -19,25 +19,35 @@ public class Button extends Interactable {
             this(x, y, Font.getCharWidth()*name.length()+(2*XBORDER), Font.getCharHeight()+(2*YBORDER), name);
 	}
 	
-	private Button(int x, int y, int width, int height, String name){
+	private Button(int x, int y, int width, int height, String n){
             super(x, y, width, height);
-            this.name = name;
+            name = n;
+            status = OFF;
             initImage();
-            refreshImage(OFF);
+            refreshImage();
 	}
 	
 	public final String getName(){
             return name;
 	}
+        
+        public final int getStatus(){
+            return status;
+        }
 	
-	public void refreshImage(int status){
+	public void refreshStatus(int s){
+            status = s;
+            refreshImage();
+	}
+        
+        public void refreshImage(){
             Graphics g = getImage().getGraphics();
 
-            if (status == OFF)
+            if (getStatus() == OFF)
                     g.setColor(OFF_COLOR);
-            else if (status == HOVER)
+            else if (getStatus() == HOVER)
                     g.setColor(HOVER_COLOR);
-            else if (status == CLICK)
+            else if (getStatus() == CLICK)
                     g.setColor(CLICK_COLOR);
             else g.setColor(NULL_COLOR);
 
@@ -54,21 +64,31 @@ public class Button extends Interactable {
 	
         @Override
 	public void mouseDragged(MouseEvent me){
-            refreshImage(HOVER);
+            refreshStatus(HOVER);
 	}
         
         @Override
 	public void mousePressed(MouseEvent me){
-            refreshImage(CLICK);
+            refreshStatus(CLICK);
 	}
         
         @Override
         public void mouseHovered(MouseEvent me) {
-            refreshImage(HOVER);
+            refreshStatus(HOVER);
         }
         
         @Override
         public void mouseNotHovered(MouseEvent me) {
-            refreshImage(OFF);
+            refreshStatus(OFF);
+        }
+        
+        @Override
+        public void mouseReleased(MouseEvent me) {
+            if(getStatus()==CLICK)
+                onAction(me);
+        }
+        
+        public void onAction(MouseEvent me){
+            
         }
 }

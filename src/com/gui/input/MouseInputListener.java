@@ -1,17 +1,14 @@
 package com.gui.input;
 
-import com.gui.gfx.GUI;
 import com.gui.gfx.Interactable;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MouseInputListener implements MouseListener{
-    private GUI gui;
+    private Interactable i;
     
-    public MouseInputListener(GUI g){
-        gui = g;
+    public MouseInputListener(Interactable a){
+        i = a;
     }
     
     @Override
@@ -21,12 +18,12 @@ public class MouseInputListener implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if(gui.contains(me))gui.mouseClicked(me);
+        if(i.contains(me))i.mouseClicked(me);
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        if(gui.contains(me))gui.mouseClicked(me);
+        if(i.contains(me))i.mouseClicked(me);
     }
 
     @Override

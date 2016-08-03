@@ -34,7 +34,14 @@ public abstract class Font {
         int xToDraw=0, yToDraw=0;
         for(int i=0; i<s.length(); i++){
             int asciiCode = (int)s.charAt(i);
-            if(asciiCode==10){
+            if(!(asciiCode>=0&&asciiCode<=255)){
+                BufferedImage charImage = fontImage.getSubimage(charWidth*(0),
+                                                                charHeight*(0),
+                                                                charWidth,
+                                                                charHeight);
+                g.drawImage(charImage, xToDraw, yToDraw, null);
+                xToDraw+=charWidth;
+            } else if(asciiCode==10){
                 xToDraw=0;
                 yToDraw+=charHeight;
             } else if(asciiCode==9){

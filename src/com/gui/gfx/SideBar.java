@@ -7,26 +7,24 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SideBar extends Interactable{
-	
-	private SideBar(Screen screen){
-		this(100, 0, 0,0,screen);
-	}
+        public static final Color BACKGROUND_COLOR = new Color(175, 175, 175);
+        public static final Color BORDER_COLOR = new Color(75, 75, 75);
 	
 	public SideBar(int x, int y, int width, int height, Screen screen){
-		super(x, y, screen.getWidth()-x, screen.getHeight()-y);
-		initImage(screen);
-                addInteractable(new LoadButton(screen, this));
-                addInteractable(new SaveButton(screen, this));
+            super(x, y, width, height);
+            initImage();
+            addInteractable(new LoadButton(screen, this));
+            //addInteractable(new SaveButton(screen, this));
 	}
 	
-	private void initImage(Screen screen){
-                Graphics g = getImage().getGraphics();
-		g.setColor(new Color(75, 75, 75));
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
-		g.setColor(new Color(75, 75, 75));
-		g.drawLine(getX(), getY(), getX(), getHeight());
+	private void initImage(){
+            Graphics g = getImage().getGraphics();
+            g.setColor(BACKGROUND_COLOR);
+            g.fillRect(getX(), getY(), getWidth(), getHeight());
+            g.setColor(BORDER_COLOR);
+            g.drawLine(getX(), getY(), getX()+1, getHeight());
 	}
-	
+        
 	private class LoadButton extends Button {
 		public LoadButton(Screen screen, SideBar sb){
 			super((((screen.getWidth()-sb.getX())/2)-(("Load...".length()*Font.getCharWidth()+Button.XBORDER)/2)+sb.getX()), 64, "Load...");
@@ -41,7 +39,7 @@ public class SideBar extends Interactable{
 				String filePath = chooser.getSelectedFile().getPath();
 				if (filePath.substring(filePath.length()-4).equals(".csv")){
 					System.out.println("You chose to open this file: "+filePath);
-					//com.main.StaticStorage.newData(chooser.getSelectedFile());
+					com.main.StaticStorage.newData(chooser.getSelectedFile());
 				}
 			}
 		}

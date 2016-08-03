@@ -9,6 +9,10 @@ public class Button extends Interactable {
 	private String name;
 	public static final int XBORDER = 6, YBORDER = 6;
 	public static final int OFF = 0, HOVER = 1, CLICK = 2;
+        public static final Color OFF_COLOR = new Color(175, 175, 175), 
+                                  HOVER_COLOR = new Color(75, 75, 75), 
+                                  CLICK_COLOR = new Color(77, 144, 254),
+                                  NULL_COLOR = Color.BLACK;
 	
 	public Button(int x, int y, String name){
             this(x, y, Font.getCharWidth()*name.length()+(2*XBORDER), Font.getCharHeight()+(2*YBORDER), name);
@@ -29,12 +33,12 @@ public class Button extends Interactable {
             Graphics g = getImage().getGraphics();
 
             if (status == OFF)
-                    g.setColor(new Color(175, 175, 175));
+                    g.setColor(OFF_COLOR);
             else if (status == HOVER)
-                    g.setColor(new Color(75, 75, 75));
+                    g.setColor(HOVER_COLOR);
             else if (status == CLICK)
-                    g.setColor(new Color(77, 144, 254));
-            else g.setColor(Color.BLACK);
+                    g.setColor(CLICK_COLOR);
+            else g.setColor(NULL_COLOR);
 
             g.drawRect(0, 0, getImage().getWidth()-1, getImage().getHeight()-1);
 	}

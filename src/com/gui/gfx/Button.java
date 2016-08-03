@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Button extends Interactable {
 	private String name;
-	public static final int XBORDER = 2, YBORDER = 2;
+	public static final int XBORDER = 6, YBORDER = 6;
 	public static final int OFF = 0, HOVER = 1, CLICK = 2;
 	
 	public Button(int x, int y, String name){
@@ -53,7 +53,12 @@ public class Button extends Interactable {
 	}
 
         @Override
-        public void mouseMoved(MouseEvent me) {
+        public void mouseHovered(MouseEvent me) {
             refreshImage(HOVER);
+        }
+        
+        @Override
+        public void mouseNotHovered(MouseEvent me) {
+            refreshImage(OFF);
         }
 }

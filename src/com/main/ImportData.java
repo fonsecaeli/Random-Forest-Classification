@@ -17,7 +17,7 @@ public class ImportData {
 	 */
 	public static DataSet importData(String fileName){
 		List<Attribute> attributes = new ArrayList<>();
-		ArrayList <Record> data = new ArrayList <>();
+		List<Record> data = new ArrayList <>();
 		String[] temp = {""};
 		String line = "";
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
@@ -37,8 +37,19 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-        attributes = Entropy.bucketContinuousAttributes(attributes, data);
-		return new DataSet(attributes, data);
+        List<Attribute> bucketedAttributes = Entropy.bucketContinuousAttributes(attributes, data);
+        for(int i = 0; i < data.size(); i++) {
+            for(int j = 0; j < attributes.size(); j++) {
+                try {
+                    String str = data.get(i).getValue(bucketedAttributes.get(j));
+                } catch (NullPointerException e) {
+                    Record r = data.get(i);
+                    r.add(bucketedAttributes.get(j), r.getValue(attributes.get(j)));
+                    r.remove(attributes.get(j));
+                }
+            }
+        }
+		return new DataSet(bucketedAttributes, data);
 	}
 	
 	public static DataSet importData(String fileName, List<Attribute> attributes){

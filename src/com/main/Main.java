@@ -43,7 +43,8 @@ public class Main {
             screen.render();*/
 
         DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
-        RandomForest f = new RandomForest(d, 10, 1);
+        RandomForest f = new RandomForest(d, 1, 1);
         System.out.println(f.oob());
+        System.out.println(f);
     }
 }

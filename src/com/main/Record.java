@@ -2,8 +2,6 @@ package com.main;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
 
 
 public class Record{
@@ -25,8 +23,15 @@ public class Record{
     public void add(Attribute attribute, String value){
             data.put(attribute, value);
     }
-	
-	/**
+
+    /**
+     * removes a specified element from the map if it exists
+     */
+    public void remove(Attribute attribute) {
+        data.remove(attribute);
+    }
+
+    /**
 	* Returns the hashmap so data can be retrieved from it
 	*/
     public HashMap <Attribute, String> getData(){
@@ -46,17 +51,6 @@ public class Record{
             return cAtt.getBucket(data.get(att));
         }
         return data.get(att);
-    }
-
-    public void changeKeys(List<Attribute> atts) {
-        Set<Attribute> keys = data.keySet();
-        if(keys.size() != atts.size()) {
-            throw new IllegalArgumentException("cannot change keys because new keylist is not correct length");
-        }
-        for(int i = 0; i < atts.size(); i++) {
-
-        }
-
     }
 
 	/**

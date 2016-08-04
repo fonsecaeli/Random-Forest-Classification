@@ -50,6 +50,23 @@ public abstract class Interactable {
 		return height;
 	}
         
+	
+	public final void setX(int x1){
+		x = x1;
+	}
+	
+	public final void setY(int y1){
+		y = y1;
+	}
+	
+	public final void setWidth(int w){
+		width = w;
+	}
+	
+	public final void setHeight(int h){
+		height = h;
+	}
+        
         public void addInteractable(Interactable i){
             interactables.add(i);
         }

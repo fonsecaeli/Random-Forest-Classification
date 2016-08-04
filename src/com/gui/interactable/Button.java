@@ -11,7 +11,8 @@ public class Button extends Interactable {
     private int status;
     public static final int XBORDER = 16, YBORDER = 10;//16,10
     public static final int OFF = 0, HOVER = 1, CLICK = 2;
-    public static final Color OFF_COLOR = new Color(175, 175, 175), 
+    public static final Color BACKGROUND_COLOR = Color.WHITE,
+                              OFF_COLOR = new Color(175, 175, 175), 
                               HOVER_COLOR = new Color(75, 75, 75), 
                               CLICK_COLOR = new Color(77, 144, 254),
                               NULL_COLOR = Color.BLACK;
@@ -55,9 +56,9 @@ public class Button extends Interactable {
         g.drawRect(0, 0, getImage().getWidth()-1, getImage().getHeight()-1);
     }
 
-    private void initImage(){
+    protected void initImage(){
         Graphics g = getImage().getGraphics();
-        g.setColor(new Color(255, 255, 255));
+        g.setColor(BACKGROUND_COLOR);
         g.fillRect(1, 1, getImage().getWidth()-2, getImage().getHeight()-2);
         BufferedImage text = Font.stringToBufferedImage(name);
         g.drawImage(text, XBORDER, YBORDER, null);

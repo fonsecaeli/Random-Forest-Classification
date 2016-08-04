@@ -67,11 +67,11 @@ public abstract class Interactable {
 		height = h;
 	}
         
-        public void addInteractable(Interactable i){
+        protected void addInteractable(Interactable i){
             interactables.add(i);
         }
         
-        public void removeInteractable(Interactable i){
+        protected void removeInteractable(Interactable i){
             interactables.remove(i);
         }
 	

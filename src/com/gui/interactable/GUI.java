@@ -1,6 +1,7 @@
 
 package com.gui.interactable;
 
+import com.gui.gfx.Font;
 import com.gui.gfx.Screen;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -22,7 +23,13 @@ public class GUI extends Interactable{
     }
     
     private final void init(Screen screen){
-        addInteractable(new SideBar((int)(screen.getWidth()*VIEWER_WIDTH_PROPORTION), 0,(int)(screen.getWidth()*(1-VIEWER_WIDTH_PROPORTION)), screen.getHeight(), screen));
-        addInteractable(new Viewer(0, 0,(int)(screen.getWidth()*VIEWER_WIDTH_PROPORTION), screen.getHeight(), screen));
+        addInteractable(new Viewer(0,
+                                   0,
+                                   (int)(screen.getWidth()*VIEWER_WIDTH_PROPORTION), 
+                                   screen.getHeight(), screen));
+        addInteractable(new SideBar((int)(screen.getWidth()*VIEWER_WIDTH_PROPORTION), 
+                                          0,
+                                          (int)(screen.getWidth()*(1-VIEWER_WIDTH_PROPORTION)), 
+                                          screen.getHeight(), screen));
     }
 }

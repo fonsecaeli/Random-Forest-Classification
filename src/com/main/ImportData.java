@@ -1,10 +1,11 @@
 package com.main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.File;
+import java.util.List;
 
 public class ImportData {
 
@@ -37,7 +38,20 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
+        //buckets the continuous attributes
+        List<Attribute> bucketedAttributes = Entropy.bucketContinuousAttributes(attributes, data);
+        for(int i = 0; i < data.size(); i++) {
+            for(int j = 0; j < attributes.size(); j++) {
+                try {
+                    String str = data.get(i).getValue(bucketedAttributes.get(j));
+                } catch (NullPointerException e) {
+                    Record r = data.get(i);
+                    r.add(bucketedAttributes.get(j), r.getValue(attributes.get(j)));
+                    r.remove(attributes.get(j));
+                }
+            }
+        }
+		return new DataSet(bucketedAttributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
 	
 	public static DataSet importData(File file){
@@ -65,7 +79,7 @@ public class ImportData {
                 String fileName = file.getPath();
 		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
-	
+
 	public static DataSet importData(String fileName, ArrayList <Attribute> attributes){
 		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
@@ -95,7 +109,7 @@ public class ImportData {
 		}
 		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
-	
+
 	public static DataSet importData(File file, ArrayList <Attribute> attributes){
 		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
@@ -123,7 +137,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-                String fileName = file.getPath();
+        String fileName = file.getPath();
 		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
 }

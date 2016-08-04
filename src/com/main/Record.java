@@ -14,7 +14,7 @@ public class Record{
 	* Initializes data
 	*/
     public Record(){
-            data = new LinkedHashMap<>();
+        data = new LinkedHashMap<>();
     }
 
 	/**
@@ -23,8 +23,15 @@ public class Record{
     public void add(Attribute attribute, String value){
             data.put(attribute, value);
     }
-	
-	/**
+
+    /**
+     * removes a specified element from the map if it exists
+     */
+    public void remove(Attribute attribute) {
+        data.remove(attribute);
+    }
+
+    /**
 	* Returns the hashmap so data can be retrieved from it
 	*/
     public HashMap <Attribute, String> getData(){
@@ -35,14 +42,22 @@ public class Record{
 	* Input key, get value
 	*/
     public String getValue(Attribute att) {
-            return data.get(att);
+        if(data.get(att) == null) {
+            //System.out.println(att);
+        }
+        if(att instanceof ContinuousAttribute) {
+            //System.out.println(att.getClass());
+            ContinuousAttribute cAtt = (ContinuousAttribute) att;
+            return cAtt.getBucket(data.get(att));
+        }
+        return data.get(att);
     }
-    
+
 	/**
 	* Input key, get value
 	*/
     public String getClassificationValue(DataSet set) {
-            return data.get(set.getClassification());
+        return data.get(set.getClassification());
     }
 
 	/**

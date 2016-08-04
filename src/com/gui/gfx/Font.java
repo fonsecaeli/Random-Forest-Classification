@@ -4,9 +4,6 @@ package com.gui.gfx;
 import com.gui.input.ImageHandler;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public abstract class Font {
     private static final int TAB_SIZE=4;
@@ -34,7 +31,14 @@ public abstract class Font {
         int xToDraw=0, yToDraw=0;
         for(int i=0; i<s.length(); i++){
             int asciiCode = (int)s.charAt(i);
-            if(asciiCode==10){
+            if(!(asciiCode>=0&&asciiCode<=255)){
+                BufferedImage charImage = fontImage.getSubimage(charWidth*(0),
+                                                                charHeight*(0),
+                                                                charWidth,
+                                                                charHeight);
+                g.drawImage(charImage, xToDraw, yToDraw, null);
+                xToDraw+=charWidth;
+            } else if(asciiCode==10){
                 xToDraw=0;
                 yToDraw+=charHeight;
             } else if(asciiCode==9){
@@ -88,7 +92,16 @@ public abstract class Font {
         return maxSize;
     }
     
+    //no \n chars allowed
     public static int stringLength(String s){
         return s.length()+(TAB_SIZE-1)*getNumber(s,"\t")/*-getNumber(s,"\n")*/;
+    }
+    
+    public static int stringWidth(String s){
+        return longestLengthBetweenString(s,"\n")*charWidth;
+    }
+    
+    public static int stringHeight(String s){
+        return (1+getNumber(s,"\n"))*charHeight;
     }
 }

@@ -1,6 +1,7 @@
 
 package com.gui.gfx;
 
+import com.gui.interactable.GUI;
 import com.gui.input.KeyboardInputListener;
 import com.gui.input.MouseInputListener;
 import com.gui.input.MouseMotionInputListener;
@@ -100,7 +101,6 @@ public class Screen extends Canvas {
         }
         Graphics g = draw.getGraphics();
         g.drawImage(image, x, y, null);
-        render();
     }
 
     

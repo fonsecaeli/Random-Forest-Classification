@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class TabSystem extends Interactable{
     public static final int TAB_HORIZONTAL_SPACING = 4,
-                            TAB_VERTICAL_SPACING = 4;
+                            TAB_VERTICAL_SPACING = 8;
     public static final Color BACKGROUND_COLOR = Color.WHITE,
                               SELECTED_COLOR = Color.WHITE,
                               UNSELECTED_COLOR = new Color(240, 240, 240);
@@ -87,6 +87,10 @@ public class TabSystem extends Interactable{
         refreshTabs();
     }
     
+    public int numTabs(){
+        return keys.size();
+    }
+    
     private List<Tab> list(){
         List<Tab> tabs= new ArrayList<>();
         for(Tab key : keys){
@@ -94,6 +98,12 @@ public class TabSystem extends Interactable{
         }
         return tabs;
     } 
+    
+    public void clear(){
+        tabSet = new HashMap<>();
+        keys = tabSet.keySet();
+        selectedTab = null;
+    }
     
     @Override
     public void render(int xoff, int yoff, Screen screen){

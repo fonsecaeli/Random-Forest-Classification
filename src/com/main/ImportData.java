@@ -37,7 +37,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data);
+		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
 	}
 	
 	public static DataSet importData(File file){
@@ -62,7 +62,8 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data);
+                String fileName = file.getPath();
+		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
 	}
 	
 	public static DataSet importData(String fileName, ArrayList <Attribute> attributes){
@@ -92,7 +93,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data);
+		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
 	}
 	
 	public static DataSet importData(File file, ArrayList <Attribute> attributes){
@@ -122,6 +123,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data);
+                String fileName = file.getPath();
+		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
 	}
 }

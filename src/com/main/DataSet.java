@@ -12,13 +12,15 @@ public class DataSet{
 	 */
     private List <Attribute> attributes;
     private List <Record> data;
+    private String name;
 
 	/**
 	 * Takes the two arrayLists of data and stores them within the class
 	 */
-	public DataSet(List <Attribute> att, List <Record> da){
+	public DataSet(List <Attribute> att, List <Record> da, String n){
 		data = da;
 		attributes = att;
+                name=n;
 	}
 
 	/**
@@ -38,6 +40,10 @@ public class DataSet{
 
     public Attribute getClassification(){
             return attributes.get(attributes.size()-1);
+	}
+    
+    public String getName(){
+            return name;
 	}
 
     /**
@@ -60,7 +66,7 @@ public class DataSet{
                         recordsToAdd.add(r);
                     }
                 }
-                mapping.put(attValues.get(i), new DataSet(data.getAttributes(), recordsToAdd));
+                mapping.put(attValues.get(i), new DataSet(data.getAttributes(), recordsToAdd, data.getName()));
             }
             
             return mapping;

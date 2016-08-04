@@ -35,6 +35,10 @@ public class StaticStorage {
         return randomForests.get(index);
     }
     
+    public static int numDataSets(){
+        return dataSets.size();
+    }
+    
     public static List<DataSet> getDataSets(){
         return dataSets;
     }

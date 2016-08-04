@@ -79,7 +79,7 @@ class Entropy {
 
             //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
             //and the classification) and does a weighted average
-            DataSet ds = new DataSet(attList, currentRecords);
+            DataSet ds = new DataSet(attList, currentRecords, "");
             double dataSetEntropy = entropy(ds);
             attEntropy += dataSetEntropy*proportion;
             //System.out.print(dataSetEntropy+" ");

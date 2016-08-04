@@ -144,9 +144,9 @@ public class RandomForest {
             //makes a list of all the excluded records from each boot strapped data set
             List<Record> oobRecords = new ArrayList<>(dataToSample.getRecords());
             oobRecords.removeAll(newRecords);
-            oobData.add(new DataSet(dataToSample.getAttributes(), oobRecords));
+            oobData.add(new DataSet(dataToSample.getAttributes(), oobRecords, dataToSample.getName()));
 
-            DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords);
+            DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords, data.getName());
             dataSets.add(bootStrappedData);
         }
         return dataSets;

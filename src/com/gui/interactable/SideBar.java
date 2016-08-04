@@ -13,8 +13,8 @@ public class SideBar extends Interactable{
     public SideBar(int x, int y, int width, int height, Screen screen){
         super(x, y, width, height);
         initImage();
-        addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE), 64));
-        addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE), 128));
+        addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, 64));
+        addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, 128));
     }
 
     private void initImage(){

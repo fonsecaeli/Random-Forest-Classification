@@ -37,7 +37,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
+		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
 	
 	public static DataSet importData(File file){
@@ -63,7 +63,7 @@ public class ImportData {
 			e.printStackTrace();
 		}
                 String fileName = file.getPath();
-		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
+		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
 	
 	public static DataSet importData(String fileName, ArrayList <Attribute> attributes){
@@ -93,7 +93,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
+		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
 	
 	public static DataSet importData(File file, ArrayList <Attribute> attributes){
@@ -124,6 +124,6 @@ public class ImportData {
 			e.printStackTrace();
 		}
                 String fileName = file.getPath();
-		return new DataSet(attributes, data, fileName.substring(fileName.lastIndexOf("/")+1));
+		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
 	}
 }

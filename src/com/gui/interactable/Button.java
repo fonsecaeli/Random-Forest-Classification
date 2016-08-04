@@ -96,10 +96,10 @@ public class Button extends Interactable {
     }
 
     public static int getWidth(String name){
-        return (Font.stringWidth(name)+2*Button.XBORDER)/2;
+        return (Font.stringWidth(name)+2*Button.XBORDER);
     }
 
     public static int getHeight(String name){
-        return (Font.stringHeight(name)+2*Button.YBORDER)/2;
+        return (Font.stringHeight(name)+2*Button.YBORDER);
     }
 }

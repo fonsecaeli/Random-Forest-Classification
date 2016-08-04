@@ -65,16 +65,17 @@ public class Viewer extends Interactable{
     public void refreshDataSetsTabSys(){
         if(dataSetsTabSys.numTabs()!=StaticStorage.numDataSets()){
             dataSetsTabSys.clear();
-        }
-        List<DataSet> dataSets = StaticStorage.getDataSets();
-        for(int i=0; i<StaticStorage.numDataSets(); i++){
-            
+            List<DataSet> dataSets = StaticStorage.getDataSets();
+            for(int i=0; i<StaticStorage.numDataSets(); i++){
+                dataSetsTabSys.addTab(dataSets.get(i).getName(), null);
+            }
         }
     }
 
     @Override
     public void render(int xoff, int yoff, Screen screen){
         //refreshImage();
+        refreshDataSetsTabSys();
         super.render(xoff, yoff, screen);
     }
 }

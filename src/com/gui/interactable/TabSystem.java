@@ -4,6 +4,7 @@ package com.gui.interactable;
 import com.gui.gfx.Screen;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -120,6 +121,10 @@ public class TabSystem extends Interactable{
         selectedTab = null;
     }
     
+    public Interactable get(Tab t){
+        return tabSet.get(t);
+    }
+    
     @Override
     public void render(int xoff, int yoff, Screen screen){
         super.render(xoff, yoff, screen);
@@ -139,6 +144,7 @@ public class TabSystem extends Interactable{
             tabs.get(i).setX(currentLength+TAB_HORIZONTAL_SPACING);
         }
     }
+    
     
     
     /* Yeah, this is too much work. Don't import so many datasets or something. Maybe cap the number of tabs. idk

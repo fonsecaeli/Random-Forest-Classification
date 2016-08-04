@@ -1,12 +1,14 @@
 package com.gui.interactable;
 
-import com.main.*;
-import java.util.Stack;
-import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
+import com.gui.gfx.Screen;
+import com.main.DecisionTree;
+import com.main.Node;
+import com.main.StaticStorage;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class FishEye extends Interactable {
 	ArrayList <Stack<Node>> stacks;
@@ -38,7 +40,7 @@ public class FishEye extends Interactable {
 	}
 	
 	public void render(int xOff, int yOff, Screen screen){
-		refreshData()
+		refreshData();
 	}
 	
 	private void refreshData(){
@@ -52,7 +54,7 @@ public class FishEye extends Interactable {
 	}
 	
 	public void refreshImage(){
-		if (stack.get(curIndex).empty()){
+		if (stacks.get(curIndex).empty()){
 			Node node = trees[curIndex].getHeadNode();
 		} else {
 			Node node = stacks.get(curIndex).peek();

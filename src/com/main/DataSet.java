@@ -23,6 +23,16 @@ public class DataSet{
                 name=n;
 	}
 
+    /**
+     * default constructor for when we just want to make a nameless data set
+     *
+     * @param att
+     * @param data
+     */
+    public DataSet(List<Attribute> att, List<Record> data) {
+        this(att, data, "");
+    }
+
 	/**
 	 * @return the data arrayList of Records that stores the LinkedHashMaps
 	 */

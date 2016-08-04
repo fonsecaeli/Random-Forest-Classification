@@ -1,7 +1,7 @@
 package com.main;
 
 import com.gui.gfx.Font;
-import com.gui.gfx.GUI;
+import com.gui.interactable.GUI;
 import com.gui.gfx.Screen;
 import com.gui.input.ImageHandler;
 import java.util.Scanner;
@@ -20,7 +20,7 @@ public class Main {
             GUI gui = new GUI(screen);
             screen.setInput(gui);
 		while(true) {
-			gui.render(screen);
+			gui.render(0, 0, screen);
 			screen.render();
 		}
 	}

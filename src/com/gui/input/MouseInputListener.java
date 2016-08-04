@@ -1,6 +1,6 @@
 package com.gui.input;
 
-import com.gui.gfx.Interactable;
+import com.gui.interactable.Interactable;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -13,17 +13,17 @@ public class MouseInputListener implements MouseListener{
     
     @Override
     public void mousePressed(MouseEvent me) {
-        if(i.contains(me))i.mousePressed(me);
+        if(i.contains(me,0,0))i.mousePressed(me,0,0);
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if(i.contains(me))i.mouseClicked(me);
+        if(i.contains(me,0,0))i.mouseClicked(me,0,0);
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        if(i.contains(me))i.mouseReleased(me);
+        if(i.contains(me,0,0))i.mouseReleased(me,0,0);
     }
 
     @Override

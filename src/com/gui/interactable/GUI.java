@@ -1,6 +1,7 @@
 
-package com.gui.gfx;
+package com.gui.interactable;
 
+import com.gui.gfx.Screen;
 import java.awt.Color;
 import java.awt.Graphics;
 

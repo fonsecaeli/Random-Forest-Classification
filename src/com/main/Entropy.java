@@ -134,6 +134,7 @@ class Entropy {
     }
 
     private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
+        //System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
         Collections.sort(r, new AttributeSorter(att));
         double bestGain = 0.0;
         double cutOff = Double.parseDouble(r.get(r.size()/2).getValue(att));
@@ -143,9 +144,10 @@ class Entropy {
             double gain = gainForLists(r, atts, high, low);
             if(gain > bestGain) {
                 cutOff = Double.parseDouble(r.get(i).getValue(att));
-                System.out.println("cutOff has been calculated");
+                System.out.println(gain);
             }
         }
+        System.out.println("cutOff has been calculated");
         return cutOff;
     }
 

@@ -37,6 +37,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+        //buckets the continuous attributes
         List<Attribute> bucketedAttributes = Entropy.bucketContinuousAttributes(attributes, data);
         for(int i = 0; i < data.size(); i++) {
             for(int j = 0; j < attributes.size(); j++) {

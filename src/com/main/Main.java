@@ -43,8 +43,10 @@ public class Main {
             screen.render();*/
 
         DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
-        RandomForest f = new RandomForest(d, 1, 1);
+        System.out.println("finished importing data");
+        RandomForest f = new RandomForest(d, 100, 2.2);
+        System.out.println("finished growing trees");
         System.out.println(f.oob());
-        System.out.println(f);
+        //System.out.println(f);
     }
 }

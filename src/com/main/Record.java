@@ -43,10 +43,10 @@ public class Record{
 	*/
     public String getValue(Attribute att) {
         if(data.get(att) == null) {
-            System.out.println(att);
+            //System.out.println(att);
         }
         if(att instanceof ContinuousAttribute) {
-            System.out.println(att.getClass());
+            //System.out.println(att.getClass());
             ContinuousAttribute cAtt = (ContinuousAttribute) att;
             return cAtt.getBucket(data.get(att));
         }
@@ -57,7 +57,7 @@ public class Record{
 	* Input key, get value
 	*/
     public String getClassificationValue(DataSet set) {
-            return data.get(set.getClassification());
+        return data.get(set.getClassification());
     }
 
 	/**

@@ -23,7 +23,7 @@ public class RandomForest {
         if(detRandomSubspace(numAtts, tuningFactor) > numAtts) throw new IllegalArgumentException("Tuning Factor too large");
         this.data = data;
         randomGenerator = new Random();
-        ATTRIBUTE_SAMPLE_SIZE = detRandomSubspace(data.getAttributes().size(), tuningFactor);
+        ATTRIBUTE_SAMPLE_SIZE = (int) detRandomSubspace(data.getAttributes().size(), tuningFactor);
         growTrees(numTrees);
     }
 
@@ -110,9 +110,9 @@ public class RandomForest {
      * of attributes to select from because itcan cause the forest to perform better or worse
      * @return the size of the random subspace
      */
-    private int detRandomSubspace(int numberOfAttributes, double factor) {
+    private double detRandomSubspace(int numberOfAttributes, double factor) {
         //can use either of the next two lines I believe
-        return (int) (Math.sqrt(numberOfAttributes)*factor);
+        return (Math.sqrt(numberOfAttributes)*factor);
         //return (int) Math.floor(Math.log(numberOfAttributes)+1);
     }
 

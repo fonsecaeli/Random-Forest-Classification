@@ -188,6 +188,10 @@ public class RandomForest {
 
         return answer;
     }
+    
+    public DecisionTree[] getTrees(){
+        return trees;
+    }
 
     @Override
     /**

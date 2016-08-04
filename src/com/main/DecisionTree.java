@@ -130,6 +130,10 @@ public class DecisionTree {
         }
         return false;
     }
+    
+    public Node getHeadNode(){
+        return head;
+    }
 
     //could just be like ascii art shown on the console to start and then a gui later
     //if we want to do that

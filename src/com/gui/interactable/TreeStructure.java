@@ -6,6 +6,7 @@ import com.gui.gfx.Screen;
 import static com.gui.interactable.Viewer.BACKGROUND_COLOR;
 import com.main.DataSet;
 import com.main.StaticStorage;
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class TreeStructure extends Interactable{
@@ -29,8 +30,8 @@ public class TreeStructure extends Interactable{
             dataSet=StaticStorage.getCurrentDataSet();
             Graphics g = getImage().getGraphics();
             g.setColor(BACKGROUND_COLOR);
-            g.fillRect(getX(), getY(), getWidth(), getHeight());
-            g.drawImage(Font.stringToBufferedImage(StaticStorage.getCurrentRandomForest().toString()), getX(), getY(), null);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.drawImage(Font.stringToBufferedImage(StaticStorage.getCurrentRandomForest().toString()), 0, 0, null);
         }
     }
     

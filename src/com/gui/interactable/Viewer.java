@@ -12,8 +12,8 @@ public class Viewer extends Interactable{
     
     private TabSystem dataSetsTabSys;
     private TabSystem optionsTabSys;
-    private TabSystem treesTabSys;
     private TreeStructure tree;
+    private FishEye fishEye;
 
     public Viewer(int x, int y, int width, int height, Screen screen){
         super(x, y, width, height);
@@ -30,28 +30,21 @@ public class Viewer extends Interactable{
         optionsTabSys = new TabSystem(0,
                                       dataSetsTabSys.getHeight(),
                                       getWidth());
-        
-        treesTabSys = new TabSystem(0,
-                                      dataSetsTabSys.getHeight()+dataSetsTabSys.getHeight(),
-                                      getWidth());
         tree = new TreeStructure(0,
-                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+treesTabSys.getHeight(),
+                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight(),
                                  getWidth(),
-                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-treesTabSys.getHeight());
+                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight());
+        fishEye = new FishEye(0,
+                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight(),
+                              getWidth(),
+                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight());
         optionsTabSys.addTab("Tree", tree);
-        optionsTabSys.addTab("HI THERE", null);
-        optionsTabSys.addTab("VERY LONG NAME TEST", null);
-        optionsTabSys.addTab("S", null);
-        for(int i=0;i<30; i++){
-            treesTabSys.addTab(""+i, null);
-        }
+        optionsTabSys.addTab("Fish Eye Viewer", fishEye);
         //StaticStorage.getCurrentDataSet()
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
-        addInteractable(treesTabSys);
         dataSetsTabSys.setSelectedTab(0);
         optionsTabSys.setSelectedTab(0);
-        treesTabSys.setSelectedTab(0);
     }
 
     private void initImage(){
@@ -67,9 +60,12 @@ public class Viewer extends Interactable{
             dataSetsTabSys.clear();
             List<DataSet> dataSets = StaticStorage.getDataSets();
             for(int i=0; i<StaticStorage.numDataSets(); i++){
-                dataSetsTabSys.addTab(dataSets.get(i).getName(), null);
+                dataSetsTabSys.addTab(new DataSetTab(0, TabSystem.TAB_VERTICAL_SPACING, dataSetsTabSys, dataSets.get(i)), null);
             }
         }
+        if(dataSetsTabSys.getSelectedTab()!=null)
+           if(StaticStorage.getCurrentDataSet()!=((DataSetTab)(dataSetsTabSys.getSelectedTab())).getDataSet())
+                StaticStorage.setIndex(dataSetsTabSys.getSelectedTabIndex());
     }
 
     @Override
@@ -77,5 +73,18 @@ public class Viewer extends Interactable{
         //refreshImage();
         refreshDataSetsTabSys();
         super.render(xoff, yoff, screen);
+    }
+    
+    private class DataSetTab extends Tab {
+        private DataSet ds;
+        
+        public DataSetTab(int x, int y, TabSystem ts, DataSet d) {
+            super(x,y,d.getName(),ts);
+            ds = d;
+        }
+        
+        public DataSet getDataSet(){
+            return ds;
+        }
     }
 }

@@ -1,12 +1,9 @@
 
 package com.gui.interactable;
 
-import com.gui.gfx.Font;
 import com.gui.gfx.Screen;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +13,7 @@ import java.util.Set;
 public class TabSystem extends Interactable{
     public static final int TAB_HORIZONTAL_SPACING = 4,
                             TAB_VERTICAL_SPACING = 8;
-    public static final Color BACKGROUND_COLOR = Color.WHITE,
-                              SELECTED_COLOR = Color.WHITE,
-                              UNSELECTED_COLOR = new Color(240, 240, 240);
+    public static final Color BACKGROUND_COLOR = Color.WHITE;
     
     private Map<Tab, Interactable> tabSet;
     private Set<Tab> keys;
@@ -54,11 +49,31 @@ public class TabSystem extends Interactable{
         refreshImage();
     }
     
+    public void addTab(Tab newTab, Interactable i){
+        tabSet.put(newTab, i);
+        addInteractable(newTab);
+        selectedTab = newTab;
+        refreshTabs();
+        refreshImage();
+    }
+    
     public void setSelectedTab(int index){
         if(index<keys.size() && index>=0){
             List<Tab> tabs = list();
             selectedTab = tabs.get(index);
         }
+    }
+    
+    public void setSelectedTab(Tab t){
+        selectedTab = t;
+    }
+    
+    public Tab getSelectedTab(){
+        return selectedTab;
+    }
+    
+    public int getSelectedTabIndex(){
+        return list().indexOf(selectedTab);
     }
     
     public int totalWidth(){
@@ -125,75 +140,6 @@ public class TabSystem extends Interactable{
         }
     }
     
-    protected class Tab extends Button{
-        
-        private TabSystem tabSys; //for finding which is selected
-        
-        public Tab(int x, int y, String name, TabSystem ts) {
-            super(x, y, name);
-            tabSys = ts;
-            initImage();
-            refreshImage();
-            
-        }
-        
-        @Override
-        public void refreshImage(){
-            if(tabSys!=null){
-                Graphics g = getImage().getGraphics();
-                
-                if(isSelectedTab()){
-
-                    g.setColor(HOVER_COLOR);
-                    g.drawRect(0, 0, getWidth()-1, getHeight());
-
-                
-                    g.setColor(SELECTED_COLOR);
-                    g.fillRect(1, 1, getWidth()-2, getHeight()-1);
-                    BufferedImage text = Font.stringToBufferedImage(getName());
-                    g.drawImage(text, XBORDER, YBORDER, null);
-                    
-                } else {
-                    
-                    if (getStatus() == OFF)
-                            g.setColor(OFF_COLOR);
-                    else if (getStatus() == HOVER || isSelectedTab())
-                            g.setColor(HOVER_COLOR);
-                    else if (getStatus() == CLICK)
-                            g.setColor(CLICK_COLOR);
-                    else g.setColor(NULL_COLOR);
-
-                    g.drawRect(0, 0, getWidth()-1, getHeight()-1);
-                    g.setColor(GUI.BORDER_COLOR);
-                    g.drawLine(0, getHeight()-1, getWidth()-1, getHeight()-1);
-                    
-                    g.setColor(UNSELECTED_COLOR);
-                    g.fillRect(1, 1, getImage().getWidth()-2, getImage().getHeight()-2);
-                    BufferedImage text = Font.stringToBufferedImage(getName());
-                    g.drawImage(text, XBORDER, YBORDER, null);
-                }
-            }
-        }
-        
-        public boolean isSelectedTab(){
-            return tabSys.selectedTab == this;
-        }
-
-        protected void initImage(){
-            Graphics g = getImage().getGraphics();
-            g.setColor(Button.BACKGROUND_COLOR);
-            g.fillRect(1, 1, getImage().getWidth()-2, getImage().getHeight()-2);
-            BufferedImage text = Font.stringToBufferedImage(getName());
-            g.drawImage(text, XBORDER, YBORDER, null);
-        }
-        
-        @Override
-        public void onAction(MouseEvent me){
-            tabSys.selectedTab=this;
-            tabSys.refreshImage();
-        }
-        
-    }
     
     /* Yeah, this is too much work. Don't import so many datasets or something. Maybe cap the number of tabs. idk
     public void refreshImage(){

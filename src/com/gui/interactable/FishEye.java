@@ -13,13 +13,14 @@ public class FishEye extends Interactable {
 	DecisionTree[] trees;
 	private static final Color BACKCOLOR = Color.WHITE;
 	private int curIndex;
+	public Button top;
 	
 	public FishEye(int x, int y, int width, int height){
 		super(x, y, width, height);
 		initImage();
 		init();
-		addInteractable(new LeftButton(0, (getHeight()/2)-(Button.getHeight("<")/2), this));
-		addInteractable(new RightButton(getWidth()-Button.getWidth(">") , (getHeight()/2)-(Button.getHeight(">")/2), this));
+		addInteractable(new LeftButton(0, (getHeight()-Button.getHeight("<"))/3, this));
+		addInteractable(new RightButton(getWidth()-Button.getWidth(">") , (getHeight()-Button.getHeight(">"))/3, this));
 	}
 	
 	private void initImage(){
@@ -36,23 +37,64 @@ public class FishEye extends Interactable {
 		}
 	}
 	
-	public void refreshImage(){
+	public void render(int xOff, int yOff, Screen screen){
+		refreshData()
+	}
+	
+	private void refreshData(){
 		if (StaticStorage.getCurrentRandomForest()!=null&&
 			StaticStorage.getCurrentRandomForest().getTrees()!=trees){
 			trees = StaticStorage.getCurrentRandomForest().getTrees();
 			stacks = new ArrayList<Stack<Node>>(trees.length);
 			curIndex = 0;
-		} 
+			refreshImage();
+		}
 	}
 	
-	protected void add(){
-		curIndex++;
-		curIndex%=trees.length;
+	public void refreshImage(){
+		if (stack.get(curIndex).empty()){
+			Node node = trees[curIndex].getHeadNode();
+		} else {
+			Node node = stacks.get(curIndex).peek();
+		}
 	}
 	
-	protected void subtract(){
-		curIndex--;
-		if (curIndex<0) curIndex+=trees.length;
+	protected void incrementIndex(){
+		if (trees!=null){
+			curIndex++;
+			curIndex%=trees.length;
+			System.out.println(curIndex);
+			refreshImage();
+		}
+	}
+	
+	protected void decrementIndex(){
+		if (trees!=null){
+			curIndex--;
+			if (curIndex<0) curIndex+=trees.length;
+			System.out.println(curIndex);
+			refreshImage();
+		}
+	}
+	
+	public void clicked(int index){
+		if (index<0){
+			
+		}
+	}
+	
+	public class FishEyeButton extends Button{
+		private FishEye dad;
+		int index;
+		public FishEyeButton(int x, int y, FishEye dad, int index, String text){
+			super(x, y, text);
+			this.dad = dad;
+			this.index = index;
+		}
+		
+		public void onAction(MouseEvent me){
+			dad.clicked(index);
+		}
 	}
 	
 	public class RightButton extends Button{
@@ -63,7 +105,7 @@ public class FishEye extends Interactable {
 		}
 		
 		public void onAction(MouseEvent me){
-			dad.add();
+			dad.incrementIndex();
 		}
 	}
 	
@@ -75,7 +117,7 @@ public class FishEye extends Interactable {
 		}
 		
 		public void onAction(MouseEvent me){
-			dad.subtract();
+			dad.decrementIndex();
 		}
 	}
 }

@@ -127,7 +127,7 @@ public class TabSystem extends Interactable{
         //render the current tab's display
         Interactable current = tabSet.get(selectedTab);
         if(current!=null){
-            current.render(xoff, yoff+getHeight(), screen);
+            current.render(xoff, yoff, screen);
         }
     }
     

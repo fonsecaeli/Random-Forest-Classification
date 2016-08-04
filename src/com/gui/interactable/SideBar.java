@@ -9,7 +9,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SideBar extends Interactable{
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
-    public static final Color BORDER_COLOR = new Color(75, 75, 75);
 
     public SideBar(int x, int y, int width, int height, Screen screen){
         super(x, y, width, height);
@@ -22,7 +21,7 @@ public class SideBar extends Interactable{
         Graphics g = getImage().getGraphics();
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, getWidth(), getHeight());
-        g.setColor(BORDER_COLOR);
+        g.setColor(GUI.BORDER_COLOR);
         g.drawLine(0, 0 , 0, getHeight());
     }
 

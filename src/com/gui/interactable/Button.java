@@ -10,6 +10,7 @@ public class Button extends Interactable {
     private String name;
     private int status;
     public static final int XBORDER = 16, YBORDER = 10;//16,10
+    public static final int BUTTON_HEIGHT = Font.getCharHeight()+(2*YBORDER);
     public static final int OFF = 0, HOVER = 1, CLICK = 2;
     public static final Color BACKGROUND_COLOR = Color.WHITE,
                               OFF_COLOR = new Color(175, 175, 175), 
@@ -18,7 +19,7 @@ public class Button extends Interactable {
                               NULL_COLOR = Color.BLACK;
 
     public Button(int x, int y, String name){
-        this(x, y, Font.getCharWidth()*name.length()+(2*XBORDER), Font.getCharHeight()+(2*YBORDER), name);
+        this(x, y, Font.getCharWidth()*name.length()+(2*XBORDER), BUTTON_HEIGHT, name);
     }
 
     private Button(int x, int y, int width, int height, String n){

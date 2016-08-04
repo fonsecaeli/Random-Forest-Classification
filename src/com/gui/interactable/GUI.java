@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class GUI extends Interactable{
-    public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
+    public static final Color BACKGROUND_COLOR = new Color(240, 240, 240),
+                              BORDER_COLOR = new Color(75, 75, 75);
     public static final double VIEWER_WIDTH_PROPORTION = 0.8;
     
     public GUI(Screen screen){

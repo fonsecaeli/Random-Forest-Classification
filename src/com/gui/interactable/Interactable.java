@@ -17,10 +17,10 @@ public abstract class Interactable {
             width = w;
             height = h;
             interactables = new ArrayList<>();
-            initImage(width, height);
+            createImage();
 	}
         
-        public void initImage(int width, int height){
+        private void createImage(){
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
         

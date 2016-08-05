@@ -13,13 +13,13 @@ public class StaticStorage {
     
     public static void newData(File file){
         DataSet ds = ImportData.importData(file);
-        RandomForest forest = new RandomForest(ds, 100, 0.7);
+        RandomForest forest = new RandomForest(ds, 2, 0.7);
         
-        System.out.println(ds);
-        System.out.println(forest);
+        //System.out.println(ds);
+        //System.out.println(forest);
         dataSets.add(ds);
         randomForests.add(forest);
-        indexOfCurrentDataSet++;
+        setIndex(indexOfCurrentDataSet+1);
     }
     
     public static void setIndex(int i){
@@ -35,6 +35,11 @@ public class StaticStorage {
     public static RandomForest getCurrentRandomForest(){
         if(dataSets.isEmpty()) return null;
         return randomForests.get(indexOfCurrentDataSet);
+    }
+    
+    public static DecisionTree getCurrentTree(){
+        if(dataSets.isEmpty()) return null;
+        return randomForests.get(indexOfCurrentDataSet).getTrees()[indexOfCurrentTree];
     }
     
     public static int numDataSets(){

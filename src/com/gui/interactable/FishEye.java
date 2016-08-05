@@ -67,23 +67,37 @@ public class FishEye extends Interactable {
 			Node node = stacks.get(curIndex).pop();
 			if (top!=null) removeInteractable(top);
 			String name = stacks.get(curIndex).peek().getAttribute().getName();
-			top = new FishEyeButton((getHeight()-Button.getHeight(name))/4 , 
-						(getWidth()-Button.getWidth(name))/2,
+			top = new FishEyeButton((getWidth()-Button.getWidth(name))/2 , 
+						(getHeight()-Button.getHeight(name))/4,
 						this, -1, name);
 			addInteractable(top);
 			stacks.get(curIndex).push(node);
+		} else {
+			removeInteractable(top);
+			top = null;
 		}
 		if (middle!=null) removeInteractable(middle);
 		String name = stacks.get(curIndex).peek().getAttribute().getName();
 		middle = new Button((getWidth()-Button.getWidth(name))/2,
 					(getHeight()-Button.getHeight(name))/3, name);
 		addInteractable(middle);
+		if (bottom!=null)
+			for (FishEyeButton f: bottom)
+				removeInteractable(f);
+		bottom = new ArrayList<>();
 		Node node = stacks.get(curIndex).peek();
 		int sum = 0;
-		for (String a: stacks.get(curIndex).peek().getKeys())
+		for (String a: node.getKeys())
 			sum+=Button.getWidth(a)+10;
 		sum-=10;
-		
+		sum = (getWidth()-sum)/2;
+		int i=0;
+		for (String a: node.getKeys()){
+			bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*2/3, this, i, a));
+			addInteractable(bottom.get(bottom.size()-1));
+			i++;
+			sum+=Button.getWidth(a)+10;
+		}
 	}
 	
 	protected void incrementIndex(){
@@ -107,6 +121,10 @@ public class FishEye extends Interactable {
 	public void clicked(int index){
 		if (index<0){
 			stacks.get(curIndex).pop();
+			refreshImage();
+		}
+		if (index>=0&&index<bottom.size()){
+			stacks.get(curIndex).push(stacks.get(curIndex).peek().getChild(bottom.get(index).getName()));
 			refreshImage();
 		}
 	}

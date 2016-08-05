@@ -68,7 +68,7 @@ public class TreeStructure extends Interactable{
             g.fillRect(0, 0, getWidth(), getHeight());
             //g.drawImage(Font.stringToBufferedImage(tree.toString()), 0, 0, null);
             //g.drawImage(bis.get(i), 0, 0, null);
-            List<BufferedImage> bis = Font.stringToBufferedImageList(StaticStorage.getCurrentRandomForest().toString());
+            List<BufferedImage> bis = Font.stringToBufferedImageList(StaticStorage.getCurrentTree().toString());
             for(int i=0; i<bis.size(); i++){
                 BufferedImage bi = bis.get(i);
                 //System.out.println("i: "+i+" | size: "+bis.size()+" | BI: "+bi);

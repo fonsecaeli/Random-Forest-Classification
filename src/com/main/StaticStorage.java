@@ -22,6 +22,18 @@ public class StaticStorage {
         setIndex(indexOfCurrentDataSet+1);
     }
     
+    public static int getIndexOfCurrentTree(){
+        return indexOfCurrentTree;
+    }
+    
+    public static int getIndexOfCurrentDataSet(){
+        return indexOfCurrentDataSet;
+    }
+    
+    public static int getIndexOfCurrentRandomForest(){
+        return getIndexOfCurrentDataSet();
+    }
+    
     public static void setIndex(int i){
         indexOfCurrentDataSet = i;
         indexOfCurrentTree=0;

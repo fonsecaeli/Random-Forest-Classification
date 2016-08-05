@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
+    public static final int BUTTON_VERTICAL_SPACING = 4;
+    public static final int BUTTON_HORIZONTAL_SPACING = 4;
     
     private TabSystem dataSetsTabSys;
     private TabSystem optionsTabSys;
@@ -32,24 +34,24 @@ public class Viewer extends Interactable{
         optionsTabSys = new TabSystem(0,
                                       dataSetsTabSys.getHeight(),
                                       getWidth());
-        left = new LeftButton(0,
-                                dataSetsTabSys.getHeight()+optionsTabSys.getHeight());
-        right = new RightButton(getWidth()-Button.getWidth(">"),
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight());
+        left = new LeftButton(BUTTON_HORIZONTAL_SPACING,
+                                dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+BUTTON_VERTICAL_SPACING);
+        right = new RightButton(getWidth()-Button.getWidth(">")-BUTTON_HORIZONTAL_SPACING,
+                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+BUTTON_VERTICAL_SPACING);
         tree = new TreeStructure(0,
-                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight(),
+                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+BUTTON_VERTICAL_SPACING,
                                  getWidth(),
-                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight());
+                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight()-BUTTON_VERTICAL_SPACING);
         fishEye = new FishEye(0,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight(),
+                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+BUTTON_VERTICAL_SPACING,
                               getWidth(),
-                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight());
+                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight()-BUTTON_VERTICAL_SPACING);
         optionsTabSys.addTab("Tree", tree);
         optionsTabSys.addTab("Fish Eye Viewer", fishEye);
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
-        //addInteractable(right);
-        //addInteractable(left);
+        addInteractable(right);
+        addInteractable(left);
         dataSetsTabSys.setSelectedTab(0);
         optionsTabSys.setSelectedTab(0);
     }

@@ -25,8 +25,6 @@ public class FishEye extends Interactable {
 		super(x, y, width, height);
 		initImage();
 		init();
-		addInteractable(new LeftButton(0, (getHeight()-Button.getHeight("<"))/3, this));
-		addInteractable(new RightButton(getWidth()-Button.getWidth(">") , (getHeight()-Button.getHeight(">"))/3, this));
 	}
 	
 	private void initImage(){
@@ -39,8 +37,8 @@ public class FishEye extends Interactable {
 		if (StaticStorage.getCurrentRandomForest()!=null){
 			trees = StaticStorage.getCurrentRandomForest().getTrees();
 			stacks = new ArrayList<Stack<Node>>(trees.length);
-			curIndex = 0;
 			change = false;
+			curIndex = StaticStorage.getIndexOfCurrentTree();
 		}
 	}
 	
@@ -56,13 +54,14 @@ public class FishEye extends Interactable {
 			stacks = new ArrayList<Stack<Node>>();
 			for (int i=0; i<trees.length; i++)
 				stacks.add(new Stack<Node>());
-			curIndex = 0;
 			change = true;
 		}
-		if (change) refreshImage();
+		if (curIndex!=StaticStorage.getIndexOfCurrentTree()) change = true;
+		if (StaticStorage.getCurrentRandomForest()!=null&&change) refreshImage();
 	}
 	
 	public void refreshImage(){
+		curIndex = StaticStorage.getIndexOfCurrentTree();
 		if (stacks.get(curIndex).empty()){
 			stacks.get(curIndex).push(trees[curIndex].getHeadNode());
 		}
@@ -116,22 +115,6 @@ public class FishEye extends Interactable {
 		return (node.getDecision()!=null);
 	}
 	
-	protected void incrementIndex(){
-		if (trees!=null){
-			curIndex++;
-			curIndex%=trees.length;
-			change = true;
-		}
-	}
-	
-	protected void decrementIndex(){
-		if (trees!=null){
-			curIndex--;
-			if (curIndex<0) curIndex+=trees.length;
-			change = true;
-		}
-	}
-	
 	public void clicked(int index){
 		if (index<0){
 			stacks.get(curIndex).pop();
@@ -161,30 +144,6 @@ public class FishEye extends Interactable {
 		
 		public void onAction(MouseEvent me){
 			dad.clicked(index);
-		}
-	}
-	
-	public class RightButton extends Button{
-		private FishEye dad;
-		public RightButton(int x, int y, FishEye dad){
-			super(x, y, ">");
-			this.dad = dad;
-		}
-		
-		public void onAction(MouseEvent me){
-			dad.incrementIndex();
-		}
-	}
-	
-	public class LeftButton extends Button{
-		private FishEye dad;
-		public LeftButton(int x, int y, FishEye dad){
-			super(x, y, "<");
-			this.dad = dad;
-		}
-		
-		public void onAction(MouseEvent me){
-			dad.decrementIndex();
 		}
 	}
 }

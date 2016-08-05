@@ -72,7 +72,7 @@ public class FishEye extends Interactable {
 			String name = stacks.get(curIndex).peek().getAttribute().getName();
 			top = new FishEyeButton((getWidth()-Button.getWidth(name))/2 , 
 						(getHeight()-Button.getHeight(name))/4,
-						this, -1, name);
+						this, -1, name, name);
 			addInteractable(top);
 			stacks.get(curIndex).push(node);
 		} else {
@@ -91,19 +91,19 @@ public class FishEye extends Interactable {
 		Node node = stacks.get(curIndex).peek();
 		int sum = 0;
 		for (String a: node.getKeys()){
-			if (isLeafNode(stacks.get(curIndex).peek().getChild(a))) sum+=Button.getWidth(stacks.get(curIndex).peek().getChild(a).getDecision());
+			if (isLeafNode(node.getChild(a))) sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+10;
 			else sum+=Button.getWidth(a)+10;
 		}
 		sum-=10;
 		sum = (getWidth()-sum)/2;
 		int i=0;
 		for (String a: node.getKeys()){
-			if (isLeafNode(stacks.get(curIndex).peek().getChild(a))) {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*3/4, this, i, stacks.get(curIndex).peek().getChild(a).getDecision()));
-				sum+=Button.getWidth(stacks.get(curIndex).peek().getChild(a).getDecision())+10;
+			if (isLeafNode(node.getChild(a))) {
+				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*3/4, this, i, a+": "+node.getChild(a).getDecision(), a));
+				sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+10;
 			}
 			else {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*3/4, this, i, a));
+				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*3/4, this, i, a, a));
 				sum+=Button.getWidth(a)+10;
 			}
 			addInteractable(bottom.get(bottom.size()-1));
@@ -120,7 +120,6 @@ public class FishEye extends Interactable {
 		if (trees!=null){
 			curIndex++;
 			curIndex%=trees.length;
-			System.out.println(curIndex);
 			change = true;
 		}
 	}
@@ -129,7 +128,6 @@ public class FishEye extends Interactable {
 		if (trees!=null){
 			curIndex--;
 			if (curIndex<0) curIndex+=trees.length;
-			System.out.println(curIndex);
 			change = true;
 		}
 	}
@@ -139,7 +137,7 @@ public class FishEye extends Interactable {
 			stacks.get(curIndex).pop();
 			change = true;
 		} else if (index>=0&&index<bottom.size()){
-			if (!isLeafNode(stacks.get(curIndex).peek().getChild(bottom.get(index).getName()))){
+			if (!isLeafNode(stacks.get(curIndex).peek().getChild(bottom.get(index).getKey()))){
 				stacks.get(curIndex).push(stacks.get(curIndex).peek().getChild(bottom.get(index).getName()));
 				change = true;
 			}
@@ -148,11 +146,17 @@ public class FishEye extends Interactable {
 	
 	public class FishEyeButton extends Button{
 		private FishEye dad;
-		int index;
-		public FishEyeButton(int x, int y, FishEye dad, int index, String text){
+		private int index;
+		private String key;
+		public FishEyeButton(int x, int y, FishEye dad, int index, String text, String key){
 			super(x, y, text);
 			this.dad = dad;
 			this.index = index;
+			this.key = key;
+		}
+		
+		public String getKey(){
+			return key;
 		}
 		
 		public void onAction(MouseEvent me){

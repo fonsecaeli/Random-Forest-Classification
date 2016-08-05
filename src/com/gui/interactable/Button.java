@@ -44,7 +44,7 @@ public class Button extends Interactable {
     public final String getName(){
         return name;
     }
-
+	
     public final int getStatus(){
         return status;
     }

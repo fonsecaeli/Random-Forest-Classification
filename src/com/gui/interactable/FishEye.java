@@ -16,7 +16,9 @@ public class FishEye extends Interactable {
 	DecisionTree[] trees;
 	private static final Color BACKCOLOR = Color.WHITE;
 	private int curIndex;
-	private Button top;
+	private FishEyeButton top;
+	private Button middle;
+	private ArrayList<FishEyeButton> bottom;
 	
 	public FishEye(int x, int y, int width, int height){
 		super(x, y, width, height);
@@ -64,13 +66,23 @@ public class FishEye extends Interactable {
 		if (stacks.get(curIndex).size()>=2){
 			Node node = stacks.get(curIndex).pop();
 			if (top!=null) removeInteractable(top);
-			top = new FishEyeButton(getHeight()/4 , 
-						(getWidth()-Button.getWidth(stacks.get(curIndex).peek().getAttribute().getName()))/2,
-						this, -1, stacks.get(curIndex).peek().getAttribute().getName());
+			String name = stacks.get(curIndex).peek().getAttribute().getName();
+			top = new FishEyeButton((getHeight()-Button.getHeight(name))/4 , 
+						(getWidth()-Button.getWidth(name))/2,
+						this, -1, name);
 			addInteractable(top);
 			stacks.get(curIndex).push(node);
 		}
+		if (middle!=null) removeInteractable(middle);
+		String name = stacks.get(curIndex).peek().getAttribute().getName();
+		middle = new Button((getWidth()-Button.getWidth(name))/2,
+					(getHeight()-Button.getHeight(name))/3, name);
+		addInteractable(middle);
+		Node node = stacks.get(curIndex).peek();
 		int sum = 0;
+		for (String a: stacks.get(curIndex).peek().getKeys())
+			sum+=Button.getWidth(a)+10;
+		sum-=10;
 		
 	}
 	
@@ -94,7 +106,8 @@ public class FishEye extends Interactable {
 	
 	public void clicked(int index){
 		if (index<0){
-			
+			stacks.get(curIndex).pop();
+			refreshImage();
 		}
 	}
 	

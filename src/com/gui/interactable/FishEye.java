@@ -1,20 +1,20 @@
 package com.gui.interactable;
 
-import com.main.*;
-import java.util.Stack;
-import java.util.ArrayList;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import com.gui.gfx.Screen;
+import com.main.DecisionTree;
+import com.main.Node;
+import com.main.StaticStorage;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class FishEye extends Interactable {
+	private static final Color BACKGROUND_COLOR = Color.WHITE;
+        
 	ArrayList <Stack<Node>> stacks;
 	DecisionTree[] trees;
-	private static final Color BACKCOLOR = Color.WHITE;
 	private int curIndex;
 	private FishEyeButton top;
 	private Button middle;
@@ -29,19 +29,20 @@ public class FishEye extends Interactable {
 	
 	private void initImage(){
 		Graphics g = getImage().getGraphics();
-		g.setColor(BACKCOLOR);
+		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
 	private void init(){
 		if (StaticStorage.getCurrentRandomForest()!=null){
 			trees = StaticStorage.getCurrentRandomForest().getTrees();
-			stacks = new ArrayList<Stack<Node>>(trees.length);
+			stacks = new ArrayList<>(trees.length);
 			change = false;
 			curIndex = StaticStorage.getIndexOfCurrentTree();
 		}
 	}
 	
+        @Override
 	public void render(int xOff, int yOff, Screen screen){
 		refreshData();
 		super.render(xOff, yOff, screen);
@@ -51,9 +52,9 @@ public class FishEye extends Interactable {
 		if (StaticStorage.getCurrentRandomForest()!=null&&
 			StaticStorage.getCurrentRandomForest().getTrees()!=trees){
 			trees = StaticStorage.getCurrentRandomForest().getTrees();
-			stacks = new ArrayList<Stack<Node>>();
+			stacks = new ArrayList<>();
 			for (int i=0; i<trees.length; i++)
-				stacks.add(new Stack<Node>());
+				stacks.add(new Stack<>());
 			change = true;
 		}
 		if (curIndex!=StaticStorage.getIndexOfCurrentTree()) change = true;
@@ -142,6 +143,7 @@ public class FishEye extends Interactable {
 			return key;
 		}
 		
+                @Override
 		public void onAction(MouseEvent me){
 			dad.clicked(index);
 		}

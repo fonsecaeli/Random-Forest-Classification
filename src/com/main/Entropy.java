@@ -1,9 +1,6 @@
 package com.main;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Entropy {
 
@@ -135,24 +132,43 @@ public class Entropy {
 
     private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
         //System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
-        Collections.sort(r, new AttributeSorter(att));
+        //Collections.sort(r, new AttributeSorter(att));
         double bestGain = 0.0;
         double cutOff = Double.parseDouble(r.get(r.size()/2).getValue(att));
         for(int i = 0; i < r.size(); i++) {
-            List<Record> low = r.subList(0, i);
-            List<Record> high = r.subList(i, r.size());
-            double gain = gainForLists(r, atts, high, low);
+            List<List<Record>> highAndLow = split(r, r.get(i).getValue(att), att);
+            double gain = gainForLists(r, atts, highAndLow.get(0), highAndLow.get(1));
             if(gain > bestGain) {
+                bestGain = gain;
                 cutOff = Double.parseDouble(r.get(i).getValue(att));
                 System.out.println(gain);
             }
         }
-        System.out.println("cutOff has been calculated");
+        //System.out.println("cutOff has been calculated");
         return cutOff;
     }
 
+    private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
+        List<Record> high = new ArrayList<>();
+        List<Record> low = new ArrayList<>();
+        for(int i = 0; i < r.size(); i++) {
+            double a = Double.parseDouble(r.get(i).getValue(att));
+            double b = Double.parseDouble(value);
+            if(a <= b) {
+                low.add(r.get(i));
+            }
+            else {
+                high.add(r.get(i));
+            }
+        }
+        List<List<Record>> toReturn = new ArrayList<>();
+        toReturn.add(high);
+        toReturn.add(low);
+        return toReturn;
+    }
+
     private static double gainForLists(List<Record> data, List<Attribute> atts, List<Record> high, List<Record> low) {
-        double postSplit = ((double)low.size()/data.size())*entropy(new DataSet(atts, low))+((double)high.size()/data.size())*entropy(new DataSet(atts, high));
+        double postSplit = (((double)low.size())/data.size())*entropy(new DataSet(atts, low))+(((double)high.size())/data.size())*entropy(new DataSet(atts, high));
         double preSplit = entropy(new DataSet(atts, data));
         return preSplit - postSplit;
     }

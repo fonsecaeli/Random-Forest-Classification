@@ -1,13 +1,15 @@
 package com.gui.interactable;
 
 import com.main.*;
-import com.gui.gfx.*;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import com.gui.gfx.Screen;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class FishEye extends Interactable {
 	ArrayList <Stack<Node>> stacks;

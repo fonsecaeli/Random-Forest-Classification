@@ -1,6 +1,5 @@
 package com.gui.interactable;
 
-import com.gui.gfx.Screen;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -10,7 +9,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class SideBar extends Interactable{
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
 
-    public SideBar(int x, int y, int width, int height, Screen screen){
+    /**
+     * Initializes the sidebar with the given dimensions
+     */
+    public SideBar(int x, int y, int width, int height){
         super(x, y, width, height);
         initImage();
         addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, 64));
@@ -54,21 +56,9 @@ public class SideBar extends Interactable{
             super(x, y, TITLE);
         }
 
-        /**
-        * This, for the moment, uses the open dialog THIS NEEDS TO BE CHANGED TO A SAVE DIALOG
-        */
         @Override
         public void onAction(MouseEvent me){
-            /*JFileChooser chooser = new JFileChooser();
-            chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
-            int returnVal = chooser.showOpenDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION){
-                String filePath = chooser.getSelectedFile().getPath();
-                if (filePath.substring(filePath.length()-4).equals(".csv")){
-                    System.out.println("You chose to open this file: "+filePath);
-                    //StaticStorage.newData(chooser.getSelectedFile());
-                }
-            }*/
+            
         }
 
     }

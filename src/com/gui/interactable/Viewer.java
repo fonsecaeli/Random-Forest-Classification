@@ -16,7 +16,7 @@ public class Viewer extends Interactable{
     private TreeStructure tree;
     private FishEye fishEye;
 
-    public Viewer(int x, int y, int width, int height, Screen screen){
+    public Viewer(int x, int y, int width, int height){
         super(x, y, width, height);
         init();
 

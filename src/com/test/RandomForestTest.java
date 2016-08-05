@@ -1,9 +1,9 @@
 package com.test;
 
-import junit.framework.TestCase;
+//import junit.framework.TestCase;
 
 
-public class RandomForestTest extends TestCase {
+public class RandomForestTest /*extends TestCase */{
 
     
     public void testDetRandomSubspace() throws Exception {

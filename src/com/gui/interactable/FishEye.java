@@ -42,31 +42,35 @@ public class FishEye extends Interactable {
 	
 	public void render(int xOff, int yOff, Screen screen){
 		refreshData();
+		super.render(xOff, yOff, screen);
 	}
 	
 	private void refreshData(){
 		if (StaticStorage.getCurrentRandomForest()!=null&&
 			StaticStorage.getCurrentRandomForest().getTrees()!=trees){
 			trees = StaticStorage.getCurrentRandomForest().getTrees();
-			stacks = new ArrayList<Stack<Node>>(trees.length);
+			stacks = new ArrayList<Stack<Node>>();
+			for (int i=0; i<trees.length; i++)
+				stacks.add(new Stack<Node>());
 			curIndex = 0;
 			refreshImage();
 		}
 	}
 	
 	public void refreshImage(){
-		if (stack.get(curIndex).empty()){
+		if (stacks.get(curIndex).empty()){
 			stacks.get(curIndex).push(trees[curIndex].getHeadNode());
 		}
-		if (stacks.get(curIndex).size()>=1){
+		if (stacks.get(curIndex).size()>=2){
 			Node node = stacks.get(curIndex).pop();
 			if (top!=null) removeInteractable(top);
-			top = new FishEyeButton(getHeight()/4 , (getWidth()-Button.getWidth())/2,
+			top = new FishEyeButton(getHeight()/4 , 
+						(getWidth()-Button.getWidth(stacks.get(curIndex).peek().getAttribute().getName()))/2,
 						this, -1, stacks.get(curIndex).peek().getAttribute().getName());
 			addInteractable(top);
 			stacks.get(curIndex).push(node);
 		}
-		
+		int sum = 0;
 		
 	}
 	

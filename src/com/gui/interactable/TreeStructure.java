@@ -42,8 +42,8 @@ public class TreeStructure extends Interactable{
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
         this.yoff=(int)(this.yoff+(SCROLL_SPEED)*(previousY-me.getY()));
         
-        this.yoff=(int)Math.max(this.yoff, -getHeight()/4);
-        this.yoff=(int)Math.min(this.yoff, list.size()*Font.getCharHeight() - getHeight()*3/4);
+        this.yoff=(int)Math.max(this.yoff, 0);
+        this.yoff=(int)Math.min(this.yoff, list.size()*Font.getCharHeight() - getHeight()*15/16);
         
         previousY=me.getY();
         super.mouseDragged(me, xoff, yoff);

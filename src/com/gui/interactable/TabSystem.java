@@ -116,9 +116,8 @@ public class TabSystem extends Interactable{
     } 
     
     public void clear(){
-        tabSet = new HashMap<>();
-        keys = tabSet.keySet();
-        selectedTab = null;
+        while(numTabs()>0)
+            removeTab(list().get(0));
     }
     
     public Interactable get(Tab t){

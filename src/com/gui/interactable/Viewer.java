@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    public static final int BUTTON_VERTICAL_SPACING = 4;
-    public static final int BUTTON_HORIZONTAL_SPACING = 4;
+    public static final int BUTTON_VERTICAL_SPACING = 6;
+    public static final int BUTTON_HORIZONTAL_SPACING = 6;
     
     private TabSystem dataSetsTabSys;
     private TabSystem optionsTabSys;
@@ -28,24 +28,36 @@ public class Viewer extends Interactable{
     }
     
     public final void init(){
+        int verticalSum=0; //how far down new elements should be added
+    /********************************************************************************************************************************/
         dataSetsTabSys = new TabSystem(0,
-                                       0,
+                                       verticalSum,
                                        getWidth());
+    /********************************************************************************************************************************/
+        verticalSum+=dataSetsTabSys.getHeight();
         optionsTabSys = new TabSystem(0,
-                                      dataSetsTabSys.getHeight(),
+                                      verticalSum,
                                       getWidth());
+        verticalSum+=optionsTabSys.getHeight();
+    /********************************************************************************************************************************/
+        verticalSum+=BUTTON_VERTICAL_SPACING;
         left = new LeftButton(BUTTON_HORIZONTAL_SPACING,
-                                dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+BUTTON_VERTICAL_SPACING);
+                                verticalSum);
         right = new RightButton(getWidth()-Button.getWidth(">")-BUTTON_HORIZONTAL_SPACING,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+BUTTON_VERTICAL_SPACING);
+                              verticalSum);
+        verticalSum+=left.getHeight();
+        verticalSum+=BUTTON_VERTICAL_SPACING;
+    /********************************************************************************************************************************/
         tree = new TreeStructure(0,
-                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+BUTTON_VERTICAL_SPACING,
+                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+2*BUTTON_VERTICAL_SPACING,
                                  getWidth(),
-                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight()-BUTTON_VERTICAL_SPACING);
+                                 getHeight()-verticalSum);
+    /****************************************************************************************************/
         fishEye = new FishEye(0,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+BUTTON_VERTICAL_SPACING,
+                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+2*BUTTON_VERTICAL_SPACING,
                               getWidth(),
-                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight()-BUTTON_VERTICAL_SPACING);
+                              getHeight()-verticalSum);
+    /********************************************************************************************************************************/
         optionsTabSys.addTab("Tree", tree);
         optionsTabSys.addTab("Fish Eye Viewer", fishEye);
         addInteractable(dataSetsTabSys);

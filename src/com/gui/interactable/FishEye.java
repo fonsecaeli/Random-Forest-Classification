@@ -1,6 +1,7 @@
 package com.gui.interactable;
 
 import com.main.*;
+import com.gui.gfx.*;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.awt.Color;
@@ -13,7 +14,7 @@ public class FishEye extends Interactable {
 	DecisionTree[] trees;
 	private static final Color BACKCOLOR = Color.WHITE;
 	private int curIndex;
-	public Button top;
+	private Button top;
 	
 	public FishEye(int x, int y, int width, int height){
 		super(x, y, width, height);
@@ -38,7 +39,7 @@ public class FishEye extends Interactable {
 	}
 	
 	public void render(int xOff, int yOff, Screen screen){
-		refreshData()
+		refreshData();
 	}
 	
 	private void refreshData(){
@@ -53,10 +54,18 @@ public class FishEye extends Interactable {
 	
 	public void refreshImage(){
 		if (stack.get(curIndex).empty()){
-			Node node = trees[curIndex].getHeadNode();
-		} else {
-			Node node = stacks.get(curIndex).peek();
+			stacks.get(curIndex).push(trees[curIndex].getHeadNode());
 		}
+		if (stacks.get(curIndex).size()>=1){
+			Node node = stacks.get(curIndex).pop();
+			if (top!=null) removeInteractable(top);
+			top = new FishEyeButton(getHeight()/4 , (getWidth()-Button.getWidth())/2,
+						this, -1, stacks.get(curIndex).peek().getAttribute().getName());
+			addInteractable(top);
+			stacks.get(curIndex).push(node);
+		}
+		
+		
 	}
 	
 	protected void incrementIndex(){

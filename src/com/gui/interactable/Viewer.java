@@ -32,9 +32,9 @@ public class Viewer extends Interactable{
         optionsTabSys = new TabSystem(0,
                                       dataSetsTabSys.getHeight(),
                                       getWidth());
-        right = new RightButton(0,
+        left = new LeftButton(0,
                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight());
-        left = new LeftButton(getWidth()-Button.getWidth("<"),
+        right = new RightButton(getWidth()-Button.getWidth(">"),
                               dataSetsTabSys.getHeight()+optionsTabSys.getHeight());
         tree = new TreeStructure(0,
                                  dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight(),
@@ -48,6 +48,8 @@ public class Viewer extends Interactable{
         optionsTabSys.addTab("Fish Eye Viewer", fishEye);
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
+        //addInteractable(right);
+        //addInteractable(left);
         dataSetsTabSys.setSelectedTab(0);
         optionsTabSys.setSelectedTab(0);
     }

@@ -13,8 +13,10 @@ import java.util.List;
 
 public class TreeStructure extends Interactable{
     private DecisionTree tree;
-    private int previousY=0, yoff;
-    List<Interactable> list;
+    private double previousY=0.;
+    private int yoff;
+    private List<Interactable> list;
+    public static final double SCROLL_SPEED=2.;
 
     public TreeStructure(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -25,17 +27,25 @@ public class TreeStructure extends Interactable{
     public void render(int xoff, int yoff, Screen screen){
         refreshImage();
         screen.drawImage(getImage(), getX()+xoff, getY()+yoff);
-        for(Interactable i : getInteractables()){
-            if(i.getHeight()>=(Math.min(this.yoff/Font.getCharHeight()-1,0)) && i.getHeight()<=(this.yoff+getHeight())/Font.getCharHeight()+1);
-
-                i.render(getX()+xoff, getY()+yoff+this.yoff, screen);
+        
+        int start = (int)(this.yoff/Font.getCharHeight())-1;
+        int end = (int)(this.yoff+getHeight())/Font.getCharHeight()+1;
+        for(int i=start; i<end; i++){
+            if(i>=0 && i<getInteractables().size()){
+                getInteractables().get(i).render(getX()+xoff, getY()+yoff-this.yoff, screen);
+            }
         }
         //super.render(xoff, yoff+this.yoff, screen);
     }
     
     @Override
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
-        yoff+=previousY-me.getY();
+        this.yoff=(int)(this.yoff+(SCROLL_SPEED)*(previousY-me.getY()));
+        
+        this.yoff=(int)Math.max(this.yoff, -getHeight()/4);
+        this.yoff=(int)Math.min(this.yoff, list.size()*Font.getCharHeight() - getHeight()*3/4);
+        
+        previousY=me.getY();
         super.mouseDragged(me, xoff, yoff);
     }
     
@@ -44,7 +54,6 @@ public class TreeStructure extends Interactable{
         previousY=me.getY();
         super.mouseHovered(me, xoff, yoff);
     }
-    
     
     public void refreshImage(){
         if(StaticStorage.getCurrentTree()!=null && StaticStorage.getCurrentTree()!=tree){

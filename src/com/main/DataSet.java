@@ -92,8 +92,6 @@ public class DataSet{
                 }
                 mapping.put(attValues.get(i), new DataSet(data.getAttributes(), recordsToAdd, data.getName()));
             }
-        //}
-
         return mapping;
 	}
 	

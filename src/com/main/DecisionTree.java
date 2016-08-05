@@ -58,6 +58,7 @@ public class DecisionTree {
 
         for (int i = 0; i < randomAttributes.size(); i++) {
             Attribute currentAttribute = randomAttributes.get(i);
+            //System.out.println(currentAttribute);
             double currentGain = Entropy.gain(data, currentAttribute);
             if (currentGain > bestGain) {
                 bestAtt = currentAttribute;

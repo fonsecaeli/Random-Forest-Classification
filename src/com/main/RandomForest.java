@@ -20,10 +20,12 @@ public class RandomForest {
     public RandomForest(DataSet data, int numTrees, double tuningFactor) {
         oobData = new ArrayList<>(numTrees);
         int numAtts = data.getAttributes().size()-1;//for the classification attribute
-        if(detRandomSubspace(numAtts, tuningFactor) >= numAtts) throw new IllegalArgumentException("Tuning Factor too large");
+        if(detRandomSubspace(numAtts, tuningFactor) > numAtts) throw new IllegalArgumentException("Tuning Factor too large");
         this.data = data;
         randomGenerator = new Random();
-        ATTRIBUTE_SAMPLE_SIZE = (int) detRandomSubspace(data.getAttributes().size(), tuningFactor);
+        ATTRIBUTE_SAMPLE_SIZE = (int) detRandomSubspace(numAtts, tuningFactor);
+        System.out.println(ATTRIBUTE_SAMPLE_SIZE);
+        System.out.println(numAtts);
         growTrees(numTrees);
     }
 
@@ -112,7 +114,7 @@ public class RandomForest {
      */
     private double detRandomSubspace(int numberOfAttributes, double factor) {
         //can use either of the next two lines I believe
-        return (Math.pow(numberOfAttributes,factor));
+        return numberOfAttributes;
         //return (int) Math.floor(Math.log(numberOfAttributes)+1);
     }
 
@@ -141,6 +143,7 @@ public class RandomForest {
             oobData.add(new DataSet(dataToSample.getAttributes(), oobRecords, dataToSample.getName()));
 
             DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords, data.getName());
+            System.out.println(data.getAttributes());
             dataSets.add(bootStrappedData);
         }
         return dataSets;

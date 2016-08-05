@@ -24,8 +24,8 @@ public abstract class Font {
         }
         
         int numLines = getNumber(s, "\n")+1;
-        int longestSubstring = longestLengthBetweenString(s, "/n");
-        
+        int longestSubstring = longestLengthBetweenString(s, "/n")+1;
+
         BufferedImage bi = new BufferedImage(longestSubstring*charWidth, charHeight*numLines, BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.getGraphics();
         int xToDraw=0, yToDraw=0;

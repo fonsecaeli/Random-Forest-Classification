@@ -13,6 +13,7 @@ public class Viewer extends Interactable{
     
     private TabSystem dataSetsTabSys;
     private TabSystem optionsTabSys;
+    private Button right, left;
     private TreeStructure tree;
     private FishEye fishEye;
 
@@ -31,17 +32,20 @@ public class Viewer extends Interactable{
         optionsTabSys = new TabSystem(0,
                                       dataSetsTabSys.getHeight(),
                                       getWidth());
+        right = new RightButton(0,
+                                dataSetsTabSys.getHeight()+optionsTabSys.getHeight());
+        left = new LeftButton(getWidth()-Button.getWidth("<"),
+                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight());
         tree = new TreeStructure(0,
-                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight(),
+                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight(),
                                  getWidth(),
-                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight());
+                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight());
         fishEye = new FishEye(0,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight(),
+                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight(),
                               getWidth(),
-                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight());
+                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight());
         optionsTabSys.addTab("Tree", tree);
         optionsTabSys.addTab("Fish Eye Viewer", fishEye);
-        //StaticStorage.getCurrentDataSet()
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
         dataSetsTabSys.setSelectedTab(0);
@@ -123,5 +127,27 @@ public class Viewer extends Interactable{
         public DataSet getDataSet(){
             return ds;
         }
+    }
+    
+    private class RightButton extends Button{
+	public RightButton(int x, int y){
+            super(x, y, ">");
+	}
+		
+        @Override
+	public void onAction(MouseEvent me){
+            StaticStorage.incrementCurrentTree();
+	}
+    }
+	
+    private class LeftButton extends Button{
+	public LeftButton(int x, int y){
+            super(x, y, "<");
+	}
+		
+        @Override
+	public void onAction(MouseEvent me){
+            StaticStorage.decrementCurrentTree();
+	}
     }
 }

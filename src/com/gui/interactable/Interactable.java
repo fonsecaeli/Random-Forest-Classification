@@ -38,6 +38,12 @@ public abstract class Interactable {
         public BufferedImage getImage(){
             return image;
         }
+        
+        public void setImage(BufferedImage bi){
+            image = bi;
+            setWidth(bi.getWidth());
+            setHeight(bi.getHeight());
+        }
 	
         /**
          * @param me the mouse event itself, used for its coords
@@ -90,6 +96,10 @@ public abstract class Interactable {
         
         protected void removeInteractable(Interactable i){
             interactables.remove(i);
+        }
+        
+        public final List<Interactable> getInteractables(){
+            return interactables;
         }
 	
         /**

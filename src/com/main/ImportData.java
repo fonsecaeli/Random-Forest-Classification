@@ -39,9 +39,13 @@ public class ImportData {
 			e.printStackTrace();
 		}
         //buckets the continuous attributes
+        return configAttributes(attributes, data, fileName);
+	}
+
+    public static DataSet configAttributes(List<Attribute> attributes, List<Record> data, String fileName) {
         List<Attribute> bucketedAttributes = Entropy.bucketContinuousAttributes(attributes, data);
-        for(int i = 0; i < data.size(); i++) {
-            for(int j = 0; j < attributes.size(); j++) {
+        for (int i = 0; i < data.size(); i++) {
+            for (int j = 0; j < attributes.size(); j++) {
                 try {
                     String str = data.get(i).getValue(bucketedAttributes.get(j));
                 } catch (NullPointerException e) {
@@ -51,9 +55,9 @@ public class ImportData {
                 }
             }
         }
-		return new DataSet(bucketedAttributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
-	}
-	
+        return new DataSet(bucketedAttributes, data, fileName.substring((int) Math.max(fileName.lastIndexOf("\\"), fileName.lastIndexOf("/")) + 1, fileName.length() - 4));
+    }
+
 	public static DataSet importData(File file){
 		ArrayList <Attribute> attributes = new ArrayList<>();
 		ArrayList <Record> data = new ArrayList <>();
@@ -76,8 +80,8 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-                String fileName = file.getPath();
-		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
+        String fileName = file.getPath();
+        return configAttributes(attributes, data, fileName);
 	}
 
 	public static DataSet importData(String fileName, ArrayList <Attribute> attributes){
@@ -107,7 +111,7 @@ public class ImportData {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
+        return configAttributes(attributes, data, fileName);
 	}
 
 	public static DataSet importData(File file, ArrayList <Attribute> attributes){
@@ -138,6 +142,6 @@ public class ImportData {
 			e.printStackTrace();
 		}
         String fileName = file.getPath();
-		return new DataSet(attributes, data, fileName.substring((int)Math.max(fileName.lastIndexOf("\\"),fileName.lastIndexOf("/")) + 1, fileName.length()-4));
+        return configAttributes(attributes, data, fileName);
 	}
 }

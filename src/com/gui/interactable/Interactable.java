@@ -7,10 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Interactable {
-	private int x, y, width, height;
-        private List<Interactable> interactables;
-	private BufferedImage image;
+	private int x, y, //The relative to the screen. They are relative to the Interactable that contains it.
+                    width, height; //the width/height of the hitbox and image
+        private List<Interactable> interactables; //A list of interactables which are updated when this
+	private BufferedImage image; //The image this interactable draws, has width of width and height of height
 	
+        /**
+         * The basic constructor, initializes the contained interactables, and then creates the image
+         * @param x1 the relative x-coord of the interactable
+         * @param y1 the relative x-coord of the interactable
+         * @param w the width of the hitbox of the interactable
+         * @param h  the height of the hitboxinteractable
+         */
 	public Interactable(int x1, int y1, int w, int h){
             x = x1;
             y = y1;
@@ -20,7 +28,10 @@ public abstract class Interactable {
             createImage();
 	}
         
-        private void createImage(){
+        /**
+         * creates image with the stored dimensions
+         */
+        private final void createImage(){
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
         
@@ -28,6 +39,12 @@ public abstract class Interactable {
             return image;
         }
 	
+        /**
+         * @param me the mouse event itself, used for its coords
+         * @param xoff the x offset of the mouse event, global coords on screen
+         * @param yoff the y offset of the mouse event, global coords on screen
+         * @returns whether the given mouse event intersects the object
+         */
 	public final boolean contains(MouseEvent me, int xoff, int yoff){
             int testX = x+xoff;
             int testY = y+yoff;
@@ -75,6 +92,9 @@ public abstract class Interactable {
             interactables.remove(i);
         }
 	
+        /**
+         * clicked - brief press then release
+         */
 	public void mouseClicked(MouseEvent me, int xoff, int yoff){
             for(Interactable i : interactables){
                 if(i.contains(me, getX()+xoff, getY()+yoff)){
@@ -83,6 +103,9 @@ public abstract class Interactable {
             }
         }
         
+        /**
+         * pressed - mouse is pressed down
+         */
 	public void mousePressed(MouseEvent me, int xoff, int yoff){
             for(Interactable i : interactables){
                 if(i.contains(me, getX()+xoff, getY()+yoff)){
@@ -91,6 +114,9 @@ public abstract class Interactable {
             }
         }
         
+        /**
+         * released - mouse is released
+         */
 	public void mouseReleased(MouseEvent me, int xoff, int yoff){
             for(Interactable i : interactables){
                 if(i.contains(me, getX()+xoff, getY()+yoff)){
@@ -101,6 +127,10 @@ public abstract class Interactable {
             }
         }
         
+        
+        /**
+         * not hovered - mouse event does not intersect and mouse is moving
+         */
 	public void mouseNotHovered(MouseEvent me, int xoff, int yoff){
             for(Interactable i : interactables){
                 if(!i.contains(me, getX()+xoff, getY()+yoff)){
@@ -109,6 +139,9 @@ public abstract class Interactable {
             }
         }
         
+        /**
+         * hovered - mouse event intersects and mouse is moving
+         */
 	public void mouseHovered(MouseEvent me, int xoff, int yoff){
             for(Interactable i : interactables){
                 if(i.contains(me, getX()+xoff, getY()+yoff)){
@@ -119,6 +152,9 @@ public abstract class Interactable {
             }
         }
         
+        /**
+         * dragged - mouse event intersects, mouse is pressed, and mouse is moving
+         */
 	public void mouseDragged(MouseEvent me, int xoff, int yoff){
             for(Interactable i : interactables){
                 if(i.contains(me, getX()+xoff, getY()+yoff)){
@@ -129,6 +165,9 @@ public abstract class Interactable {
             }
         }
         
+        /**
+         * draws image, then draws all of its interactables
+         */
         public void render(int xoff, int yoff, Screen screen){
             screen.drawImage(image, getX()+xoff, getY()+yoff);
             for(Interactable i : interactables){

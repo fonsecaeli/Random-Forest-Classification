@@ -133,9 +133,6 @@ public class Entropy {
     private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
         //System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
         //Collections.sort(r, new AttributeSorter(att));
-        for(Record re: r) {
-            System.out.println(re);
-        }
         double bestGain = 0.0;
         double cutOff = Double.parseDouble(r.get(r.size()/2).getValue(att));
         for(int i = 0; i < r.size(); i++) {

@@ -4,6 +4,8 @@ package com.gui.gfx;
 import com.gui.input.ImageHandler;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Font {
     private static final int TAB_SIZE=4;
@@ -24,7 +26,7 @@ public abstract class Font {
         }
         
         int numLines = getNumber(s, "\n")+1;
-        int longestSubstring = longestLengthBetweenString(s, "/n");
+        int longestSubstring = longestLengthBetweenString(s, "\n");
         
         BufferedImage bi = new BufferedImage(longestSubstring*charWidth, charHeight*numLines, BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.getGraphics();
@@ -59,8 +61,31 @@ public abstract class Font {
                 xToDraw+=charWidth;
             }
         }
+        /*System.out.println();
+        System.out.println("BufferedImage: "+bi);
+        if(bi==null)System.out.println("************************************************************");
+        System.out.println("String: "+s);
+        System.out.println("numLines: "+numLines);
+        System.out.println("longestSubstring: "+longestSubstring);*/
         
         return bi;
+    }
+    
+    
+    public static List<BufferedImage> stringToBufferedImageList(String s){
+        if(s.equals("")){
+            return new ArrayList<>();
+        }
+        
+        List<BufferedImage> bis = new ArrayList<>();
+        
+        String[] strings = s.split("\n");
+        for(int i=0; i<strings.length; i++){
+            if(!strings[i].equals("")){
+                bis.add(stringToBufferedImage(strings[i]));
+            }
+        }
+        return bis;
     }
     
     public static int getCharWidth() {

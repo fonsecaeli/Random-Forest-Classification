@@ -71,7 +71,7 @@ public class FishEye extends Interactable {
 			if (top!=null) removeInteractable(top);
 			String name = stacks.get(curIndex).peek().getAttribute().getName();
 			top = new FishEyeButton((getWidth()-Button.getWidth(name))/2 , 
-						(getHeight()-Button.getHeight(name))/4,
+						(getHeight()-Button.getHeight(name))*3/8,
 						this, -1, name, name);
 			addInteractable(top);
 			stacks.get(curIndex).push(node);
@@ -99,11 +99,11 @@ public class FishEye extends Interactable {
 		int i=0;
 		for (String a: node.getKeys()){
 			if (isLeafNode(node.getChild(a))) {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*3/4, this, i, a+": "+node.getChild(a).getDecision(), a));
+				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*5/8, this, i, a+": "+node.getChild(a).getDecision(), a));
 				sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+10;
 			}
 			else {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*3/4, this, i, a, a));
+				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*5/8, this, i, a, a));
 				sum+=Button.getWidth(a)+10;
 			}
 			addInteractable(bottom.get(bottom.size()-1));

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-class Entropy {
+public class Entropy {
 
 	/**
      * entropy of total data set

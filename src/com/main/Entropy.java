@@ -119,7 +119,7 @@ public class Entropy {
             Attribute toAdd = atts.get(i);
             if(continuous) {
                 double cutOff = detCutOff(r, atts, atts.get(i));
-                System.out.println(cutOff);
+                System.out.println(atts.get(i).getName()+": "+cutOff);
                 toAdd = new ContinuousAttribute(atts.get(i).getName(), cutOff);
             }
             else if(flagged) {
@@ -141,7 +141,14 @@ public class Entropy {
             if(gain > bestGain) {
                 bestGain = gain;
                 cutOff = Double.parseDouble(r.get(i).getValue(att));
-                System.out.println(gain);
+                for(Record re: highAndLow.get(0)) {
+                    System.out.println(re);
+                }
+                System.out.println();
+                for(Record re: highAndLow.get(1)) {
+                    System.out.println(re);
+                }
+                System.out.println("end of set");
             }
         }
         //System.out.println("cutOff has been calculated");
@@ -151,10 +158,14 @@ public class Entropy {
     private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
         List<Record> high = new ArrayList<>();
         List<Record> low = new ArrayList<>();
+        double delta = .01;
         for(int i = 0; i < r.size(); i++) {
             double a = Double.parseDouble(r.get(i).getValue(att));
             double b = Double.parseDouble(value);
-            if(a <= b) {
+            if(a < b) {
+                low.add(r.get(i));
+            }
+            else if(Math.abs(a - b) < delta) {
                 low.add(r.get(i));
             }
             else {

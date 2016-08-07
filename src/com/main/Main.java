@@ -24,8 +24,8 @@ public class Main {
 			gui.render(0, 0, screen);
 			screen.render();
 		}
-        /*DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
-        RandomForest r = new RandomForest(d, 10, 1);
-        System.out.println(r);*/
+       /* DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
+        RandomForest r = new RandomForest(d, 10, 1);*/
+        //System.out.println(r);
     }
 }

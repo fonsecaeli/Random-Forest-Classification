@@ -17,7 +17,7 @@ public class Main {
         new ImageHandler("/font2x.png");
         Font.init(16,28);
 
-        Screen screen = new Screen(1920,1080);
+        Screen screen = new Screen(1920,1020);
         GUI gui = new GUI(screen);
         screen.setInput(gui);
 

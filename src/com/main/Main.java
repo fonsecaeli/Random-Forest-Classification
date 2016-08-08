@@ -6,6 +6,8 @@ import com.gui.input.ImageHandler;
 import com.gui.interactable.GUI;
 
 import java.util.Scanner;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class Main {
 
@@ -14,10 +16,19 @@ public class Main {
         //System.out.println("Input the font file: ");
         //String fontInput = scanner.nextLine();
         //fontInput = fontInput.replace("\'", "").replace("\"", "");
-        new ImageHandler("/font2x.png");
-        Font.init(16,28);
-
-        Screen screen = new Screen(1920,1020);
+	
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int screenWidth = screenSize.width;
+	int screenHeight= screenSize.height;
+	
+        if (screenWidth*screenHeight>=1900*1000){
+		new ImageHandler("/font2x.png");
+        	Font.init(16,28);
+	} else {
+		new ImageHandler("/font.png");
+        	Font.init(8,14);
+	}
+        Screen screen = new Screen(screenWidth*15/16, screenHeight*15/16);
         GUI gui = new GUI(screen);
         screen.setInput(gui);
 

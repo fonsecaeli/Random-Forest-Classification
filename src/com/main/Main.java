@@ -25,8 +25,8 @@ public class Main {
 		new ImageHandler("/font2x.png");
         	Font.init(16,28);
 	} else if (screenWidth*screenHeight>=1900*1000) {
-		new ImageHandler("/font.png");
-        	Font.init(8,14);
+		new ImageHandler("/font1.5x.png");
+        	Font.init(12,21);
 	} else {
 		new ImageHandler("/font.png");
         	Font.init(8,14);

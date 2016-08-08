@@ -127,7 +127,7 @@ public class Entropy {
             Attribute toAdd = atts.get(i);
             if(continuous) {
                 double cutOff = detCutOff(r, atts, atts.get(i));
-                System.out.println(atts.get(i).getName()+": "+cutOff);
+                //System.out.println(atts.get(i).getName()+": "+cutOff);
                 toAdd = new ContinuousAttribute(atts.get(i).getName(), cutOff);
             }
             else if(flagged) {
@@ -205,7 +205,7 @@ public class Entropy {
      * @return the total information gain from this split
      */
     private static double gainForLists(List<Record> data, List<Attribute> atts, List<Record> high, List<Record> low) {
-        double postSplit = (((double)low.size())/data.size())*entropy(new DataSet(atts, low))+(((double)high.size())/data.size())*entropy(new DataSet(atts, high));
+        double postSplit = ((double)low.size())/data.size()*entropy(new DataSet(atts, low))+((double)high.size())/data.size()*entropy(new DataSet(atts, high));
         double preSplit = entropy(new DataSet(atts, data));
         return preSplit - postSplit;
     }

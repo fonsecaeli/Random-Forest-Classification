@@ -33,7 +33,7 @@ public class Main {
         screen.setInput(gui);
 
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 120.0;
+        final double amountOfTicks = 60.0;
         double ns = 1000000000/amountOfTicks;
         double delta=0;
         //int updates=0;
@@ -57,7 +57,7 @@ public class Main {
 
             if (System.nanoTime()-timer>1000000000){
                 timer+=1000000000;
-                System.out.println(/*updates + " Ticks, */"FPS "+frames);
+                //System.out.println(/*updates + " Ticks, */"FPS "+frames);
                 //updates=0;
                 frames=0;
             }

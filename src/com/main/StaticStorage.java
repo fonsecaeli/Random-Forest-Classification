@@ -61,6 +61,10 @@ public class StaticStorage {
         return dataSets.size();
     }
     
+    public static int numTrees(){
+        return getCurrentRandomForest().getTrees().length;
+    }
+    
     public static List<DataSet> getDataSets(){
         return dataSets;
     }
@@ -72,8 +76,8 @@ public class StaticStorage {
     public static void incrementCurrentTree(){
         if (getCurrentRandomForest()!=null){
             indexOfCurrentTree++;
-            int currentMaxLength=getCurrentRandomForest().getTrees().length;
-            if(indexOfCurrentTree>currentMaxLength)indexOfCurrentTree=0;
+            int currentMaxIndex=getCurrentRandomForest().getTrees().length-1;
+            if(indexOfCurrentTree>currentMaxIndex)indexOfCurrentTree=0;
         }
     }
 

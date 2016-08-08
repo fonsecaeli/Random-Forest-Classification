@@ -12,6 +12,7 @@ import java.util.Stack;
 
 public class FishEye extends Interactable {
 	private static final Color BACKGROUND_COLOR = Color.WHITE;
+	private final int CHILD_SPACING = 50;
         
 	ArrayList <Stack<Node>> stacks;
 	DecisionTree[] trees;
@@ -63,53 +64,81 @@ public class FishEye extends Interactable {
 	
 	public void refreshImage(){
 		curIndex = StaticStorage.getIndexOfCurrentTree();
+		
+		//pushes the head node to the stack if it isn't there yet
 		if (stacks.get(curIndex).empty()){
 			stacks.get(curIndex).push(trees[curIndex].getHeadNode());
 		}
+		
+		//makes the button above the current node if the node on the stack isn't the head node and removes the button if the head node is alone on the stack
 		if (stacks.get(curIndex).size()>=2){
-			Node node = stacks.get(curIndex).pop();
+			Node temp = stacks.get(curIndex).pop();
 			if (top!=null) removeInteractable(top);
-			String name = stacks.get(curIndex).peek().getAttribute().getName();
+			String name = "("+stacks.get(curIndex).peek().getKeyString()+") "+stacks.get(curIndex).peek().getAttribute().getName();
 			top = new FishEyeButton((getWidth()-Button.getWidth(name))/2 , 
-						(getHeight()-Button.getHeight(name))*3/8,
+						(getHeight()-Button.getHeight(name))*2/8,
 						this, -1, name, name);
 			addInteractable(top);
-			stacks.get(curIndex).push(node);
+			stacks.get(curIndex).push(temp);
 		} else {
 			removeInteractable(top);
 			top = null;
 		}
+		
+		//removes the middle button so it can be 'remade'
 		if (middle!=null) removeInteractable(middle);
-		String name = stacks.get(curIndex).peek().getAttribute().getName();
+		String name = "("+stacks.get(curIndex).peek().getKeyString()+") "+stacks.get(curIndex).peek().getAttribute().getName();
 		middle = new Button((getWidth()-Button.getWidth(name))/2,
 					(getHeight()-Button.getHeight(name))/2, name);
 		addInteractable(middle);
+		
+		//removes all of the child nodes so they can be 'remade'
 		if (bottom!=null)
 			for (FishEyeButton f: bottom)
 				removeInteractable(f);
 		bottom = new ArrayList<>();
 		Node node = stacks.get(curIndex).peek();
+		
+		//counts width of all the child buttons together
 		int sum = 0;
 		for (String a: node.getKeys()){
-			if (isLeafNode(node.getChild(a))) sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+10;
-			else sum+=Button.getWidth(a)+10;
+			if (isLeafNode(node.getChild(a))) sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+CHILD_SPACING;
+			else sum+=Button.getWidth(a)+CHILD_SPACING;
 		}
-		sum-=10;
+		sum-=CHILD_SPACING;
 		sum = (getWidth()-sum)/2;
 		int i=0;
+		
+		//makes all of the child buttons
 		for (String a: node.getKeys()){
 			if (isLeafNode(node.getChild(a))) {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*5/8, this, i, a+": "+node.getChild(a).getDecision(), a));
-				sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+10;
+				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*6/8, this, i, a+": "+node.getChild(a).getDecision(), a));
+				sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+CHILD_SPACING;
 			}
 			else {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*5/8, this, i, a, a));
-				sum+=Button.getWidth(a)+10;
+				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*6/8, this, i, a, a));
+				sum+=Button.getWidth(a)+CHILD_SPACING;
 			}
 			addInteractable(bottom.get(bottom.size()-1));
 			i++;
 		}
+		initImage();
+		renderLines();
 		change = false;
+	}
+	
+	private void renderLines(){
+		if (middle!=null){
+			Graphics g = getImage().getGraphics();
+			g.setColor(Color.BLACK);
+			if (top!=null)
+				g.drawLine(top.getX()+(top.getWidth()/2), top.getY()+(top.getHeight()/2),
+					middle.getX()+(middle.getWidth()/2), middle.getY()+(middle.getHeight()/2));
+			
+			if (bottom!=null&&bottom.size()>0)
+				for(FishEyeButton f: bottom)
+					g.drawLine(middle.getX()+(middle.getWidth()/2), middle.getY()+(middle.getHeight()/2), f.getX()+(f.getWidth()/2), f.getY()+(f.getHeight()/2));
+		}
 	}
 	
 	private boolean isLeafNode(Node node){

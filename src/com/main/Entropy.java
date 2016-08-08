@@ -57,7 +57,6 @@ public class Entropy {
      * @param dataSet The DataSet to check, contains the Record and Attribute Lists
      * @param att The Attribute to used to calculate entropy
      */
-	
     private static double attributeEntropy(DataSet dataSet, Attribute att) {
         //Intializing values needed
         List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
@@ -79,11 +78,8 @@ public class Entropy {
             DataSet ds = new DataSet(attList, currentRecords, "");
             double dataSetEntropy = entropy(ds);
             attEntropy += dataSetEntropy*proportion;
-            //System.out.print(dataSetEntropy+" ");
         }
         return attEntropy;
-        //sortedRecords should be filled
-        //System.out.println(att+" | Entropy: "+attEntropy);
     }
 
 
@@ -100,6 +96,15 @@ public class Entropy {
         return entropy - attributeEntropy;
     }
 
+    /**
+     * Takes a list of Attributes and changes the continuous attributes in that list
+     * into a ContinuousAttribute Object.
+     *
+     * @param atts the list of attributes to be examined
+     * @param r the list of records that is the data from which the list of atts was
+     *          extracted from
+     * @return a list of ContinuousAttribute and Attribute Objects
+     */
     public static List<Attribute> bucketContinuousAttributes(List<Attribute> atts, List<Record> r) {
         List<Attribute> newAtts = new ArrayList<>(atts.size());
         for(int i = 0; i < atts.size(); i++) {
@@ -130,6 +135,14 @@ public class Entropy {
         return newAtts;
     }
 
+    /**
+     * Determines the cut off point between High and low for a specific continuous attribute
+     * this is a helper method for bucketContinuousAttributes()
+     * @param r the data
+     * @param atts all the attributes from the data set
+     * @param att the attribute being bucketed
+     * @return the best cutoff point (using information gain)
+     */
     private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
         //System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
         //Collections.sort(r, new AttributeSorter(att));
@@ -155,6 +168,14 @@ public class Entropy {
         return cutOff;
     }
 
+    /**
+     * Splits a set of records into two buckets high and low according to some specified value
+     * this is a helper method for detCutOff()
+     * @param r the data
+     * @param value the value to split on
+     * @param att the attribute we are buketing
+     * @return
+     */
     private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
         List<Record> high = new ArrayList<>();
         List<Record> low = new ArrayList<>();
@@ -178,6 +199,16 @@ public class Entropy {
         return toReturn;
     }
 
+    /**
+     * determines the net information gain from splitting a data set into two sections
+     * helper method for bucketContinuousAttributes()
+     *
+     * @param data the data
+     * @param atts all the attributes possible
+     * @param high the high list
+     * @param low the low list
+     * @return the total information gain from this split
+     */
     private static double gainForLists(List<Record> data, List<Attribute> atts, List<Record> high, List<Record> low) {
         double postSplit = (((double)low.size())/data.size())*entropy(new DataSet(atts, low))+(((double)high.size())/data.size())*entropy(new DataSet(atts, high));
         double preSplit = entropy(new DataSet(atts, data));

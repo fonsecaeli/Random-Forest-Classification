@@ -14,10 +14,10 @@ public class Main {
         //System.out.println("Input the font file: ");
         //String fontInput = scanner.nextLine();
         //fontInput = fontInput.replace("\'", "").replace("\"", "");
-        new ImageHandler("/font.png");
-        Font.init(8,14);
+        new ImageHandler("/font2x.png");
+        Font.init(16,28);
 
-        Screen screen = new Screen(1280,700);
+        Screen screen = new Screen(1920,1080);
         GUI gui = new GUI(screen);
         screen.setInput(gui);
 

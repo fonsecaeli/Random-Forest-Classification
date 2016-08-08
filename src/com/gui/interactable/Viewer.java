@@ -89,37 +89,43 @@ public class Viewer extends Interactable{
     @Override
     public void mouseClicked(MouseEvent me, int xoff, int yoff){
         super.mouseClicked(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseClicked(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseClicked(me, xoff, yoff);
     }
 
     @Override
     public void mousePressed(MouseEvent me, int xoff, int yoff){
         super.mousePressed(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mousePressed(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mousePressed(me, xoff, yoff);
     }
 
     @Override
     public void mouseReleased(MouseEvent me, int xoff, int yoff){
         super.mouseReleased(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseReleased(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseReleased(me, xoff, yoff);
     }
 
     @Override
     public void mouseNotHovered(MouseEvent me, int xoff, int yoff){
         super.mouseNotHovered(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseNotHovered(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseNotHovered(me, xoff, yoff);
     }
 
     @Override
     public void mouseHovered(MouseEvent me, int xoff, int yoff){
         super.mouseHovered(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseHovered(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseHovered(me, xoff, yoff);
     }
 
     @Override
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
         super.mouseDragged(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseDragged(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseDragged(me, xoff, yoff);
     }
 
     @Override

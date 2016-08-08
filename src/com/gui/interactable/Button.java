@@ -81,7 +81,8 @@ public class Button extends Interactable {
 
     @Override
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
-        refreshStatus(HOVER);
+        if(getStatus() != CLICK)
+            refreshStatus(HOVER);
     }
 
     @Override

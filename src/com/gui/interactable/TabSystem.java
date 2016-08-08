@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
+import com.util.Pair;
 
 public class TabSystem extends Interactable{
     public static final int TAB_HORIZONTAL_SPACING = 4,

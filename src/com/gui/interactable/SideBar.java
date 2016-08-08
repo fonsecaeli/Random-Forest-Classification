@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SideBar extends Interactable{
-    public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
+    public static final Color BACKGROUND_COLOR = new Color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
 
     /**
      * Initializes the sidebar with the given dimensions

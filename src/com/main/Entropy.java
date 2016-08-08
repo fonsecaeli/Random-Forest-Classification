@@ -6,6 +6,9 @@ public class Entropy {
 
 	/**
      * entropy of total data set
+     *
+     * @param set the data set to get the entropy of
+     * @return the entropy of the data set
      */
 	private static double entropy(DataSet set) {
             List<Record> data = set.getRecords();

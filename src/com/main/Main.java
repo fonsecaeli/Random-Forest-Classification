@@ -22,7 +22,7 @@ public class Main {
         screen.setInput(gui);
 
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 60.0;
+        final double amountOfTicks = 120.0;
         double ns = 1000000000/amountOfTicks;
         double delta=0;
         //int updates=0;

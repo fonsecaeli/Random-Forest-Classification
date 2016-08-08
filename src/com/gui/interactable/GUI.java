@@ -10,7 +10,7 @@ import java.awt.Graphics;
  * This is what is called when the screen renders
  */
 public class GUI extends Interactable{
-    public static final Color BACKGROUND_COLOR = new Color(240, 240, 240),
+    public static final Color BACKGROUND_COLOR = Color.WHITE,
                               BORDER_COLOR = new Color(75, 75, 75);
     public static final double VIEWER_WIDTH_PROPORTION = 0.8;
     

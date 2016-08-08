@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
+    public static final int CONTENT_VERTICAL_OFFSET = 12;
     
     private TabSystem dataSetsTabSys;
     private TabSystem optionsTabSys;
@@ -42,6 +43,8 @@ public class Viewer extends Interactable{
                                              verticalSum,
                                              getWidth());
         verticalSum+=treeChanger.getHeight();
+    /********************************************************************************************************************************/
+        verticalSum+=CONTENT_VERTICAL_OFFSET;
     /********************************************************************************************************************************/
         tree = new TreeStructure(0,
                                  verticalSum,

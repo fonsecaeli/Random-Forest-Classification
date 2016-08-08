@@ -37,6 +37,9 @@ public class CurrentTreeChanger extends Interactable {
         Graphics g = getImage().getGraphics();
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(getX(), getY(), getWidth(), getHeight());
+            
+        g.setColor(GUI.BORDER_COLOR);
+        g.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
     }
     
     
@@ -47,6 +50,10 @@ public class CurrentTreeChanger extends Interactable {
             Graphics g = getImage().getGraphics();
             g.setColor(BACKGROUND_COLOR);
             g.fillRect(0, 0, getWidth(), getHeight());
+            
+            g.setColor(GUI.BORDER_COLOR);
+            g.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
+            
             BufferedImage txt = Font.stringToBufferedImage("On tree "+(StaticStorage.getIndexOfCurrentTree()+1)+" of "+StaticStorage.numTrees());
             g.drawImage(txt,(getWidth()-txt.getWidth())/2,(getHeight()-txt.getHeight())/2,null);
         }

@@ -9,21 +9,48 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            //System.out.println("Input the font file: ");
-            //String fontInput = scanner.nextLine();
-            //fontInput = fontInput.replace("\'", "").replace("\"", "");
-            new ImageHandler("/font.png");
-            Font.init(8,14);
-            
-            Screen screen = new Screen(1280,700);
-            GUI gui = new GUI(screen);
-            screen.setInput(gui);
-		while(true) {
-			gui.render(0, 0, screen);
-			screen.render();
-		}
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        //System.out.println("Input the font file: ");
+        //String fontInput = scanner.nextLine();
+        //fontInput = fontInput.replace("\'", "").replace("\"", "");
+        new ImageHandler("/font.png");
+        Font.init(8,14);
+
+        Screen screen = new Screen(1280,700);
+        GUI gui = new GUI(screen);
+        screen.setInput(gui);
+
+        long lastTime = System.nanoTime();
+        final double amountOfTicks = 60.0;
+        double ns = 1000000000/amountOfTicks;
+        double delta=0;
+        //int updates=0;
+        int frames=0;
+        long timer = System.nanoTime();
+
+        while (true){
+            long now = System.nanoTime();
+            delta += (now-lastTime)/ns;
+            lastTime = now;
+            if (delta>=1){
+                {//render
+                gui.render(0, 0, screen);
+                screen.render();
+                }
+                //tick();
+                //updates++;
+                frames++;
+                delta--;
+            }
+
+            if (System.nanoTime()-timer>1000000000){
+                timer+=1000000000;
+                System.out.println(/*updates + " Ticks, */"FPS "+frames);
+                //updates=0;
+                frames=0;
+            }
+        }
        /* DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
         RandomForest r = new RandomForest(d, 10, 1);*/
         //System.out.println(r);

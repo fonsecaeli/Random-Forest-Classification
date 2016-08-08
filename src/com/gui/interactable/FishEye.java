@@ -12,7 +12,8 @@ import java.util.Stack;
 
 public class FishEye extends Interactable {
 	private static final Color BACKGROUND_COLOR = Color.WHITE;
-	private final int CHILD_SPACING = 50;
+	private final int CHILD_SPACING = 20;
+	private final double VERTICAL_SPACING = 0.125, MIDDLE_HEIGHT = 0.5;
         
 	ArrayList <Stack<Node>> stacks;
 	DecisionTree[] trees;
@@ -76,7 +77,7 @@ public class FishEye extends Interactable {
 			if (top!=null) removeInteractable(top);
 			String name = "("+stacks.get(curIndex).peek().getKeyString()+") "+stacks.get(curIndex).peek().getAttribute().getName();
 			top = new FishEyeButton((getWidth()-Button.getWidth(name))/2 , 
-						(getHeight()-Button.getHeight(name))*2/8,
+						(int)((MIDDLE_HEIGHT-VERTICAL_SPACING)*(getHeight()-Button.getHeight(name))),
 						this, -1, name, name);
 			addInteractable(top);
 			stacks.get(curIndex).push(temp);
@@ -89,7 +90,7 @@ public class FishEye extends Interactable {
 		if (middle!=null) removeInteractable(middle);
 		String name = "("+stacks.get(curIndex).peek().getKeyString()+") "+stacks.get(curIndex).peek().getAttribute().getName();
 		middle = new Button((getWidth()-Button.getWidth(name))/2,
-					(getHeight()-Button.getHeight(name))/2, name);
+					(int)(MIDDLE_HEIGHT*(getHeight()-Button.getHeight(name))), name);
 		addInteractable(middle);
 		
 		//removes all of the child nodes so they can be 'remade'
@@ -112,11 +113,11 @@ public class FishEye extends Interactable {
 		//makes all of the child buttons
 		for (String a: node.getKeys()){
 			if (isLeafNode(node.getChild(a))) {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*6/8, this, i, a+": "+node.getChild(a).getDecision(), a));
+				bottom.add(new FishEyeButton(sum, (int)((MIDDLE_HEIGHT+VERTICAL_SPACING)*(getHeight()-Button.getHeight(a))), this, i, a+": "+node.getChild(a).getDecision(), a));
 				sum+=Button.getWidth(a+": "+node.getChild(a).getDecision())+CHILD_SPACING;
 			}
 			else {
-				bottom.add(new FishEyeButton(sum, (getHeight()-Button.getHeight(a))*6/8, this, i, a, a));
+				bottom.add(new FishEyeButton(sum, (int)((MIDDLE_HEIGHT+VERTICAL_SPACING)*(getHeight()-Button.getHeight(a))), this, i, a, a));
 				sum+=Button.getWidth(a)+CHILD_SPACING;
 			}
 			addInteractable(bottom.get(bottom.size()-1));

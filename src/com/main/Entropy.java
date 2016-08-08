@@ -154,14 +154,6 @@ public class Entropy {
             if(gain > bestGain) {
                 bestGain = gain;
                 cutOff = Double.parseDouble(r.get(i).getValue(att));
-                for(Record re: highAndLow.get(0)) {
-                    System.out.println(re);
-                }
-                System.out.println();
-                for(Record re: highAndLow.get(1)) {
-                    System.out.println(re);
-                }
-                System.out.println("end of set");
             }
         }
         //System.out.println("cutOff has been calculated");
@@ -173,8 +165,8 @@ public class Entropy {
      * this is a helper method for detCutOff()
      * @param r the data
      * @param value the value to split on
-     * @param att the attribute we are buketing
-     * @return
+     * @param att the attribute we are bucketing
+     * @return the split data set
      */
     private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
         List<Record> high = new ArrayList<>();

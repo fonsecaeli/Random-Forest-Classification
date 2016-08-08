@@ -166,7 +166,7 @@ public class Entropy {
      * @param r the data
      * @param value the value to split on
      * @param att the attribute we are bucketing
-     * @return
+     * @return the split data set
      */
     private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
         List<Record> high = new ArrayList<>();

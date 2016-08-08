@@ -79,8 +79,12 @@ public class Node {
     public Set<String> getKeys(){
         return children.keySet();
     }
-    
-    //Sets the decision for a node; only applicable for leaf nodes
+
+    /**
+     * Sets the decision for a node; only applicable for leaf nodes
+     *
+     * @param value the value to set the decision too
+     */
     public void setDecision(String value){
         decision=value;
     }

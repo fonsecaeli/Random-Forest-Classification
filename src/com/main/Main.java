@@ -21,7 +21,7 @@ public class Main {
 	int screenWidth = screenSize.width;
 	int screenHeight= screenSize.height;
 	
-        if (screenWidth*screenHeight>=1900*1000){
+        if (screenWidth*screenHeight>=2500*1400){
 		new ImageHandler("/font2x.png");
         	Font.init(16,28);
 	} else {

@@ -110,7 +110,6 @@ public class TabSystem extends Interactable{
         List<Tab> tabs= new ArrayList<>();
         keys.stream().forEach((key) -> {
             tabs.add(key);
-            System.out.println(key);
         });
         return tabs;
     } 

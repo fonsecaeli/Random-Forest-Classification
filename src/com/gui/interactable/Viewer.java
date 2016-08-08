@@ -124,9 +124,14 @@ public class Viewer extends Interactable{
 
     @Override
     public void render(int xoff, int yoff, Screen screen){
-        //refreshImage();
-        refreshDataSetsTabSys();
-        super.render(xoff, yoff, screen);
+        if(StaticStorage.numDataSets()<=0){
+            screen.drawImage(getImage(), getX()+xoff, getY()+yoff);
+            dataSetsTabSys.render(getX()+xoff, getY()+yoff, screen);
+        } else {
+            //refreshImage();
+            refreshDataSetsTabSys();
+            super.render(xoff, yoff, screen);
+        }
     }
     
     private class DataSetTab extends Tab {

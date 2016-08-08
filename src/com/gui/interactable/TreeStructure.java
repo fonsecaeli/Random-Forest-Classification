@@ -43,7 +43,12 @@ public class TreeStructure extends Interactable{
         this.yoff=(int)(this.yoff+(SCROLL_SPEED)*(previousY-me.getY()));
         
         this.yoff=(int)Math.max(this.yoff, 0);
-        this.yoff=(int)Math.min(this.yoff, list.size()*Font.getCharHeight() - getHeight()*15/16);
+        int maxHeight = getHeight()*15/16;
+        int height = list.size()*Font.getCharHeight();
+        if(height>maxHeight)
+            this.yoff=(int)Math.min(this.yoff, height - maxHeight);
+        else 
+            this.yoff=(int)Math.min(this.yoff, 0);
         
         previousY=me.getY();
         super.mouseDragged(me, xoff, yoff);
@@ -57,6 +62,7 @@ public class TreeStructure extends Interactable{
     
     public void refreshImage(){
         if(StaticStorage.getCurrentTree()!=null && StaticStorage.getCurrentTree()!=tree){
+            this.yoff=0;
             for(Interactable i : list){
                 removeInteractable(i);
             }

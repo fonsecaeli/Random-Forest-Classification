@@ -35,6 +35,7 @@ public class ImportData {
 					data.get(data.size()-1).add(attributes.get(i), temp[i]);
 				}
 			}
+                        br.close();
 		} catch (IOException e){
 			e.printStackTrace();
 		}
@@ -77,6 +78,7 @@ public class ImportData {
 					data.get(data.size()-1).add(attributes.get(i), temp[i]);
 				}
 			}
+                    br.close();
 		} catch (IOException e){
 			e.printStackTrace();
 		}
@@ -108,6 +110,7 @@ public class ImportData {
 					data.get(data.size()-1).add(attributes.get(i), temp[i]);
 				}
 			}
+                        br.close();
 		} catch (IOException e){
 			e.printStackTrace();
 		}
@@ -138,6 +141,7 @@ public class ImportData {
 					data.get(data.size()-1).add(attributes.get(i), temp[i]);
 				}
 			}
+                        br.close();
 		} catch (IOException e){
 			e.printStackTrace();
 		}

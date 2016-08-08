@@ -16,7 +16,7 @@ public class TreeStructure extends Interactable{
     private double previousY=0.;
     private int yoff;
     private List<Interactable> list;
-    public static final double SCROLL_SPEED=2.;
+    public static final double SCROLL_SPEED=3.;
 
     public TreeStructure(int x, int y, int width, int height) {
         super(x, y, width, height);

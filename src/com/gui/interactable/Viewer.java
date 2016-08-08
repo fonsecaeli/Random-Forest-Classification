@@ -10,12 +10,10 @@ import java.util.List;
 
 public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    public static final int BUTTON_VERTICAL_SPACING = 6;
-    public static final int BUTTON_HORIZONTAL_SPACING = 6;
     
     private TabSystem dataSetsTabSys;
     private TabSystem optionsTabSys;
-    private Button right, left;
+    private CurrentTreeChanger treeChanger;
     private TreeStructure tree;
     private FishEye fishEye;
 
@@ -33,28 +31,25 @@ public class Viewer extends Interactable{
         dataSetsTabSys = new TabSystem(0,
                                        verticalSum,
                                        getWidth());
-    /********************************************************************************************************************************/
         verticalSum+=dataSetsTabSys.getHeight();
+    /********************************************************************************************************************************/
         optionsTabSys = new TabSystem(0,
                                       verticalSum,
                                       getWidth());
         verticalSum+=optionsTabSys.getHeight();
     /********************************************************************************************************************************/
-        verticalSum+=BUTTON_VERTICAL_SPACING;
-        left = new LeftButton(BUTTON_HORIZONTAL_SPACING,
-                                verticalSum);
-        right = new RightButton(getWidth()-Button.getWidth(">")-BUTTON_HORIZONTAL_SPACING,
-                              verticalSum);
-        verticalSum+=left.getHeight();
-        verticalSum+=BUTTON_VERTICAL_SPACING;
+        treeChanger = new CurrentTreeChanger(0,
+                                             verticalSum,
+                                             getWidth());
+        verticalSum+=treeChanger.getHeight();
     /********************************************************************************************************************************/
         tree = new TreeStructure(0,
-                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+2*BUTTON_VERTICAL_SPACING,
+                                 verticalSum,
                                  getWidth(),
                                  getHeight()-verticalSum);
     /****************************************************************************************************/
         fishEye = new FishEye(0,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+2*BUTTON_VERTICAL_SPACING,
+                              verticalSum,
                               getWidth(),
                               getHeight()-verticalSum);
     /********************************************************************************************************************************/
@@ -62,16 +57,15 @@ public class Viewer extends Interactable{
         optionsTabSys.addTab("Fish Eye Viewer", fishEye);
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
-        addInteractable(right);
-        addInteractable(left);
+        addInteractable(treeChanger);
         dataSetsTabSys.setSelectedTab(0);
-        optionsTabSys.setSelectedTab(0);
+        optionsTabSys.setSelectedTab(1);//1 is tested, it puts fish eye at index 0 even though it was added second
     }
 
     private void initImage(){
             Graphics g = getImage().getGraphics();
             g.setColor(BACKGROUND_COLOR);
-            g.fillRect(getX(), getY(), getWidth(), getHeight());
+            g.fillRect(0, 0, getWidth(), getHeight());
             //refreshImage();
     }
 
@@ -143,27 +137,5 @@ public class Viewer extends Interactable{
         public DataSet getDataSet(){
             return ds;
         }
-    }
-    
-    private class RightButton extends Button{
-	public RightButton(int x, int y){
-            super(x, y, ">");
-	}
-		
-        @Override
-	public void onAction(MouseEvent me){
-            StaticStorage.incrementCurrentTree();
-	}
-    }
-	
-    private class LeftButton extends Button{
-	public LeftButton(int x, int y){
-            super(x, y, "<");
-	}
-		
-        @Override
-	public void onAction(MouseEvent me){
-            StaticStorage.decrementCurrentTree();
-	}
     }
 }

@@ -28,7 +28,7 @@ public class TreeStructure extends Interactable{
         refreshImage();
         screen.drawImage(getImage(), getX()+xoff, getY()+yoff);
         
-        int start = (int)(this.yoff/Font.getCharHeight())-1;
+        int start = (int)(this.yoff/Font.getCharHeight());
         int end = (int)(this.yoff+getHeight())/Font.getCharHeight()+1;
         for(int i=start; i<end; i++){
             if(i>=0 && i<getInteractables().size()){

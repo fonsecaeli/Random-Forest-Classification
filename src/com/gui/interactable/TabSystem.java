@@ -60,8 +60,7 @@ public class TabSystem extends Interactable{
     
     public void setSelectedTab(int index){
         if(index<keys.size() && index>=0){
-            List<Tab> tabs = list();
-            selectedTab = tabs.get(index);
+            selectedTab = list().get(index);
         }
     }
     
@@ -109,9 +108,10 @@ public class TabSystem extends Interactable{
     
     private List<Tab> list(){
         List<Tab> tabs= new ArrayList<>();
-        for(Tab key : keys){
+        keys.stream().forEach((key) -> {
             tabs.add(key);
-        }
+            System.out.println(key);
+        });
         return tabs;
     } 
     

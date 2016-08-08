@@ -78,4 +78,8 @@ public class Tab extends Button{
         tabSys.refreshImage();
     }
 
+    
+    public String toString(){
+        return getName();
+    }
 }

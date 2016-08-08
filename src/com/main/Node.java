@@ -65,6 +65,10 @@ public class Node {
         return decision;
     }
 	
+	public String getKeyString(){
+		return keyString;
+	}
+	
     public String toStringColor(){
 	String toReturn = "[Option: \u001B[31m"+keyString+"\u001B[0m";
 		if (att != null){

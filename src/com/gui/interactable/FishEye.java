@@ -13,7 +13,7 @@ import java.util.Stack;
 public class FishEye extends Interactable {
 	private static final Color BACKGROUND_COLOR = Color.WHITE;
 	private final int CHILD_SPACING = 20;
-	private final double VERTICAL_SPACING = 0.125, MIDDLE_HEIGHT = 0.5;
+	private final double VERTICAL_SPACING = 0.2, MIDDLE_HEIGHT = 0.5;
         
 	ArrayList <Stack<Node>> stacks;
 	DecisionTree[] trees;
@@ -39,8 +39,7 @@ public class FishEye extends Interactable {
 		if (StaticStorage.getCurrentRandomForest()!=null){
 			trees = StaticStorage.getCurrentRandomForest().getTrees();
 			stacks = new ArrayList<>(trees.length);
-			change = false;
-			curIndex = StaticStorage.getIndexOfCurrentTree();
+			change = false; curIndex = StaticStorage.getIndexOfCurrentTree();
 		}
 	}
 	
@@ -71,6 +70,16 @@ public class FishEye extends Interactable {
 			stacks.get(curIndex).push(trees[curIndex].getHeadNode());
 		}
 		
+		refreshTop();
+		refreshMiddle();
+		refreshChildren();
+		
+		initImage();
+		renderLines();
+		change = false;
+	}
+	
+	private void refreshTop(){
 		//makes the button above the current node if the node on the stack isn't the head node and removes the button if the head node is alone on the stack
 		if (stacks.get(curIndex).size()>=2){
 			Node temp = stacks.get(curIndex).pop();
@@ -85,14 +94,24 @@ public class FishEye extends Interactable {
 			removeInteractable(top);
 			top = null;
 		}
-		
-		//removes the middle button so it can be 'remade'
+	}
+	
+	private void refreshMiddle(){
+		//'remakes' the middle button
+		Node node = stacks.get(curIndex).peek();
 		if (middle!=null) removeInteractable(middle);
-		String name = "("+stacks.get(curIndex).peek().getKeyString()+") "+stacks.get(curIndex).peek().getAttribute().getName();
+		String name;
+		if (node.getKeys().size()>0)
+			name = "("+node.getKeyString()+") "+node.getAttribute().getName();
+		else name = "("+node.getKeyString()+") "+node.getDecision();
 		middle = new Button((getWidth()-Button.getWidth(name))/2,
 					(int)(MIDDLE_HEIGHT*(getHeight()-Button.getHeight(name))), name);
 		addInteractable(middle);
-		
+	}
+	
+	
+	
+	private void refreshChildren(){
 		//removes all of the child nodes so they can be 'remade'
 		if (bottom!=null)
 			for (FishEyeButton f: bottom)
@@ -123,9 +142,6 @@ public class FishEye extends Interactable {
 			addInteractable(bottom.get(bottom.size()-1));
 			i++;
 		}
-		initImage();
-		renderLines();
-		change = false;
 	}
 	
 	private void renderLines(){

@@ -158,7 +158,7 @@ public class Entropy {
     private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
         List<Record> high = new ArrayList<>();
         List<Record> low = new ArrayList<>();
-        double delta = .01;
+        double delta = .001;
         for(int i = 0; i < r.size(); i++) {
             double a = Double.parseDouble(r.get(i).getValue(att));
             double b = Double.parseDouble(value);

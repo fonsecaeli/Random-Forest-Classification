@@ -24,10 +24,14 @@ public class Main {
         if (screenWidth*screenHeight>=2500*1400){
 		new ImageHandler("/font2x.png");
         	Font.init(16,28);
+	} else if (screenWidth*screenHeight>=1900*1000) {
+		new ImageHandler("/font.png");
+        	Font.init(8,14);
 	} else {
 		new ImageHandler("/font.png");
         	Font.init(8,14);
 	}
+	
         Screen screen = new Screen(screenWidth*15/16, screenHeight*15/16);
         GUI gui = new GUI(screen);
         screen.setInput(gui);

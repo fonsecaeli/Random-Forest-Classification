@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 public class SideBar extends Interactable{
     //The background color of the side bar
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
+    public static final double VERTICAL_SPACING_PROPORTION = 0.2;
 
     /**
      * Initializes the sidebar with the given dimensions
@@ -18,8 +19,11 @@ public class SideBar extends Interactable{
     public SideBar(int x, int y, int width, int height){
         super(x, y, width, height);
         initImage();
-        addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, 64));
-        //addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, 128));
+        
+        int sum=(int)(VERTICAL_SPACING_PROPORTION*getHeight());
+        addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, sum));
+        sum+=(int)(VERTICAL_SPACING_PROPORTION*getHeight());
+        //addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, sum));
     }
 
     /**
@@ -51,7 +55,7 @@ public class SideBar extends Interactable{
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
 		catch (Exception ex) {ex.printStackTrace();}
                 JFileChooser chooser = new JFileChooser();
-		chooser.setPreferredSize(new Dimension(480, 640));
+		chooser.setPreferredSize(new Dimension(960, 640));
                 chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
                 int returnVal = chooser.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION){

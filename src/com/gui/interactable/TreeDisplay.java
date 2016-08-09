@@ -11,14 +11,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeStructure extends Interactable{
+public class TreeDisplay extends Interactable{
     private DecisionTree tree;
     private double previousY=0.;
     private int yoff;
     private List<Interactable> list;
     public static final double SCROLL_SPEED=3.;
 
-    public TreeStructure(int x, int y, int width, int height) {
+    public TreeDisplay(int x, int y, int width, int height) {
         super(x, y, width, height);
         list = new ArrayList<>();
     }

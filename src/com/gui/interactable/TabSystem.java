@@ -109,18 +109,22 @@ public class TabSystem extends Interactable{
     
     /**
      * Gets the index of a tab in the tab system
-     * @param t
-     * @return 
+     * @param tab the tab to find the index of
+     * @return the index of the tab
      */
-    public int getIndexOfTab(Tab t){
+    public int getIndexOfTab(Tab tab){
         for (int i=0; i<pairList.size(); i++) {
-            if (pairList.get(i).getKey() == t) {
+            if (pairList.get(i).getKey() == tab) {
                 return i;
             }
         }
         return -1;
     }
     
+    /**
+     * The width of all of the tabs within the TabSystem
+     * @return the width
+     */
     public int totalWidth(){
         int sum=0;
         for(Pair p : pairList){
@@ -130,6 +134,11 @@ public class TabSystem extends Interactable{
         return sum;
     }
     
+    /**
+     * The width of all of the tabs up to the max within the TabSystem
+     * @param max the max index of the tab to go up to
+     * @return the width
+     */
     public int totalWidth(int max){
         int sum=0;
         for(int i=0;i<max;i++){
@@ -139,26 +148,45 @@ public class TabSystem extends Interactable{
         return sum;
     }
     
-    protected void removeTab(Pair p){
-        removeInteractable((Tab)p.getKey());
-        pairList.remove(p);
-        refreshTabs();
+    /**
+     * remove a tab/interactable Pair from the tabSystem
+     * @param pair the pair to remove
+     */
+    protected void removeTab(Pair pair){
+        removeInteractable((Tab)pair.getKey());
+        pairList.remove(pair);
+        //refreshTabs();
     }
     
+    /**
+     * returns the number of tabs within the TabSystem
+     * @return 
+     */
     public int numTabs(){
         return pairList.size();
     }
     
+    /**
+     * clears all tabs from a TabSystem
+     */
     public void clear(){
         while(numTabs()>0)
             removeTab(pairList.get(0));
     }
     
-    public Interactable get(Tab t){
-        int index = getIndexOfTab(t);
+    /**
+     * get the paired interactable from a tab
+     * @param tab the tab to check for
+     * @return the interactable paired with tab
+     */
+    public Interactable get(Tab tab){
+        int index = getIndexOfTab(tab);
         return index<0 ? null: pairList.get(index).getValue();
-    }
+    } 
     
+    /**
+     * render all of the tabs, etc, along with the current renderable
+     */
     @Override
     public void render(int xoff, int yoff, Screen screen){
         super.render(xoff, yoff, screen);
@@ -170,6 +198,9 @@ public class TabSystem extends Interactable{
         }
     }
     
+    /**
+     * Reset the spacing between tabs
+     */
     private void refreshTabs(){
         for(int i=0; i<pairList.size(); i++){
             int currentLength = totalWidth(i);

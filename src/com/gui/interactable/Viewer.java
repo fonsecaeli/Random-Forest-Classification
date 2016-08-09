@@ -12,12 +12,24 @@ public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final int CONTENT_VERTICAL_OFFSET = 12;
     
+    //The tab system that changes the current data set
     private TabSystem dataSetsTabSys;
+    //The tab system which updates the current display
     private TabSystem optionsTabSys;
+    //The holder for the buttons which change the current tree
     private CurrentTreeChanger treeChanger;
+    //The tree display
     private TreeStructure tree;
+    //the fisheye display
     private FishEye fishEye;
 
+    /**
+     * The basic constructor, passes the parameters onto Interactable and then calls its init methods
+     * @param x
+     * @param y
+     * @param width
+     * @param height 
+     */
     public Viewer(int x, int y, int width, int height){
         super(x, y, width, height);
         init();
@@ -26,6 +38,10 @@ public class Viewer extends Interactable{
 
     }
     
+    /**
+     * Inits the tab systems, buttons, etc.
+     * Also places them and adds them as listeners
+     */
     public final void init(){
         int verticalSum=0; //how far down new elements should be added
     /********************************************************************************************************************************/
@@ -65,6 +81,9 @@ public class Viewer extends Interactable{
         optionsTabSys.setSelectedTab(1);//1 is tested, it puts fish eye at index 0 even though it was added second
     }
 
+    /**
+     * Initializes the Viewer's image
+     */
     private void initImage(){
             Graphics g = getImage().getGraphics();
             g.setColor(BACKGROUND_COLOR);
@@ -140,6 +159,9 @@ public class Viewer extends Interactable{
         }
     }
     
+    /**
+     * the tabs which change the current Data Set
+     */
     private class DataSetTab extends Tab {
         private DataSet ds;
         

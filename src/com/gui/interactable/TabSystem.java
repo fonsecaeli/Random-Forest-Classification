@@ -9,11 +9,15 @@ import java.util.List;
 import com.util.Pair;
 
 public class TabSystem extends Interactable{
+    //the spacing between tabs
     public static final int TAB_HORIZONTAL_SPACING = 4,
                             TAB_VERTICAL_SPACING = 8;
+    //the background color of a tab system
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     
+    //Using a Pair List instead of a map because order needs to be preserved
     private List<Pair<Tab, Interactable>> pairList;
+    //The current tab
     private Tab selectedTab;
     
     public TabSystem(int x1, int y1, int w) {
@@ -23,6 +27,9 @@ public class TabSystem extends Interactable{
         initImage();
     }
     
+    /**
+     * Inites the image
+     */
     public void initImage(){
         Graphics g = getImage().getGraphics();
         g.setColor(BACKGROUND_COLOR);
@@ -31,12 +38,20 @@ public class TabSystem extends Interactable{
         g.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
     }
     
+    /**
+     * refreshes all tabs within the system, there is no need to refresh the TabSystem's actual image
+     */
     public void refreshImage(){
         for(Pair p : pairList){
             ((Tab)p.getKey()).refreshImage();
         }
     }
     
+    /**
+     * add a tab with a given tab and paired Interactable to the tab system
+     * @param name the name on the tab
+     * @param i the Interactable that is handled when the tab is the selected tab
+     */
     public void addTab(String name, Interactable i){
         Tab newTab = new Tab(totalWidth()+TAB_HORIZONTAL_SPACING, TAB_VERTICAL_SPACING, name, this);
         pairList.add(new Pair<>(newTab, i));
@@ -45,6 +60,11 @@ public class TabSystem extends Interactable{
         refreshImage();
     }
     
+    /**
+     * Add an already created tab with the paired Interactable to the tab system
+     * @param newTab the tab to add
+     * @param i  the Interactable that is handled when the tab is the selected tab
+     */
     public void addTab(Tab newTab, Interactable i){
         pairList.add(new Pair<>(newTab, i));
         addInteractable(newTab);
@@ -53,33 +73,58 @@ public class TabSystem extends Interactable{
         refreshImage();
     }
     
+    /**
+     * Set the selected tab based on the index of a tab
+     * @param index the index of the tab to set
+     */
     public void setSelectedTab(int index){
         if(index<pairList.size() && index>=0){
             selectedTab = pairList.get(index).getKey();
         }
     }
     
-    public void setSelectedTab(Tab t){
-        selectedTab = t;
+    /**
+     * Set the selected tab based on a tab
+     * @param tab the tab to set
+     */
+    public void setSelectedTab(Tab tab){
+        selectedTab = tab;
     }
     
+    /**
+     * Get the currently selected tab
+     * @return the currently selected tab
+     */
     public Tab getSelectedTab(){
         return selectedTab;
     }
     
+    /**
+     * Get the index of the currently selected tab
+     * @return the index of the currently selected tab
+     */
     public int getSelectedTabIndex(){
         return getIndexOfTab(selectedTab);
     }
     
-    public int getIndexOfTab(Tab t){
+    /**
+     * Gets the index of a tab in the tab system
+     * @param tab the tab to find the index of
+     * @return the index of the tab
+     */
+    public int getIndexOfTab(Tab tab){
         for (int i=0; i<pairList.size(); i++) {
-            if (pairList.get(i).getKey() == t) {
+            if (pairList.get(i).getKey() == tab) {
                 return i;
             }
         }
         return -1;
     }
     
+    /**
+     * The width of all of the tabs within the TabSystem
+     * @return the width
+     */
     public int totalWidth(){
         int sum=0;
         for(Pair p : pairList){
@@ -89,6 +134,11 @@ public class TabSystem extends Interactable{
         return sum;
     }
     
+    /**
+     * The width of all of the tabs up to the max within the TabSystem
+     * @param max the max index of the tab to go up to
+     * @return the width
+     */
     public int totalWidth(int max){
         int sum=0;
         for(int i=0;i<max;i++){
@@ -98,26 +148,45 @@ public class TabSystem extends Interactable{
         return sum;
     }
     
-    protected void removeTab(Pair p){
-        removeInteractable((Tab)p.getKey());
-        pairList.remove(p);
-        refreshTabs();
+    /**
+     * remove a tab/interactable Pair from the tabSystem
+     * @param pair the pair to remove
+     */
+    protected void removeTab(Pair pair){
+        removeInteractable((Tab)pair.getKey());
+        pairList.remove(pair);
+        //refreshTabs();
     }
     
+    /**
+     * returns the number of tabs within the TabSystem
+     * @return 
+     */
     public int numTabs(){
         return pairList.size();
     }
     
+    /**
+     * clears all tabs from a TabSystem
+     */
     public void clear(){
         while(numTabs()>0)
             removeTab(pairList.get(0));
     }
     
-    public Interactable get(Tab t){
-        int index = getIndexOfTab(t);
+    /**
+     * get the paired interactable from a tab
+     * @param tab the tab to check for
+     * @return the interactable paired with tab
+     */
+    public Interactable get(Tab tab){
+        int index = getIndexOfTab(tab);
         return index<0 ? null: pairList.get(index).getValue();
-    }
+    } 
     
+    /**
+     * render all of the tabs, etc, along with the current renderable
+     */
     @Override
     public void render(int xoff, int yoff, Screen screen){
         super.render(xoff, yoff, screen);
@@ -129,6 +198,9 @@ public class TabSystem extends Interactable{
         }
     }
     
+    /**
+     * Reset the spacing between tabs
+     */
     private void refreshTabs(){
         for(int i=0; i<pairList.size(); i++){
             int currentLength = totalWidth(i);

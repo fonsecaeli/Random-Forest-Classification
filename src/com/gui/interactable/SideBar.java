@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SideBar extends Interactable{
+    //The background color of the side bar
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
 
     /**
@@ -16,9 +17,12 @@ public class SideBar extends Interactable{
         super(x, y, width, height);
         initImage();
         addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, 64));
-        addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, 128));
+        //addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, 128));
     }
 
+    /**
+     * Initializes the image
+     */
     private void initImage(){
         Graphics g = getImage().getGraphics();
         g.setColor(BACKGROUND_COLOR);
@@ -27,13 +31,19 @@ public class SideBar extends Interactable{
         g.drawLine(0, 0 , 0, getHeight());
     }
 
+    /**
+     * The button which, when clicked, brings up the load menu
+     */
     private class LoadButton extends Button {
+        //The title of the button
         private static final String TITLE = "Load...";
 
+        //Default constructor, only needs the location as title is stored and width/height is handled by the super
         public LoadButton(int x, int y){
                 super(x, y, TITLE);
         }
 
+        //Brings up the load window for importing data
         @Override
         public void onAction(MouseEvent me){
                 JFileChooser chooser = new JFileChooser();
@@ -49,13 +59,19 @@ public class SideBar extends Interactable{
             }
     }
 
+    /**
+     * The button which, when clicked, brings up the save menu
+     */
     private class SaveButton extends Button {
+        //The title of the button
         private static final String TITLE = "Save As...";
 
+        //Default constructor, only needs the location as title is stored and width/height is handled by the super
         public SaveButton(int x, int y){
             super(x, y, TITLE);
         }
 
+        //brings up the save menu
         @Override
         public void onAction(MouseEvent me){
             

@@ -38,6 +38,9 @@ public class TreeStructure extends Interactable{
         //super.render(xoff, yoff+this.yoff, screen);
     }
     
+    /**
+     * Manages the scrolling in the tree structure
+     */
     @Override
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
         this.yoff=(int)(this.yoff+(SCROLL_SPEED)*(previousY-me.getY()));
@@ -54,12 +57,18 @@ public class TreeStructure extends Interactable{
         super.mouseDragged(me, xoff, yoff);
     }
     
+    /**
+     * Manages the scrolling in the tree structure
+     */
     @Override
     public void mouseHovered(MouseEvent me, int xoff, int yoff){
         previousY=me.getY();
         super.mouseHovered(me, xoff, yoff);
     }
     
+    /**
+     * Refreshes the image of the tree structure, mainly of the strings that need to be drawn
+     */
     public void refreshImage(){
         if(StaticStorage.getCurrentTree()!=null && StaticStorage.getCurrentTree()!=tree){
             this.yoff=0;
@@ -85,6 +94,9 @@ public class TreeStructure extends Interactable{
         }
     }
     
+    /**
+     * basically one item that is displayed in the tree display
+     */
     private class TreeItem extends Interactable {
 
         public TreeItem(int x1, int y1, BufferedImage bi) {

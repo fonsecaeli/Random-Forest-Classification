@@ -43,14 +43,10 @@ public class Entropy {
 
             //calculate the entropy
             double entropy=0;
-            //System.out.print("[");
             for(int i=0; i<dataSums.length; i++){
                 double currentData = dataSums[i];
-                //System.out.print((int)(100*dataSums[i])/100.0+" ");
                 entropy-=currentData*logN(currentData, dataSums.length);//Did -= instead of: sum += -1(...);
             }
-            //System.out.println("]");
-            //System.out.println(entropy);
             return entropy;
 	}
 

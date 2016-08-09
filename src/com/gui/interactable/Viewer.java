@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    public static final int CONTENT_VERTICAL_OFFSET = 12;
+    public static final int CONTENT_VERTICAL_OFFSET = 6, CONTENT_HORIZONTAL_OFFSET = 6;
     
     //The tab system that changes the current data set
     private TabSystem dataSetsTabSys;
@@ -20,8 +20,10 @@ public class Viewer extends Interactable{
     private CurrentTreeChanger treeChanger;
     //The tree display
     private TreeStructure tree;
-    //the fisheye display
+    //The fisheye display
     private FishEye fishEye;
+	//The query display
+	private Query query;
 
     /**
      * The basic constructor, passes the parameters onto Interactable and then calls its init methods
@@ -44,36 +46,27 @@ public class Viewer extends Interactable{
      */
     public final void init(){
         int verticalSum=0; //how far down new elements should be added
-    /********************************************************************************************************************************/
-        dataSetsTabSys = new TabSystem(0,
-                                       verticalSum,
-                                       getWidth());
+    /************************************************************************************************************/
+        dataSetsTabSys = new TabSystem(0, verticalSum, getWidth());
         verticalSum+=dataSetsTabSys.getHeight();
-    /********************************************************************************************************************************/
-        optionsTabSys = new TabSystem(0,
-                                      verticalSum,
-                                      getWidth());
+    /************************************************************************************************************/
+        optionsTabSys = new TabSystem(0, verticalSum, getWidth());
         verticalSum+=optionsTabSys.getHeight();
-    /********************************************************************************************************************************/
-        treeChanger = new CurrentTreeChanger(0,
-                                             verticalSum,
-                                             getWidth());
+    /************************************************************************************************************/
+        treeChanger = new CurrentTreeChanger(0, verticalSum, getWidth());
         verticalSum+=treeChanger.getHeight();
-    /********************************************************************************************************************************/
+    /************************************************************************************************************/
         verticalSum+=CONTENT_VERTICAL_OFFSET;
-    /********************************************************************************************************************************/
-        tree = new TreeStructure(0,
-                                 verticalSum,
-                                 getWidth(),
-                                 getHeight()-verticalSum);
+    /*************************************************************************************************************/
+        tree = new TreeStructure(CONTENT_HORIZONTAL_OFFSET, verticalSum, getWidth()-(2*CONTENT_HORIZONTAL_OFFSET), getHeight()-verticalSum);
     /****************************************************************************************************/
-        fishEye = new FishEye(0,
-                              verticalSum,
-                              getWidth(),
-                              getHeight()-verticalSum);
-    /********************************************************************************************************************************/
+        fishEye = new FishEye(CONTENT_HORIZONTAL_OFFSET, verticalSum, getWidth()-(2*CONTENT_HORIZONTAL_OFFSET), getHeight()-verticalSum);
+    /************************************************************************************************************/
+	query = new Query(CONTENT_HORIZONTAL_OFFSET, verticalSum, getWidth()-(2*CONTENT_HORIZONTAL_OFFSET), getHeight()-verticalSum);
+    /************************************************************************************************************/
         optionsTabSys.addTab("Tree", tree);
         optionsTabSys.addTab("Fish Eye Viewer", fishEye);
+	optionsTabSys.addTab("Query", query);
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
         addInteractable(treeChanger);

@@ -1,10 +1,12 @@
 package com.gui.interactable;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.UIManager;
 
 public class SideBar extends Interactable{
     //The background color of the side bar
@@ -46,7 +48,10 @@ public class SideBar extends Interactable{
         //Brings up the load window for importing data
         @Override
         public void onAction(MouseEvent me){
+		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
+		catch (Exception ex) {ex.printStackTrace();}
                 JFileChooser chooser = new JFileChooser();
+		chooser.setPreferredSize(new Dimension(480, 640));
                 chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
                 int returnVal = chooser.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION){

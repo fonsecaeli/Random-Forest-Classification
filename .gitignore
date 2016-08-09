@@ -10,3 +10,7 @@
 Test.java
 *.xml
 .idea/
+/nbproject/
+/dist/
+/util/nbproject/private/
+*.swp

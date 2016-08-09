@@ -1,4 +1,4 @@
-# Random-Forest-Classification
+#Random-Forest-Classification
 
 NWAPW Project Proposal 
 Random Forest Classification
@@ -46,7 +46,4 @@ We also need to determine the entropy after splitting the data base of one attri
 E(T,X)= C∈XP(C)E(C)
 The information gain of a given split S is defined by the following:
 G(S)= E(A)-E(T,X)
-ID3 uses a greedy algorithm to find the best possible split, calculating the information gain for every possible split and then finding the minimum.  This shouldn’t be an issue if the data sets being used define their attributes discreetly.  Time efficiency arises if we are trying to deal with continuous attributes because there are too many ways the split the data at each node.  To deal with this if we are dealing with continuous attributes, then I will define a threshold for the attributes so that continues attributes can be split into discrete sections.  I am interested in exploring other algorithms to build the Random Forest ID3 should just be the starting point.   
-EXTRA DETAILS
-I will be bringing a PC running windows to camp.  
-I would feel comfortable being the Project Designer, lead programmer, tester, or communication lead
+ID3 uses a greedy algorithm to find the best possible split, calculating the information gain for every possible split and then finding the minimum.  This shouldn’t be an issue if the data sets being used define their attributes discreetly.  Time efficiency arises if we are trying to deal with continuous attributes because there are too many ways the split the data at each node.  To deal with this if we are dealing with continuous attributes, then I will define a threshold for the attributes so that continues attributes can be split into discrete sections.  I am interested in exploring other algorithms to build the Random Forest ID3 should just be the starting point.

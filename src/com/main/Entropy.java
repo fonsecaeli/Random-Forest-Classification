@@ -1,16 +1,14 @@
 package com.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Entropy {
 
 	/**
      * entropy of total data set
      */
-	public static double entropy(DataSet set) {
-            List<Record> data = set.getData();
+	private static double entropy(DataSet set) {
+            List<Record> data = set.getRecords();
             if(data.isEmpty()) {
                 return 0.0;
             }
@@ -60,35 +58,33 @@ public class Entropy {
      * @param att The Attribute to used to calculate entropy
      */
 	
-    public static double attributeEntropy(DataSet dataSet, Attribute att) {
+    private static double attributeEntropy(DataSet dataSet, Attribute att) {
         //Intializing values needed
         List<String> attValues = att.getValues();               //The list of possible values from the test Attribute
         Map<String,DataSet> dataSets = DataSet.splitData(dataSet, att);
 
-        //sortedRecords should be filled
         double attEntropy = 0.0;
         for(int i=0; i<attValues.size(); i++) {
             String currentKey = attValues.get(i);
-            List<Record> currentRecords = dataSets.get(currentKey).getData();
-            
-            double proportion = ((double) currentRecords.size())/dataSet.getData().size();
+            List<Record> currentRecords = dataSets.get(currentKey).getRecords();
+
+            double proportion = ((double) currentRecords.size())/dataSet.getRecords().size();
             //creates a list from DataSet of the Attribute to be tested and the classification Attribute (which is placed at the end, where DataSet expects it)
             List<Attribute> attList = new ArrayList<>();
-            attList.add(att);
+            //attList.add(att);
             attList.add(dataSet.getClassification());
 
             //calls entropy of a new DataSet (with an Attribute list of only the Attribute to test
             //and the classification) and does a weighted average
-            DataSet ds = new DataSet(attList, currentRecords);
+            DataSet ds = new DataSet(attList, currentRecords, "");
             double dataSetEntropy = entropy(ds);
             attEntropy += dataSetEntropy*proportion;
             //System.out.print(dataSetEntropy+" ");
         }
-        //System.out.println(att+" | Entropy: "+attEntropy);
         return attEntropy;
+        //sortedRecords should be filled
+        //System.out.println(att+" | Entropy: "+attEntropy);
     }
-
-
 
 
     /**
@@ -102,6 +98,79 @@ public class Entropy {
         double entropy = entropy(data);
         double attributeEntropy = attributeEntropy(data,att);
         return entropy - attributeEntropy;
+    }
+
+    public static List<Attribute> bucketContinuousAttributes(List<Attribute> atts, List<Record> r) {
+        List<Attribute> newAtts = new ArrayList<>(atts.size());
+        for(int i = 0; i < atts.size(); i++) {
+            boolean flagged = false;
+            boolean continuous = true;
+            List<String> values = atts.get(i).getValues();
+            for(int j = 0; j < values.size(); j++) {
+                try {
+                    double n = Double.parseDouble(values.get(j));
+                }
+                catch(NumberFormatException e) {
+                    if(j!=0) flagged=true;
+                    continuous=false;
+                    break;
+                }
+            }
+            Attribute toAdd = atts.get(i);
+            if(continuous) {
+                double cutOff = detCutOff(r, atts, atts.get(i));
+                System.out.println(cutOff);
+                toAdd = new ContinuousAttribute(atts.get(i).getName(), cutOff);
+            }
+            else if(flagged) {
+                System.out.println("They may be an error in the data under the " + atts.get(i).getName() + " column");
+            }
+            newAtts.add(toAdd);
+        }
+        return newAtts;
+    }
+
+    private static double detCutOff(List<Record> r, List<Attribute> atts, Attribute att) {
+        //System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+        //Collections.sort(r, new AttributeSorter(att));
+        double bestGain = 0.0;
+        double cutOff = Double.parseDouble(r.get(r.size()/2).getValue(att));
+        for(int i = 0; i < r.size(); i++) {
+            List<List<Record>> highAndLow = split(r, r.get(i).getValue(att), att);
+            double gain = gainForLists(r, atts, highAndLow.get(0), highAndLow.get(1));
+            if(gain > bestGain) {
+                bestGain = gain;
+                cutOff = Double.parseDouble(r.get(i).getValue(att));
+                System.out.println(gain);
+            }
+        }
+        //System.out.println("cutOff has been calculated");
+        return cutOff;
+    }
+
+    private static List<List<Record>> split(List<Record> r, String value, Attribute att) {
+        List<Record> high = new ArrayList<>();
+        List<Record> low = new ArrayList<>();
+        for(int i = 0; i < r.size(); i++) {
+            double a = Double.parseDouble(r.get(i).getValue(att));
+            double b = Double.parseDouble(value);
+            if(a <= b) {
+                low.add(r.get(i));
+            }
+            else {
+                high.add(r.get(i));
+            }
+        }
+        List<List<Record>> toReturn = new ArrayList<>();
+        toReturn.add(high);
+        toReturn.add(low);
+        return toReturn;
+    }
+
+    private static double gainForLists(List<Record> data, List<Attribute> atts, List<Record> high, List<Record> low) {
+        double postSplit = (((double)low.size())/data.size())*entropy(new DataSet(atts, low))+(((double)high.size())/data.size())*entropy(new DataSet(atts, high));
+        double preSplit = entropy(new DataSet(atts, data));
+        return preSplit - postSplit;
     }
 
     /**

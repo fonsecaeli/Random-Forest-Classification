@@ -1,34 +1,31 @@
 package com.main;
 
+import com.gui.gfx.Font;
+import com.gui.gfx.Screen;
+import com.gui.input.ImageHandler;
+import com.gui.interactable.GUI;
+
 import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
-            //System.out.println(ds);
-            //System.out.println(Entropy.entropy(ds));
-            /*
-            List<Attribute> atts = ds.getAttributes();
-            for(int i=0; i<atts.size(); i++){
-                System.out.println(atts.get(i).getName()+": ");
-                double attEn = Entropy.attributeEntropy(ds, atts.get(i));
-                System.out.println("Attribute Entropy: "+attEn);
-                System.out.println();
-            }*/
+            Scanner scanner = new Scanner(System.in);
+            //System.out.println("Input the font file: ");
+            //String fontInput = scanner.nextLine();
+            //fontInput = fontInput.replace("\'", "").replace("\"", "");
+            new ImageHandler("/font.png");
+            Font.init(8,14);
             
-            /*
-            System.out.println("\n\n\n");
-            
-            ds = ImportData.importData("C:\\Users\\Benjamin 2\\Documents\\NetBeansProjects\\RandomForestClassification\\RandomForestClassification\\src\\irisData.csv");
-            System.out.println(ds);
-            System.out.println(Entropy.entropy(ds));
-            
-            atts = ds.getAttributes();
-            for(int i=0; i<atts.size(); i++){
-                System.out.println(atts.get(i).getName()+": "+Entropy.attributeEntropy(ds, atts.get(i)));
-            }
-            */
-            DataSet ds = ImportData.importData(new Scanner(System.in).nextLine().replace("\'", ""));
-            DecisionTree tree = new DecisionTree(ds);
-            System.out.println(tree);
-	}
+            Screen screen = new Screen(1280,700);
+            GUI gui = new GUI(screen);
+            screen.setInput(gui);
+		while(true) {
+			gui.render(0, 0, screen);
+			screen.render();
+		}
+        /*DataSet d = ImportData.importData("C:\\Users\\EliFo\\OneDrive - Lakeside School\\Projects\\MachineLearningProject\\Random-Forest-Classification\\src\\golfData.csv");
+        RandomForest r = new RandomForest(d, 10, 1);
+        System.out.println(r);*/
+    }
 }

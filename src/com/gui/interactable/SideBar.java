@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 public class SideBar extends Interactable{
     //The background color of the side bar
     public static final Color BACKGROUND_COLOR = new Color(240, 240, 240);
-    public static final int VERTICAL_SPACING = 100;
+    public static final double VERTICAL_SPACING_PROPORTION = 0.2;
 
     /**
      * Initializes the sidebar with the given dimensions
@@ -20,9 +20,9 @@ public class SideBar extends Interactable{
         super(x, y, width, height);
         initImage();
         
-        int sum=VERTICAL_SPACING;
+        int sum=(int)(VERTICAL_SPACING_PROPORTION*getHeight());
         addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, sum));
-        sum+=VERTICAL_SPACING;
+        sum+=(int)(VERTICAL_SPACING_PROPORTION*getHeight());
         //addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, sum));
     }
 

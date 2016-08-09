@@ -1,12 +1,12 @@
 package com.gui.interactable;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import com.gui.gfx.Screen;
 import com.main.DecisionTree;
 import com.main.Node;
 import com.main.StaticStorage;
-import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Stack;
 

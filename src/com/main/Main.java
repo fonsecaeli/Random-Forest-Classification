@@ -18,13 +18,11 @@ public class Main {
         //fontInput = fontInput.replace("\'", "").replace("\"", "");
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int screenWidth = screenSize.width;
-	int screenHeight= screenSize.height;
 	
-        if (screenWidth*screenHeight>=2500*1400){
+        if (screenSize.getWidth()*screenSize.getHeight()>=2500*1400){
 		new ImageHandler("/font2x.png");
         	Font.init(16,28);
-	} else if (screenWidth*screenHeight>=1900*1000) {
+	} else if (screenSize.getWidth()*screenSize.getHeight()>=1900*1000) {
 		new ImageHandler("/font1.5x.png");
         	Font.init(12,21);
 	} else {
@@ -32,7 +30,7 @@ public class Main {
         	Font.init(8,14);
 	}
 	
-        Screen screen = new Screen(screenWidth*15/16, screenHeight*15/16);
+        Screen screen = new Screen((int)(screenSize.getWidth()*15/16), (int)(screenSize.getHeight()*15/16));
         GUI gui = new GUI(screen);
         screen.setInput(gui);
 

@@ -3,8 +3,8 @@ package com.gui.interactable;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.swing.JFileChooser;
-import java.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import com.gui.gfx.Screen;
 import com.main.StaticStorage;
 
@@ -15,7 +15,7 @@ public class Query extends Interactable {
 	public Query(int x, int y, int width, int height){
 		super(x, y, width, height);
 		initImage();
-		addInteractable(new QueryButton(0, 0));
+		addInteractable(new QueryButton(0, 0, this));
 	}
 	
 	private void initImage(){
@@ -39,7 +39,7 @@ public class Query extends Interactable {
 			int returnVal = chooser.showOpenDialog(null);
 			System.out.println(returnVal);
 			if (returnVal == JFileChooser.APPROVE_OPTION){
-				String filePath = chooser.getSelectedFile.getPath();
+				String filePath = chooser.getSelectedFile().getPath();
 				if (filePath.substring(filePath.length()-4).equals(".csv")){
 					System.out.println("You chose to open this file: "+filePath);
 					

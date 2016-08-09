@@ -1,10 +1,12 @@
 package com.gui.interactable;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.UIManager;
 import com.gui.gfx.Screen;
 import com.main.StaticStorage;
 
@@ -34,7 +36,10 @@ public class Query extends Interactable {
 		
 		@Override
 		public void onAction(MouseEvent me){
+			try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
+			catch (Exception ex) {ex.printStackTrace();}
 			JFileChooser chooser = new JFileChooser();
+			chooser.setPreferredSize(new Dimension(480, 640));
 			chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
 			int returnVal = chooser.showOpenDialog(null);
 			System.out.println(returnVal);

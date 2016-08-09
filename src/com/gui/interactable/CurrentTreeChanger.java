@@ -23,6 +23,9 @@ public class CurrentTreeChanger extends Interactable {
         init();
     }
     
+    /**
+     * Init the buttons, as well as adding them
+     */
     private void init(){
         left = new LeftButton(BUTTON_HORIZONTAL_SPACING,
                                 BUTTON_VERTICAL_SPACING);
@@ -33,6 +36,9 @@ public class CurrentTreeChanger extends Interactable {
         initImage();
     }
     
+    /**
+     * Init the image
+     */
     private void initImage(){
         Graphics g = getImage().getGraphics();
         g.setColor(BACKGROUND_COLOR);
@@ -65,6 +71,9 @@ public class CurrentTreeChanger extends Interactable {
         super.render(xoff, yoff, screen);
     }
     
+    /**
+     * changes the current Tree that is being looked at to the next right index
+     */
     private class RightButton extends Button{
 	public RightButton(int x, int y){
             super(x, y, ">");
@@ -75,7 +84,10 @@ public class CurrentTreeChanger extends Interactable {
             StaticStorage.incrementCurrentTree();
 	}
     }
-	
+    
+    /**
+     * changes the current Tree that is being looked at to the next left index
+     */
     private class LeftButton extends Button{
 	public LeftButton(int x, int y){
             super(x, y, "<");

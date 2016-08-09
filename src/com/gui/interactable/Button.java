@@ -112,6 +112,8 @@ public class Button extends Interactable {
 
     /**
      * returns the potential width of a button with a given name
+     * @param name the name to test
+     * @return the height of the button
      */
     public static int getWidth(String name){
         return (Font.stringWidth(name)+2*Button.XBORDER);
@@ -119,6 +121,8 @@ public class Button extends Interactable {
 
     /**
      * returns the potential width of a button with a given name
+     * @param name the name to test
+     * @return the height of the button
      */
     public static int getHeight(String name){
         return (Font.stringHeight(name)+2*Button.YBORDER);

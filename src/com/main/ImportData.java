@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.List;
 
 public class ImportData {
     public static DataSet configAttributes(List<Attribute> attributes, List<Record> data, String fileName) {
@@ -58,7 +59,7 @@ public class ImportData {
         return configAttributes(attributes, data, fileName);
 	}
 	
-	public static DataSet importData(File file, ArrayList <Attribute> attributes){
+	public static DataSet importData(File file, List <Attribute> attributes){
 		ArrayList <Record> data = new ArrayList <>();
 		String[] temp = {""};
 		String line = "";

@@ -55,14 +55,12 @@ public class Viewer extends Interactable{
     /************************************************************************************************************/
         treeChanger = new CurrentTreeChanger(0, verticalSum, getWidth());
         verticalSum+=treeChanger.getHeight();
-    /************************************************************************************************************/
-        verticalSum+=CONTENT_VERTICAL_OFFSET;
     /*************************************************************************************************************/
-        treeDisplay = new TreeDisplay(CONTENT_HORIZONTAL_OFFSET, verticalSum, getWidth()-2*CONTENT_HORIZONTAL_OFFSET, getHeight()-verticalSum);
+        treeDisplay = new TreeDisplay(0, verticalSum, getWidth(), getHeight()-verticalSum);
     /****************************************************************************************************/
-        fishEyeDisplay = new FishEye(CONTENT_HORIZONTAL_OFFSET, verticalSum, getWidth()-2*CONTENT_HORIZONTAL_OFFSET, getHeight()-verticalSum);
+        fishEyeDisplay = new FishEye(0, verticalSum, getWidth(), getHeight()-verticalSum);
     /************************************************************************************************************/
-	queryDisplay = new Query(CONTENT_HORIZONTAL_OFFSET, verticalSum, getWidth()-2*CONTENT_HORIZONTAL_OFFSET, getHeight()-verticalSum);
+	queryDisplay = new Query(0, verticalSum, getWidth(), getHeight()-verticalSum);
     /************************************************************************************************************/
         optionsTabSys.addTab("Tree", treeDisplay);
         optionsTabSys.addTab("Fish Eye Viewer", fishEyeDisplay);

@@ -57,6 +57,7 @@ public class SideBar extends Interactable{
                 JFileChooser chooser = new JFileChooser();
 		chooser.setPreferredSize(new Dimension(960, 640));
                 chooser.setFileFilter(new FileNameExtensionFilter("csv files", "csv"));
+		
                 int returnVal = chooser.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION){
                         String filePath = chooser.getSelectedFile().getPath();

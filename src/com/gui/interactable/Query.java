@@ -51,6 +51,8 @@ public class Query extends Interactable {
     }
 
     private void query(File file){
+            this.xoff=0;
+            this.yoff=0;
             List <Attribute> attributes = StaticStorage.getCurrentDataSet().getAttributes();
             DataSet newDataSet = ImportData.importData(file, attributes);
             RandomForest forest = StaticStorage.getCurrentRandomForest();

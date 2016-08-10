@@ -23,53 +23,52 @@ import com.gui.gfx.Font;
 
 
 public class Query extends Interactable {
-	private static final Color BACKGROUND_COLOR = Color.WHITE;
-        public static final double VERTICAL_SCROLL_SPEED=3.;
-        public static final double HORIZONTAL_SCROLL_SPEED=1.;
-        public static final int CONTENT_HORIZONTAL_SPACING = Viewer.CONTENT_HORIZONTAL_OFFSET;
+    private static final Color BACKGROUND_COLOR = Color.WHITE;
+    public static final double VERTICAL_SCROLL_SPEED=3.;
+    public static final double HORIZONTAL_SCROLL_SPEED=1.;
+    public static final int CONTENT_HORIZONTAL_SPACING = Viewer.CONTENT_HORIZONTAL_OFFSET;
     public static final int CONTENT_VERTICAL_SPACING = Viewer.CONTENT_VERTICAL_OFFSET;
-        
-	private HashMap <RandomForest, List<Interactable>> queried;
-        private int yoff;
-        private double previousY=0.;
-        private int xoff;
-        private double previousX=0.;
-        private int VERTICAL_SHIFT;
-	
-	public Query(int x, int y, int width, int height){
-		super(x, y, width, height);
-		initImage();
-		queried = new HashMap<>();
-                addInteractable(new QueryButtonHolder(0,0,getWidth(),this));
-                VERTICAL_SHIFT = getInteractables().get(0).getHeight()+CONTENT_VERTICAL_SPACING;
-	}
-	
-	private void initImage(){
-		Graphics g = getImage().getGraphics();
-		g.setColor(BACKGROUND_COLOR);
-		g.fillRect(0, 0, getWidth(), getHeight());
-	}
-	
-	private void query(File file){
-		List <Attribute> attributes = StaticStorage.getCurrentDataSet().getAttributes();
-		DataSet newDataSet = ImportData.importData(file, attributes);
-		RandomForest forest = StaticStorage.getCurrentRandomForest();
-		queried.put(forest, new ArrayList());
-		
-                int sum = VERTICAL_SHIFT;
-		for (Record r: newDataSet.getRecords()){
-                        Interactable i = new DisplayItem(CONTENT_HORIZONTAL_SPACING,sum,Font.stringToBufferedImage(r.toString()+" Classification: "+forest.queryTrees(r, forest.getTrees())));
-			queried.get(forest).add(i);
-                        sum+=Font.getCharHeight();
-                }
-	}
-	
-	private void clear(){
+
+    private HashMap <RandomForest, List<Interactable>> queried;
+    private int yoff;
+    private double previousY=0.;
+    private int xoff;
+    private double previousX=0.;
+    private int VERTICAL_SHIFT;
+
+    public Query(int x, int y, int width, int height){
+        super(x, y, width, height);
+        initImage();
+        queried = new HashMap<>();
+        addInteractable(new QueryButtonHolder(0,0,getWidth(),this));
+        VERTICAL_SHIFT = getInteractables().get(0).getHeight()+CONTENT_VERTICAL_SPACING;
+    }
+
+    private void initImage(){
+        Graphics g = getImage().getGraphics();
+        g.setColor(BACKGROUND_COLOR);
+        g.fillRect(0, 0, getWidth(), getHeight());
+    }
+
+    private void query(File file){
+            List <Attribute> attributes = StaticStorage.getCurrentDataSet().getAttributes();
+            DataSet newDataSet = ImportData.importData(file, attributes);
+            RandomForest forest = StaticStorage.getCurrentRandomForest();
+            queried.put(forest, new ArrayList());
+
+            int sum = VERTICAL_SHIFT;
+            for (Record r: newDataSet.getRecords()){
+                    Interactable i = new DisplayItem(CONTENT_HORIZONTAL_SPACING,sum,Font.stringToBufferedImage(r.toString()+" Classification: "+forest.queryTrees(r, forest.getTrees())));
+                    queried.get(forest).add(i);
+                    sum+=Font.getCharHeight();
+            }
+    }
+
+    private void clear(){
 		List list = queried.get(StaticStorage.getCurrentRandomForest());
 		if (list!=null)
 			list.clear();
 	}
-        
         
     @Override
     public void render(int xoff, int yoff, Screen screen){
@@ -104,7 +103,7 @@ public class Query extends Interactable {
                 if(list.get(i).getWidth()>maxWidth)
                     maxWidth = list.get(i).getWidth();
             }
-            this.xoff=(int)Math.min(this.xoff, maxWidth - getWidth());
+            this.xoff=(int)Math.min(this.xoff, maxWidth - getWidth()+Font.getCharWidth()*6);
             this.xoff=(int)Math.max(this.xoff, 0);
             previousX=me.getX();
             

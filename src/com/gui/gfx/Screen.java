@@ -79,7 +79,7 @@ public class Screen extends Canvas {
         BufferStrategy bs = getBufferStrategy();
         
         if (bs==null){
-            createBufferStrategy(3);
+            createBufferStrategy(5);
             return;
         }
         Graphics g = bs.getDrawGraphics();

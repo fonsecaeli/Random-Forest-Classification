@@ -12,11 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeDisplay extends Interactable{
-    private DecisionTree tree;
+    public static final double VERTICAL_SCROLL_SPEED=3.;
+    public static final double HORIZONTAL_SCROLL_SPEED=1.;
+    public static final int CONTENT_HORIZONTAL_SPACING = Viewer.CONTENT_HORIZONTAL_OFFSET;
+    public static final int CONTENT_VERTICAL_SPACING = Viewer.CONTENT_VERTICAL_OFFSET;
+    
     private double previousY=0.;
     private int yoff;
+    private int xoff;
+    private double previousX=0.;
+    
+    private DecisionTree tree;
     private List<Interactable> list;
-    public static final double SCROLL_SPEED=3.;
 
     public TreeDisplay(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -32,7 +39,7 @@ public class TreeDisplay extends Interactable{
         int end = (int)(this.yoff+getHeight())/Font.getCharHeight()+1;
         for(int i=start; i<end; i++){
             if(i>=0 && i<getInteractables().size()){
-                getInteractables().get(i).render(getX()+xoff, getY()+yoff-this.yoff, screen);
+                getInteractables().get(i).render(getX()+xoff-this.xoff, getY()+yoff-this.yoff, screen);
             }
         }
         //super.render(xoff, yoff+this.yoff, screen);
@@ -43,7 +50,19 @@ public class TreeDisplay extends Interactable{
      */
     @Override
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
-        this.yoff=(int)(this.yoff+(SCROLL_SPEED)*(previousY-me.getY()));
+        this.xoff=(int)(this.xoff+(HORIZONTAL_SCROLL_SPEED)*(previousX-me.getX()));
+
+        int maxWidth=0;
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).getWidth()>maxWidth)
+                maxWidth = list.get(i).getWidth();
+        }
+        this.xoff=(int)Math.min(this.xoff, maxWidth - getWidth());
+        this.xoff=(int)Math.max(this.xoff, 0);
+        previousX=me.getX();
+            
+            
+        this.yoff=(int)(this.yoff+(VERTICAL_SCROLL_SPEED)*(previousY-me.getY()));
         
         this.yoff=(int)Math.max(this.yoff, 0);
         int maxHeight = getHeight()*15/16;
@@ -62,6 +81,7 @@ public class TreeDisplay extends Interactable{
      */
     @Override
     public void mouseHovered(MouseEvent me, int xoff, int yoff){
+        previousX=me.getX();
         previousY=me.getY();
         super.mouseHovered(me, xoff, yoff);
     }
@@ -71,6 +91,7 @@ public class TreeDisplay extends Interactable{
      */
     public void refreshImage(){
         if(StaticStorage.getCurrentTree()!=null && StaticStorage.getCurrentTree()!=tree){
+            this.xoff=0;
             this.yoff=0;
             for(Interactable i : list){
                 removeInteractable(i);
@@ -87,7 +108,7 @@ public class TreeDisplay extends Interactable{
             for(int i=0; i<bis.size(); i++){
                 BufferedImage bi = bis.get(i);
                 //System.out.println("i: "+i+" | size: "+bis.size()+" | BI: "+bi);
-                Interactable newTreeItem = new TreeItem(0,i*Font.getCharHeight(),bi);
+                Interactable newTreeItem = new TreeItem(CONTENT_HORIZONTAL_SPACING,CONTENT_VERTICAL_SPACING+i*Font.getCharHeight(),bi);
                 list.add(newTreeItem);
                 addInteractable(newTreeItem);
             }

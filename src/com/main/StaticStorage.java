@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaticStorage {
-    public static final int NUM_TREES=10;
+    public static final int NUM_TREES=50;
     public static final double TUNING_FACTOR=0.7;
     
     private static List<DataSet> dataSets = new ArrayList<>(); 

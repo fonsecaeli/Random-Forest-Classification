@@ -26,7 +26,7 @@ public class Viewer extends Interactable{
     //The query display
     private Query queryDisplay;
     //The full decision tree display
-    private FullDecisionTreeDisplay fullDecisionTreeDisplay;
+    //private FullDecisionTreeDisplay fullDecisionTreeDisplay;
 
     /**
      * The basic constructor, passes the parameters onto Interactable and then calls its init methods
@@ -64,13 +64,13 @@ public class Viewer extends Interactable{
     /************************************************************************************************************/
 	queryDisplay = new Query(0, verticalSum, getWidth(), getHeight()-verticalSum);
     /************************************************************************************************************/
-	fullDecisionTreeDisplay = new FullDecisionTreeDisplay(0, verticalSum, getWidth(), getHeight()-verticalSum);
+	//fullDecisionTreeDisplay = new FullDecisionTreeDisplay(0, verticalSum, getWidth(), getHeight()-verticalSum);
     /************************************************************************************************************/
     
         optionsTabSys.addTab("Tree", treeDisplay);
         optionsTabSys.addTab("Fish Eye Viewer", fishEyeDisplay);
 	optionsTabSys.addTab("Query", queryDisplay);
-	optionsTabSys.addTab("Full Decision Tree", fullDecisionTreeDisplay);
+	//optionsTabSys.addTab("Full Decision Tree", fullDecisionTreeDisplay);
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
         addInteractable(treeChanger);

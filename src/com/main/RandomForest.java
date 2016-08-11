@@ -115,7 +115,7 @@ public class RandomForest {
         //can use either of the next two lines I believe
         //return numberOfAttributes;
         //return Math.floor(Math.log(numberOfAttributes)+1);
-        return Math.sqrt(numberOfAttributes)*factor;
+        return Math.pow(numberOfAttributes,factor);
     }
 
     /**'

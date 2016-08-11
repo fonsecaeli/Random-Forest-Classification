@@ -20,6 +20,13 @@ public class DecisionTree {
         head = new Node("HEAD_NODE");
         grow(data, head);
     }
+    
+    
+    public DecisionTree(DataSet data) {
+        ATTRIBUTE_SAMPLE_SIZE = data.getAttributes().size();
+        head = new Node("HEAD_NODE");
+        grow(data, head);
+    }
 
     //TODO: make sure we don't check attributes that have already been split on
     private void grow(DataSet data, Node node) {
@@ -76,15 +83,21 @@ public class DecisionTree {
     private List<Attribute> randomSample(List<Attribute> atts) {
         Random randomGenerator = new Random();
         List<Attribute> randomSample = new ArrayList<>();
-        for (int i = 0; i < ATTRIBUTE_SAMPLE_SIZE; i++) {
-            /*need the -1 because we dont want to count the classificaiton value for
-            this random splitting*/
-            Attribute toBeAdded = atts.get(randomGenerator.nextInt(atts.size() - 1));
-            //makes sure we don't get any duplicates
-            if (!randomSample.contains(toBeAdded)) {
-                randomSample.add(toBeAdded);
-            } else {
-                i--;
+        if(ATTRIBUTE_SAMPLE_SIZE!=atts.size())
+            for (int i = 0; i < ATTRIBUTE_SAMPLE_SIZE; i++) {
+                /*need the -1 because we dont want to count the classificaiton value for
+                this random splitting*/
+                Attribute toBeAdded = atts.get(randomGenerator.nextInt(atts.size() - 1));
+                //makes sure we don't get any duplicates
+                if (!randomSample.contains(toBeAdded)) {
+                    randomSample.add(toBeAdded);
+                } else {
+                    i--;
+                }
+            }
+        else {
+            for(int i=0; i<ATTRIBUTE_SAMPLE_SIZE; i++){
+                randomSample.add(atts.get(i));
             }
         }
         return randomSample;

@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaticStorage {
-    public static final int NUM_TREES=10;
+    public static final int NUM_TREES=20;
     public static final double TUNING_FACTOR=0.7;
     
     private static List<DataSet> dataSets = new ArrayList<>(); 
     private static List<RandomForest> randomForests = new ArrayList<>();
-    private static int indexOfCurrentDataSet=0;
+    private static int indexOfCurrentDataSet=-1;
     private static int indexOfCurrentTree=0;
     
     public static void newData(File file){
@@ -21,6 +21,11 @@ public class StaticStorage {
         dataSets.add(ds);
         randomForests.add(forest);
         setIndex(dataSets.size()-1);
+    }
+    
+    public static void refreshCurrentForest(){
+        if(!(getIndexOfCurrentDataSet()<0))
+            randomForests.set(getIndexOfCurrentDataSet(), new RandomForest(getCurrentDataSet(), NUM_TREES, TUNING_FACTOR));
     }
     
     public static int getIndexOfCurrentTree(){

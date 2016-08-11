@@ -1,5 +1,6 @@
 package com.gui.interactable;
 
+import com.main.StaticStorage;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,7 +24,7 @@ public class SideBar extends Interactable{
         int sum=(int)(VERTICAL_SPACING_PROPORTION*getHeight());
         addInteractable(new LoadButton(getWidth()/2-Button.getWidth(LoadButton.TITLE)/2, sum));
         sum+=(int)(VERTICAL_SPACING_PROPORTION*getHeight());
-        //addInteractable(new SaveButton(getWidth()/2-Button.getWidth(SaveButton.TITLE)/2, sum));
+        addInteractable(new RefreshForestButton(getWidth()/2-Button.getWidth(RefreshForestButton.TITLE)/2, sum));
     }
 
     /**
@@ -70,21 +71,21 @@ public class SideBar extends Interactable{
     }
 
     /**
-     * The button which, when clicked, brings up the save menu
+     * The button which, when clicked, refreshes the current forest
      */
-    private class SaveButton extends Button {
+    private class RefreshForestButton extends Button {
         //The title of the button
-        private static final String TITLE = "Save As...";
+        private static final String TITLE = "Refresh Forest";
 
         //Default constructor, only needs the location as title is stored and width/height is handled by the super
-        public SaveButton(int x, int y){
+        public RefreshForestButton(int x, int y){
             super(x, y, TITLE);
         }
 
         //brings up the save menu
         @Override
         public void onAction(MouseEvent me){
-            
+            StaticStorage.refreshCurrentForest();
         }
 
     }

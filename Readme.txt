@@ -3,7 +3,7 @@ Random Forest Classification
 This readme is intended to help the user get started in using the Random Forest Classification program
 
 
-1) Understanding WHAT
+1) Understanding the basics
 	A) The purpose of this program is to classify data into a decision tree:
 
 Outlook, Humidity,Golf?
@@ -38,12 +38,14 @@ INPUT, INPUT, INPUT,.....,INPUT, OUTPUT
 INPUT, INPUT, INPUT,.....,INPUT, OUTPUT
 INPUT, INPUT, INPUT,.....,INPUT, OUTPUT
  
-and then save the file as a .csv file.
-
-2) You start using the program by clicking the 'Load...' button and then selecting the corresponding csv file
-
+And then save the file as a .csv file.
+After that you can start up the program and click the 'Load...' button and select the saved csv file
 
 
+
+
+
+2) How to use the program
 
 
 

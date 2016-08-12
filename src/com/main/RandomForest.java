@@ -20,12 +20,11 @@ public class RandomForest {
     public RandomForest(DataSet data, int numTrees, double tuningFactor) {
         oobData = new ArrayList<>(numTrees);
         int numAtts = data.getAttributes().size()-1;//for the classification attribute
-        if(detRandomSubspace(numAtts, tuningFactor) > numAtts) throw new IllegalArgumentException("Tuning Factor too large");
+        double randomSubspaceSize = detRandomSubspace(numAtts, tuningFactor);
+        if(randomSubspaceSize > numAtts) throw new IllegalArgumentException("Tuning Factor too large");
         this.data = data;
         randomGenerator = new Random();
-        ATTRIBUTE_SAMPLE_SIZE = (int) detRandomSubspace(numAtts, tuningFactor);
-        System.out.println(ATTRIBUTE_SAMPLE_SIZE);
-        System.out.println(numAtts);
+        ATTRIBUTE_SAMPLE_SIZE = (int) randomSubspaceSize;
         growTrees(numTrees);
     }
 
@@ -73,8 +72,8 @@ public class RandomForest {
                 else {incorrect++;}
             }
         }
-        System.out.println("incorrect: "+incorrect);
-        System.out.println("correct: "+correct);
+        //System.out.println("incorrect: "+incorrect);
+        //System.out.println("correct: "+correct);
         return (double)incorrect/(correct+incorrect);
     }
 
@@ -109,13 +108,14 @@ public class RandomForest {
      *
      * @param numberOfAttributes the number of possible attributes
      * @param factor a tuning factor, sometimes we need to tune the number
-     * of attributes to select from because itcan cause the forest to perform better or worse
+     * of attributes to select from because it can cause the forest to perform better or worse
      * @return the size of the random subspace
      */
     private double detRandomSubspace(int numberOfAttributes, double factor) {
         //can use either of the next two lines I believe
-        return numberOfAttributes;
-        //return (int) Math.floor(Math.log(numberOfAttributes)+1);
+        //return numberOfAttributes;
+        //return Math.floor(Math.log(numberOfAttributes)+1);
+        return Math.pow(numberOfAttributes,factor);
     }
 
     /**'
@@ -143,7 +143,6 @@ public class RandomForest {
             oobData.add(new DataSet(dataToSample.getAttributes(), oobRecords, dataToSample.getName()));
 
             DataSet bootStrappedData = new DataSet(data.getAttributes(), newRecords, data.getName());
-            System.out.println(data.getAttributes());
             dataSets.add(bootStrappedData);
         }
         return dataSets;

@@ -10,7 +10,7 @@ class EntropyTest /*extends TestCase*/ {
 
     public void setUp() throws Exception {
         //super.setUp();
-        data = ImportData.importData("data.csv");
+        //data = ImportData.importData("data.csv");
 
     }
 

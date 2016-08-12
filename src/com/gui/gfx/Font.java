@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Font {
-    private static final int TAB_SIZE=4;
+    private static final int TAB_SIZE=2;
     private static int charWidth, charHeight;
     private static BufferedImage fontImage;
     

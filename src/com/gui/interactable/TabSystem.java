@@ -4,30 +4,32 @@ package com.gui.interactable;
 import com.gui.gfx.Screen;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.util.Pair;
 
 public class TabSystem extends Interactable{
+    //the spacing between tabs
     public static final int TAB_HORIZONTAL_SPACING = 4,
                             TAB_VERTICAL_SPACING = 8;
+    //the background color of a tab system
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     
-    private Map<Tab, Interactable> tabSet;
-    private Set<Tab> keys;
+    //Using a Pair List instead of a map because order needs to be preserved
+    private List<Pair<Tab, Interactable>> pairList;
+    //The current tab
     private Tab selectedTab;
     
     public TabSystem(int x1, int y1, int w) {
         super(x1, y1, w, Button.BUTTON_HEIGHT+TAB_VERTICAL_SPACING);
-        tabSet = new HashMap<>();
-        keys = tabSet.keySet();
+        pairList = new ArrayList<>();
         selectedTab = null;
         initImage();
     }
     
+    /**
+     * Inites the image
+     */
     public void initImage(){
         Graphics g = getImage().getGraphics();
         g.setColor(BACKGROUND_COLOR);
@@ -36,112 +38,173 @@ public class TabSystem extends Interactable{
         g.drawLine(0, getHeight()-1, getWidth(), getHeight()-1);
     }
     
+    /**
+     * refreshes all tabs within the system, there is no need to refresh the TabSystem's actual image
+     */
     public void refreshImage(){
-        for(Tab key : keys){
-            key.refreshImage();
+        for(Pair p : pairList){
+            ((Tab)p.getKey()).refreshImage();
         }
     }
     
+    /**
+     * add a tab with a given tab and paired Interactable to the tab system
+     * @param name the name on the tab
+     * @param i the Interactable that is handled when the tab is the selected tab
+     */
     public void addTab(String name, Interactable i){
         Tab newTab = new Tab(totalWidth()+TAB_HORIZONTAL_SPACING, TAB_VERTICAL_SPACING, name, this);
-        tabSet.put(newTab, i);
+        pairList.add(new Pair<>(newTab, i));
         addInteractable(newTab);
         selectedTab = newTab;
         refreshImage();
     }
     
+    /**
+     * Add an already created tab with the paired Interactable to the tab system
+     * @param newTab the tab to add
+     * @param i  the Interactable that is handled when the tab is the selected tab
+     */
     public void addTab(Tab newTab, Interactable i){
-        tabSet.put(newTab, i);
+        pairList.add(new Pair<>(newTab, i));
         addInteractable(newTab);
         selectedTab = newTab;
         refreshTabs();
         refreshImage();
     }
     
+    /**
+     * Set the selected tab based on the index of a tab
+     * @param index the index of the tab to set
+     */
     public void setSelectedTab(int index){
-        if(index<keys.size() && index>=0){
-            List<Tab> tabs = list();
-            selectedTab = tabs.get(index);
+        if(index<pairList.size() && index>=0){
+            selectedTab = pairList.get(index).getKey();
         }
     }
     
-    public void setSelectedTab(Tab t){
-        selectedTab = t;
+    /**
+     * Set the selected tab based on a tab
+     * @param tab the tab to set
+     */
+    public void setSelectedTab(Tab tab){
+        selectedTab = tab;
     }
     
+    /**
+     * Get the currently selected tab
+     * @return the currently selected tab
+     */
     public Tab getSelectedTab(){
         return selectedTab;
     }
     
+    /**
+     * Get the index of the currently selected tab
+     * @return the index of the currently selected tab
+     */
     public int getSelectedTabIndex(){
-        return list().indexOf(selectedTab);
+        return getIndexOfTab(selectedTab);
     }
     
+    /**
+     * Gets the index of a tab in the tab system
+     * @param tab the tab to find the index of
+     * @return the index of the tab
+     */
+    public int getIndexOfTab(Tab tab){
+        for (int i=0; i<pairList.size(); i++) {
+            if (pairList.get(i).getKey() == tab) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    /**
+     * The width of all of the tabs within the TabSystem
+     * @return the width
+     */
     public int totalWidth(){
         int sum=0;
-        for(Tab key : keys){
-            sum+=key.getImage().getWidth();
+        for(Pair p : pairList){
+            sum+=((Tab)p.getKey()).getImage().getWidth();
         }
-        sum+=tabSet.size()*TAB_HORIZONTAL_SPACING;
+        sum+=pairList.size()*TAB_HORIZONTAL_SPACING;
         return sum;
     }
     
+    /**
+     * The width of all of the tabs up to the max within the TabSystem
+     * @param max the max index of the tab to go up to
+     * @return the width
+     */
     public int totalWidth(int max){
         int sum=0;
-        List<Tab> tabs = list();
         for(int i=0;i<max;i++){
-            
-            sum+=tabs.get(i).getImage().getWidth();
+            sum+=pairList.get(i).getKey().getImage().getWidth();
         }
         sum+=max*TAB_HORIZONTAL_SPACING;
         return sum;
     }
     
-    protected void removeTab(Tab t){
-        removeInteractable(t);
-        tabSet.remove(t);
-        refreshTabs();
+    /**
+     * remove a tab/interactable Pair from the tabSystem
+     * @param pair the pair to remove
+     */
+    protected void removeTab(Pair pair){
+        removeInteractable((Tab)pair.getKey());
+        pairList.remove(pair);
+        //refreshTabs();
     }
     
+    /**
+     * returns the number of tabs within the TabSystem
+     * @return 
+     */
     public int numTabs(){
-        return keys.size();
+        return pairList.size();
     }
     
-    private List<Tab> list(){
-        List<Tab> tabs= new ArrayList<>();
-        for(Tab key : keys){
-            tabs.add(key);
-        }
-        return tabs;
+    /**
+     * clears all tabs from a TabSystem
+     */
+    public void clear(){
+        while(numTabs()>0)
+            removeTab(pairList.get(0));
+    }
+    
+    /**
+     * get the paired interactable from a tab
+     * @param tab the tab to check for
+     * @return the interactable paired with tab
+     */
+    public Interactable get(Tab tab){
+        int index = getIndexOfTab(tab);
+        return index<0 ? null: pairList.get(index).getValue();
     } 
     
-    public void clear(){
-        tabSet = new HashMap<>();
-        keys = tabSet.keySet();
-        selectedTab = null;
-    }
-    
-    public Interactable get(Tab t){
-        return tabSet.get(t);
-    }
-    
+    /**
+     * render all of the tabs, etc, along with the current renderable
+     */
     @Override
     public void render(int xoff, int yoff, Screen screen){
         super.render(xoff, yoff, screen);
         
         //render the current tab's display
-        Interactable current = tabSet.get(selectedTab);
+        Interactable current = get(selectedTab);
         if(current!=null){
             current.render(xoff, yoff, screen);
         }
     }
     
+    /**
+     * Reset the spacing between tabs
+     */
     private void refreshTabs(){
-        List<Tab> tabs = list();
-        
-        for(int i=0; i<tabs.size(); i++){
+        for(int i=0; i<pairList.size(); i++){
             int currentLength = totalWidth(i);
-            tabs.get(i).setX(currentLength+TAB_HORIZONTAL_SPACING);
+            pairList.get(i).getKey().setX(currentLength+TAB_HORIZONTAL_SPACING);
         }
     }
     
@@ -172,4 +235,5 @@ public class TabSystem extends Interactable{
         }
     }
     */
+    
 }

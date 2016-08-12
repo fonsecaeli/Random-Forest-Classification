@@ -10,56 +10,81 @@ import java.util.List;
 
 public class Viewer extends Interactable{
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    public static final int BUTTON_VERTICAL_SPACING = 4;
-    public static final int BUTTON_HORIZONTAL_SPACING = 4;
+    public static final int CONTENT_VERTICAL_OFFSET = 6, 
+                            CONTENT_HORIZONTAL_OFFSET = 6;
     
+    //The tab system that changes the current data set
     private TabSystem dataSetsTabSys;
+    //The tab system which updates the current display
     private TabSystem optionsTabSys;
-    private Button right, left;
-    private TreeStructure tree;
-    private FishEye fishEye;
+    //The holder for the buttons which change the current tree
+    private CurrentTreeChanger treeChanger;
+    //The tree display
+    private TreeDisplay treeDisplay;
+    //The fisheye display
+    private FishEye fishEyeDisplay;
+    //The query display
+    private Query queryDisplay;
+    //The full decision tree display
+    //private FullDecisionTreeDisplay fullDecisionTreeDisplay;
 
+    /**
+     * The basic constructor, passes the parameters onto Interactable and then calls its init methods
+     * @param x
+     * @param y
+     * @param width
+     * @param height 
+     */
     public Viewer(int x, int y, int width, int height){
         super(x, y, width, height);
         init();
 
         initImage();
-
     }
     
+    /**
+     * Inits the tab systems, buttons, etc.
+     * Also places them and adds them as listeners
+     */
     public final void init(){
-        dataSetsTabSys = new TabSystem(0,
-                                       0,
-                                       getWidth());
-        optionsTabSys = new TabSystem(0,
-                                      dataSetsTabSys.getHeight(),
-                                      getWidth());
-        left = new LeftButton(BUTTON_HORIZONTAL_SPACING,
-                                dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+BUTTON_VERTICAL_SPACING);
-        right = new RightButton(getWidth()-Button.getWidth(">")-BUTTON_HORIZONTAL_SPACING,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+BUTTON_VERTICAL_SPACING);
-        tree = new TreeStructure(0,
-                                 dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+BUTTON_VERTICAL_SPACING,
-                                 getWidth(),
-                                 getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight()-BUTTON_VERTICAL_SPACING);
-        fishEye = new FishEye(0,
-                              dataSetsTabSys.getHeight()+optionsTabSys.getHeight()+right.getHeight()+BUTTON_VERTICAL_SPACING,
-                              getWidth(),
-                              getHeight()-dataSetsTabSys.getHeight()-optionsTabSys.getHeight()-right.getHeight()-BUTTON_VERTICAL_SPACING);
-        optionsTabSys.addTab("Tree", tree);
-        optionsTabSys.addTab("Fish Eye Viewer", fishEye);
+        int verticalSum=0; //how far down new elements should be added
+    /************************************************************************************************************/
+        dataSetsTabSys = new TabSystem(0, verticalSum, getWidth());
+        verticalSum+=dataSetsTabSys.getHeight();
+    /************************************************************************************************************/
+        optionsTabSys = new TabSystem(0, verticalSum, getWidth());
+        verticalSum+=optionsTabSys.getHeight();
+    /************************************************************************************************************/
+        treeChanger = new CurrentTreeChanger(0, verticalSum, getWidth());
+        verticalSum+=treeChanger.getHeight();
+    /*************************************************************************************************************/
+        treeDisplay = new TreeDisplay(0, verticalSum, getWidth(), getHeight()-verticalSum);
+    /****************************************************************************************************/
+        fishEyeDisplay = new FishEye(0, verticalSum, getWidth(), getHeight()-verticalSum);
+    /************************************************************************************************************/
+	queryDisplay = new Query(0, verticalSum, getWidth(), getHeight()-verticalSum);
+    /************************************************************************************************************/
+	//fullDecisionTreeDisplay = new FullDecisionTreeDisplay(0, verticalSum, getWidth(), getHeight()-verticalSum);
+    /************************************************************************************************************/
+    
+        optionsTabSys.addTab("Tree", treeDisplay);
+        optionsTabSys.addTab("Fish Eye Viewer", fishEyeDisplay);
+	optionsTabSys.addTab("Query", queryDisplay);
+	//optionsTabSys.addTab("Full Decision Tree", fullDecisionTreeDisplay);
         addInteractable(dataSetsTabSys);
         addInteractable(optionsTabSys);
-        addInteractable(right);
-        addInteractable(left);
+        addInteractable(treeChanger);
         dataSetsTabSys.setSelectedTab(0);
-        optionsTabSys.setSelectedTab(0);
+        optionsTabSys.setSelectedTab(2);//1 is tested, it puts fish eye at index 0 even though it was added second
     }
 
+    /**
+     * Initializes the Viewer's image
+     */
     private void initImage(){
             Graphics g = getImage().getGraphics();
             g.setColor(BACKGROUND_COLOR);
-            g.fillRect(getX(), getY(), getWidth(), getHeight());
+            g.fillRect(0, 0, getWidth(), getHeight());
             //refreshImage();
     }
 
@@ -80,46 +105,60 @@ public class Viewer extends Interactable{
     @Override
     public void mouseClicked(MouseEvent me, int xoff, int yoff){
         super.mouseClicked(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseClicked(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseClicked(me, xoff, yoff);
     }
 
     @Override
     public void mousePressed(MouseEvent me, int xoff, int yoff){
         super.mousePressed(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mousePressed(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mousePressed(me, xoff, yoff);
     }
 
     @Override
     public void mouseReleased(MouseEvent me, int xoff, int yoff){
         super.mouseReleased(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseReleased(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseReleased(me, xoff, yoff);
     }
 
     @Override
     public void mouseNotHovered(MouseEvent me, int xoff, int yoff){
         super.mouseNotHovered(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseNotHovered(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseNotHovered(me, xoff, yoff);
     }
 
     @Override
     public void mouseHovered(MouseEvent me, int xoff, int yoff){
         super.mouseHovered(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseHovered(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseHovered(me, xoff, yoff);
     }
 
     @Override
     public void mouseDragged(MouseEvent me, int xoff, int yoff){
         super.mouseDragged(me, xoff, yoff);
-        if(optionsTabSys.getSelectedTab()!=null)optionsTabSys.get(optionsTabSys.getSelectedTab()).mouseDragged(me, xoff, yoff);
+        Tab selected = optionsTabSys.getSelectedTab();
+        if(selected!=null && optionsTabSys.get(selected)!=null)optionsTabSys.get(selected).mouseDragged(me, xoff, yoff);
     }
 
     @Override
     public void render(int xoff, int yoff, Screen screen){
-        //refreshImage();
-        refreshDataSetsTabSys();
-        super.render(xoff, yoff, screen);
+        if(StaticStorage.numDataSets()<=0){
+            screen.drawImage(getImage(), getX()+xoff, getY()+yoff);
+            dataSetsTabSys.render(getX()+xoff, getY()+yoff, screen);
+        } else {
+            //refreshImage();
+            refreshDataSetsTabSys();
+            super.render(xoff, yoff, screen);
+        }
     }
     
+    /**
+     * the tabs which change the current Data Set
+     */
     private class DataSetTab extends Tab {
         private DataSet ds;
         
@@ -131,27 +170,5 @@ public class Viewer extends Interactable{
         public DataSet getDataSet(){
             return ds;
         }
-    }
-    
-    private class RightButton extends Button{
-	public RightButton(int x, int y){
-            super(x, y, ">");
-	}
-		
-        @Override
-	public void onAction(MouseEvent me){
-            StaticStorage.incrementCurrentTree();
-	}
-    }
-	
-    private class LeftButton extends Button{
-	public LeftButton(int x, int y){
-            super(x, y, "<");
-	}
-		
-        @Override
-	public void onAction(MouseEvent me){
-            StaticStorage.decrementCurrentTree();
-	}
     }
 }

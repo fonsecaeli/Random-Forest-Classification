@@ -6,20 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaticStorage {
+    public static final int NUM_TREES=20;
+    public static final double TUNING_FACTOR=0.7;
+    
     private static List<DataSet> dataSets = new ArrayList<>(); 
     private static List<RandomForest> randomForests = new ArrayList<>();
     private static int indexOfCurrentDataSet=-1;
-    private static int indexOfCurrentTree=-1;
+    private static int indexOfCurrentTree=0;
     
     public static void newData(File file){
         DataSet ds = ImportData.importData(file);
-        RandomForest forest = new RandomForest(ds, 2, 0.7);
+        RandomForest forest = new RandomForest(ds, NUM_TREES, TUNING_FACTOR);
         
-        //System.out.println(ds);
-        //System.out.println(forest);
         dataSets.add(ds);
         randomForests.add(forest);
-        setIndex(indexOfCurrentDataSet+1);
+        setIndex(dataSets.size()-1);
+    }
+    
+    public static void refreshCurrentForest(){
+        if(!(getIndexOfCurrentDataSet()<0))
+            randomForests.set(getIndexOfCurrentDataSet(), new RandomForest(getCurrentDataSet(), NUM_TREES, TUNING_FACTOR));
     }
     
     public static int getIndexOfCurrentTree(){
@@ -35,6 +41,8 @@ public class StaticStorage {
     }
     
     public static void setIndex(int i){
+        if(i<0)i=0;
+        else if(i>=dataSets.size())i=dataSets.size()-1;
         indexOfCurrentDataSet = i;
         indexOfCurrentTree=0;
     }
@@ -45,17 +53,21 @@ public class StaticStorage {
     }
     
     public static RandomForest getCurrentRandomForest(){
-        if(dataSets.isEmpty()) return null;
+        if(randomForests.isEmpty()) return null;
         return randomForests.get(indexOfCurrentDataSet);
     }
     
     public static DecisionTree getCurrentTree(){
-        if(dataSets.isEmpty()) return null;
+        if(randomForests.isEmpty()) return null;
         return randomForests.get(indexOfCurrentDataSet).getTrees()[indexOfCurrentTree];
     }
     
     public static int numDataSets(){
         return dataSets.size();
+    }
+    
+    public static int numTrees(){
+        return getCurrentRandomForest().getTrees().length;
     }
     
     public static List<DataSet> getDataSets(){
@@ -69,7 +81,8 @@ public class StaticStorage {
     public static void incrementCurrentTree(){
         if (getCurrentRandomForest()!=null){
             indexOfCurrentTree++;
-            indexOfCurrentTree%=getCurrentRandomForest().getTrees().length;
+            int currentMaxIndex=getCurrentRandomForest().getTrees().length-1;
+            if(indexOfCurrentTree>currentMaxIndex)indexOfCurrentTree=0;
         }
     }
 
